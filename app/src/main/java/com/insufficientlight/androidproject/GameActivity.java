@@ -8,8 +8,10 @@ public class GameActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        //yeet
+        //Don't put stuff before the super.onCreate
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CombatEngine.battleLoop("Testville", "Testburg");
     }
 }
