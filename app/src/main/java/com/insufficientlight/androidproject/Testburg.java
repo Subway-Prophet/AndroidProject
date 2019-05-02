@@ -2,10 +2,10 @@ package com.insufficientlight.androidproject;
 
 public class Testburg
 {
-    static int armyQuality = 1;
-    static int troopMorale = 2;
-    static int troopCount = 200;
-    public static int getTroopCount()
+    int armyQuality = 1;
+    int troopMorale = 2;
+    int troopCount = 200;
+    public int getTroopCount()
     {
         return troopCount;
     }

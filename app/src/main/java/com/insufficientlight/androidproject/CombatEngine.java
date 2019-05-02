@@ -9,12 +9,12 @@ public class CombatEngine
         return 1;
     }
 
-    public static int combatPowerCalculate (String armyName)
+    public static int combatPowerCalculate (Class armyName)
     {
         return 1;
     }
 
-    public static String battleLoop(String armyOne, String armyTwo)
+    public static String battleLoop(Class armyOne, Class armyTwo)
     {
         int armyOneUnits = 0;
         int armyTwoUnits = 0;
@@ -26,8 +26,8 @@ public class CombatEngine
         armyOnePower = combatPowerCalculate(armyOne);
         armyTwoPower = combatPowerCalculate(armyTwo);
 
-        armyOneUnits = Testburg.getTroopCount();
-        armyTwoUnits = Testville.getTroopCount();
+        armyOneUnits = armyOne.getTroopCount();
+        armyTwoUnits = armyTwo.getTroopCount();
 
         while (!retreat)
         {
@@ -43,10 +43,9 @@ public class CombatEngine
             }
             if (armyTwoUnits == 0)
             {
-
+                return "yeetnot";
             }
         }
-
         return "France loses";
     }
 

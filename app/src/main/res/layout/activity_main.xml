@@ -7,13 +7,75 @@
     tools:context=".GameActivity">
 
     <TextView
+        android:layout_margin="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/Title"
+        android:text="Battle for the ages"
         app:layout_constraintHorizontal_bias="0.416"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:layout_margin="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Army One: "
+        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintTop_toBottomOf="@+id/Title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/ArmyOne"
+        />
+    <TextView
+        android:layout_margin="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Army Two: "
+        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintTop_toBottomOf="@+id/Title"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/ArmyTwo"
+        />
+    <TextView
+        android:layout_margin="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Army One Losses: "
+        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintTop_toBottomOf="@+id/ArmyOne"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/ArmyOneLoss"
+        />
+    <TextView
+        android:layout_margin="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Army Two Losses: "
+        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintTop_toBottomOf="@+id/ArmyOne"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/ArmyTwoLoss"
+        />
+    <Button
+        android:layout_margin="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Surrender"
+        android:text="Pussy Out"
+        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ArmyTwoLoss"
+        />
+    <Button
+        android:layout_margin="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/KeepFighting"
+        android:text="Keep Fighting"
+        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ArmyTwoLoss"
+        />
 
 </android.support.constraint.ConstraintLayout>

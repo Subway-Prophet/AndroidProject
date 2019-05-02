@@ -12,6 +12,6 @@ public class GameActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        CombatEngine.battleLoop("Testville", "Testburg");
+        //CombatEngine.battleLoop( "Testville ", "Testburg");
     }
 }
