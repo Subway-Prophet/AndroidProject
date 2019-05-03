@@ -1,0 +1,8 @@
+Day one: 
+-Git hub and google drive set up
+-Created Project
+-Sold soul to the government 
+-Began combat mechanics
+Day two;
+-Continued the combat mechanics
+-added Change log.txt and Journal.txt
