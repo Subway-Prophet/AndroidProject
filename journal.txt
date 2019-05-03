@@ -1,3 +1,9 @@
 5-03-19
 Days one and two: NullPoINtErExeptIOnN
-We where thrown into the fire that is android app development. This involved us setting up a few of our base classes and beggining development of the combat engine. Difficulty came in the form of setting up these classes to work together along with understanding how we wanted the end product ot flow/operate. Along with this much research went into the best way to link devices into a multiplayer configeration and how data would be passed. The decition was made to use "Google play game services" for actual multiplayer connections instead of google's "Nearby Connections API" for local multiplayer as it should be end up being easier to get working and would help future proof the end result. Lastly time was spent improving our UI concepts from what was origion ally put in the proposial.
+We where thrown into the fire that is android app development. This involved us setting up a few of our base classes and
+beggining development of the combat engine. Difficulty came in the form of setting up these classes to work together along 
+with understanding how we wanted the end product ot flow/operate. Along with this much research went into the best way to link 
+devices into a multiplayer configeration and how data would be passed. The decition was made to use "Google play game 
+services" for actual multiplayer connections instead of google's "Nearby Connections API" for local multiplayer as it should 
+be end up being easier to get working and would help future proof the end result. Lastly time was spent improving our UI 
+concepts from what was origion ally put in the proposial.
