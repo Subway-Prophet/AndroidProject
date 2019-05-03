@@ -11,8 +11,9 @@ public class GameActivity extends AppCompatActivity
         //Don't put stuff before the super.onCreate
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //CombatEngine.battleLoop( "Testville ", "Testburg");
+        Army army1 = new Army("Testville first company", 1, 0, 300);
+        Army army2 = new Army("Testburg second legion", 1, 0, 300);
+        CombatEngine.battleLoop( army1, army2);
     }
     //Hey is this working
 }
