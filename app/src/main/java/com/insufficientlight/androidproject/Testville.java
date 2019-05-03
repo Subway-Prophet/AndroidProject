@@ -1,6 +1,6 @@
 package com.insufficientlight.androidproject;
 
-public class Testville
+/**public class Testville
 {
     static int armyQuality = -2;
     static int troopMorale = 3;
@@ -29,4 +29,4 @@ public class Testville
     {
         this.troopMorale = troopMorale;
     }
-}
+}**/

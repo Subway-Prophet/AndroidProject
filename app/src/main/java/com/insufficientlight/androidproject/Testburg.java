@@ -1,6 +1,6 @@
 package com.insufficientlight.androidproject;
 
-public class Testburg
+/**public class Testburg
 {
     int armyQuality = 1;
     int troopMorale = 2;
@@ -30,3 +30,4 @@ public class Testburg
         this.troopMorale = troopMorale;
     }
 }
+**/
