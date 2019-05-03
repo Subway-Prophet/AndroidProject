@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:text="Army Two Losses: "
         app:layout_constraintHorizontal_bias="0.416"
-        app:layout_constraintTop_toBottomOf="@+id/ArmyOne"
+        app:layout_constraintTop_toBottomOf="@+id/ArmyOneLoss"
         app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/ArmyTwoLoss"
         />
@@ -65,7 +65,7 @@
         android:text="Pussy Out"
         app:layout_constraintHorizontal_bias="0.416"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ArmyTwoLoss"
+        app:layout_constraintTop_toBottomOf="@id/ArmyTwoLoss"
         />
     <Button
         android:layout_margin="25dp"
@@ -75,7 +75,7 @@
         android:text="Keep Fighting"
         app:layout_constraintHorizontal_bias="0.416"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ArmyTwoLoss"
+        app:layout_constraintTop_toBottomOf="@id/ArmyTwoLoss"
         />
 
 </android.support.constraint.ConstraintLayout>
