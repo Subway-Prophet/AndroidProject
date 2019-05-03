@@ -1,7 +1,7 @@
 Day one: 
 -Git hub and google drive set up
 -Created Project
--Sold soul to the government 
+-Sold soul to the government(and google) 
 -Began combat mechanics
 Day two;
 -Continued the combat mechanics
