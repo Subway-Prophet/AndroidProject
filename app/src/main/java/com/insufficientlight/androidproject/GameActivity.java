@@ -25,8 +25,8 @@ public class GameActivity extends AppCompatActivity
         //Don't put stuff before the super.onCreate
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Army army1 = new Army("Testville first company", 1, 0, 300);
-        Army army2 = new Army("Testburg second legion", 1, 0, 300);
+        final Army army1 = new Army("Testville first company", 1, 0, 300);
+        final Army army2 = new Army("Testburg second legion", 1, 0, 300);
 
         Sur = findViewById(R.id.Surrender);
         Con = findViewById(R.id.KeepFighting);
@@ -35,7 +35,23 @@ public class GameActivity extends AppCompatActivity
         An1 = findViewById(R.id.ArmyOne);
         An2 = findViewById(R.id.ArmyTwo);
 
-        CombatEngine.battleLoop( army1, army2);
+        Thread runLoop = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                CombatEngine.battleLoop(army1, army2);
+            }
+        });
+        try
+        {
+            runLoop.join();
+
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+        //CombatEngine.battleLoop( army1, army2);
     }
     //Hey is this working
 }

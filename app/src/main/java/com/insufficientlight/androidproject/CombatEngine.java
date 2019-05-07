@@ -12,15 +12,10 @@ public class CombatEngine
 
     public static int armyLosses (int armyOneCP, int armyTwoCP, int armyOneTroops, int armyTwoTroops)
     {
-        Random rand = new Random();
-        int n = rand.nextInt(5);
-        n += 1;
         //Slight Progress
         double kills1 = 0;
-        kills1 = (armyOneCP * (armyOneTroops * .10) * n);
+        kills1 = (armyOneCP * (armyOneTroops * .01));
         int result = (int) kills1;
-
-
         return result;
     }
 
@@ -41,6 +36,8 @@ public class CombatEngine
         int losses1 = 0;
         int losses2 = 0;
         boolean retreat = false;
+
+
 
         //Method Calls
         armyOnePower = combatPowerCalculate(armyOne);
