@@ -3,6 +3,8 @@ package com.insufficientlight.androidproject;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Random;
+
 
 public class CombatEngine
     //Combat engine is the handler for combats, it calculates the math and spits the results back out to the user
@@ -10,12 +12,16 @@ public class CombatEngine
 
     public static int armyLosses (int armyOneCP, int armyTwoCP, int armyOneTroops, int armyTwoTroops)
     {
+        Random rand = new Random();
+        int n = rand.nextInt(5);
+        n += 1;
         //Slight Progress
-        int kills1 = 0;
-        int kills2 = 0;
-        kills1 = (armyOneCP * armyOneTroops);
-        kills2 = (armyTwoCP * armyTwoTroops);
-        return 100;
+        double kills1 = 0;
+        kills1 = (armyOneCP * (armyOneTroops * .10) * n);
+        int result = (int) kills1;
+
+
+        return result;
     }
 
     public static int combatPowerCalculate (Army armyName)
