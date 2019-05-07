@@ -7,24 +7,14 @@ import android.widget.TextView;
 public class CombatEngine
     //Combat engine is the handler for combats, it calculates the math and spits the results back out to the user
 {
-    /**
-    //Surrender Button
-    public static Button Sur;
-    //Keep fighting Button
-    public static Button Con;
-    //Losses text View for side one
-    public static TextView Los1;
-    //Losses text View for side two
-    public static TextView Los2;
-    //Army1's army name text view
-    public static TextView An1;
-    //Army2's army name text view
-    public static TextView An2;
-     **/
 
     public static int armyLosses (int armyOneCP, int armyTwoCP, int armyOneTroops, int armyTwoTroops)
     {
-        //Calculates the losses on one side.
+        //Slight Progress
+        int kills1 = 0;
+        int kills2 = 0;
+        kills1 = (armyOneCP * armyOneTroops);
+        kills2 = (armyTwoCP * armyTwoTroops);
         return 100;
     }
 
@@ -36,12 +26,7 @@ public class CombatEngine
 
     public static void battleLoop(Army armyOne, Army armyTwo)
     {
-        /**Sur.findViewById(R.id.Surrender);
-        Con.findViewById(R.id.KeepFighting);
-        Los1.findViewById(R.id.ArmyOneLoss);
-        Los2.findViewById(R.id.ArmyTwoLoss);
-        An1.findViewById(R.id.ArmyOne);
-        An2.findViewById(R.id.ArmyTwo);**/
+
         int armyOneUnits = 0;
         int armyTwoUnits = 0;
         int armyOnePower = 0;
