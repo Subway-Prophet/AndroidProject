@@ -6,6 +6,19 @@ public class Army
     int troopMorale;
     int troopCount;
     int troopWeaponQ;
+    int combatPower;
+
+    public int getCombatPower()
+    {
+        combatPower = troopMorale + troopWeaponQ;
+        return combatPower;
+    }
+
+    public void setCombatPower(int combatPower)
+    {
+        this.combatPower = combatPower;
+    }
+
     public String getArmyName()
     {
         return armyName;
@@ -42,12 +55,11 @@ public class Army
     {
         this.troopMorale = troopMorale;
     }
-    public Army(String armyName, int troopWeaponQ, int troopMorale, int troopCount)
+    public Army(String armyName, int combatPower, int troopCount)
     {
-            this.armyName = armyName;
-            this.troopCount = troopCount;
-            this.troopWeaponQ = troopWeaponQ;
-            this.troopMorale = troopMorale;
+        this.armyName = armyName;
+        this.troopCount = troopCount;
+        this.combatPower = combatPower;
     }
 
 }
