@@ -6,3 +6,10 @@ Day one:
 Day two;
 -Continued the combat mechanics
 -added Change log.txt and Journal.txt
+
+5-6-19 to 5-8-19
+-Buttons and text views added for 
+troubleshooting combat mechanics
+-Fixed one form of app crash on running 
+combat
+-Memory leak error created,
