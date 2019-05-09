@@ -13,3 +13,8 @@ troubleshooting combat mechanics
 -Fixed one form of app crash on running 
 combat
 -Memory leak error created,
+
+5-9-16
+-Fixed a bunch of string related warnings
+-Made Combat engine more efficent
+-Became Insane
