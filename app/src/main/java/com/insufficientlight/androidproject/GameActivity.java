@@ -58,21 +58,6 @@ public class GameActivity extends AppCompatActivity {
 }
 
 
-/**Thread runLoop = new Thread(new Runnable()
- {
- @Override
- public void run()
- {
- CombatEngine.battleLoop(army1, army2);
- }
- });
- try
- {
- runLoop.join();
 
- } catch (InterruptedException e)
- {
- e.printStackTrace();
- }**/
 
 
