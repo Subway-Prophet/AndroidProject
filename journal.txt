@@ -7,3 +7,6 @@ devices into a multiplayer configeration and how data would be passed. The decit
 services" for actual multiplayer connections instead of google's "Nearby Connections API" for local multiplayer as it should 
 be end up being easier to get working and would help future proof the end result. Lastly time was spent improving our UI 
 concepts from what was origion ally put in the proposial.
+
+5-09-19
+Billy worked the entire time to fix a memory leak to no avail. Jason worked the entire time to get multiplayer working, with many errors.
