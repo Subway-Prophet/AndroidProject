@@ -18,3 +18,8 @@ combat
 -Fixed a bunch of string related warnings
 -Made Combat engine more efficent
 -Became Insane
+
+5-10-19
+-added several classed
+-restructured combat engine
+-maintianed my insanity
