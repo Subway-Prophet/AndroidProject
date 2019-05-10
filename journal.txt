@@ -10,3 +10,6 @@ concepts from what was origion ally put in the proposial.
 
 5-09-19
 Billy worked the entire time to fix a memory leak to no avail. Jason worked the entire time to get multiplayer working, with many errors.
+
+5-10-19
+Completely reworked the combat system.
