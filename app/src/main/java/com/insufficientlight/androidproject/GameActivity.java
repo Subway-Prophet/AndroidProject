@@ -28,9 +28,14 @@ public class GameActivity extends AppCompatActivity {
         //Don't put stuff before the super.onCreate
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final Army army1 = new Army("Testville first company", 1, 300);
-        final Army army2 = new Army("Testburg second legion", 1,  300);
-
+        final Army army1 = new Army("Testville first company", 1,300, 100, 0 , 10 );
+        final Army army2 = new Army("Testburg second legion", 2, 200, 100, 75, 25);
+        final Terrain planes = new Terrain("Planes", 300,  0, 2, 1, true,   false, false);
+        final Terrain Hills = new Terrain("Hills", 200,  1, 1, 2, false,   true, false);
+        final Unit infantry = new Unit("Infantry", 2, 1, false);
+        final Unit archer = new Unit ("Archer", 2, 1, true);
+        final Unit cavalry = new Unit ("Cavalry", 5, 2, false);
+        final Unit siegeWeapon = new Unit ("Ballista", 1, 3, true);
         Sur = findViewById(R.id.Surrender);
         Con = findViewById(R.id.KeepFighting);
         Los1 = findViewById(R.id.ArmyOneLoss);
@@ -50,7 +55,21 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void onClick (View v)
         {
-            CombatEngine.battleLoop(army1, army2);
+            Thread thread = new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    //CombatEngine.battleLoop(army1, army2);
+                }
+            });
+            try
+            {
+                thread.join();
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
         }
     });
 }

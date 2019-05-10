@@ -3,63 +3,82 @@ package com.insufficientlight.androidproject;
 public class Army
 {
     String armyName;
-    int troopMorale;
     int troopCount;
-    int troopWeaponQ;
     int combatPower;
+    int numInf;
+    int numCav;
+    int numArc;
+    int numSie;
+    int playerTag;
 
     public int getCombatPower()
     {
-        combatPower = troopMorale + troopWeaponQ;
         return combatPower;
     }
-
     public void setCombatPower(int combatPower)
     {
         this.combatPower = combatPower;
     }
-
     public String getArmyName()
     {
         return armyName;
     }
-
     public void setArmyName(String armyName)
     {
         this.armyName = armyName;
     }
-    public void setTroopCount(int troopCount)
+    public int getNumInf()
     {
-        this.troopCount = troopCount;
+        return numInf;
+    }
+    public void setNumInf(int numInf)
+    {
+        this.numInf = numInf;
+    }
+    public int getNumCav()
+    {
+        return numCav;
+    }
+    public int getNumArc()
+    {
+        return numArc;
+    }
+    public void setNumCav(int numCav)
+    {
+        this.numCav = numCav;
+    }
+    public void setNumArc(int numArc)
+    {
+        this.numArc = numArc;
+    }
+    public int getNumSie()
+    {
+        return numSie;
+    }
+    public void setNumSie(int numSie)
+    {
+        this.numSie = numSie;
     }
 
-    public int getTroopCount()
+    public int getPlayerTag()
     {
-        return troopCount;
+        return playerTag;
     }
 
-    public int getTroopWeaponQ()
+    public void setPlayerTag(int playerTag)
     {
-        return troopWeaponQ;
+        this.playerTag = playerTag;
     }
 
-    public void setTroopWeaponQ(int troopWeaponQ)
-    {
-        this.troopWeaponQ = troopWeaponQ;
-    }
-    public int getTroopMorale()
-    {
-        return troopMorale;
-    }
-    public void setTroopMorale(int troopMorale)
-    {
-        this.troopMorale = troopMorale;
-    }
-    public Army(String armyName, int combatPower, int troopCount)
+    public Army(String armyName, int playerTag, int numInf, int numArc, int numCav, int numSie)
     {
         this.armyName = armyName;
-        this.troopCount = troopCount;
-        this.combatPower = combatPower;
+
+        this.numInf = numInf;
+        this.numCav = numCav;
+        this.numArc = numArc;
+        this.numSie = numSie;
+        this.playerTag = playerTag;
     }
 
 }

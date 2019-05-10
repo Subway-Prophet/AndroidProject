@@ -1,4 +1,7 @@
 package com.insufficientlight.androidproject;
+import android.app.AlertDialog;
+import android.util.Log;
+
 import java.util.Random;
 
 class CombatEngine
@@ -15,7 +18,8 @@ class CombatEngine
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
     }
-    static void battleLoop(Army armyOne, Army armyTwo)
+
+    /**static void battleLoop(Army armyOne, Army armyTwo)
     {
         int counter = 0;
         boolean retreat = false;
@@ -30,9 +34,10 @@ class CombatEngine
             //Losses Calculation, Possible Culprit of memory leak
             armyOne.setTroopCount(((armyOne.getTroopCount()) - ((armyTwo.getCombatPower()) * ((armyTwo.getTroopCount()) % (getRandomNumberInRange(15, 20))))));
             armyTwo.setTroopCount(((armyTwo.getTroopCount()) -((armyOne.getCombatPower()) * ((armyOne.getTroopCount()) % (getRandomNumberInRange(15, 20))))));
+            //Log.i()
             //Updates the user on losses
-            GameActivity.Los1.setText(armyOne.getArmyName() + "Now has  " + armyOne.getTroopCount() + " soldiers!");
-            GameActivity.Los2.setText(armyOne.getArmyName() + "Now has  " + armyOne.getTroopCount() + " soldiers!");
+            //GameActivity.Los1.setText(armyOne.getArmyName() + "Now has  " + armyOne.getTroopCount() + " soldiers!");
+            //GameActivity.Los2.setText(armyOne.getArmyName() + "Now has  " + armyOne.getTroopCount() + " soldiers!");
             //Ticking Counter
             counter = counter + 1;
             //Win/loss Conditions
@@ -45,6 +50,6 @@ class CombatEngine
                 retreat = true;
             }
         }
-    }
+    }**/
 }
 
