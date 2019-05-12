@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Battle
 {
     //Collection of skirmishes
-    ArrayList<Skirmish> mSkirmishes;
+    int SkirmCount = 0;
 
-    public void simulateRound()
+    public void simulateRound(Army attacker, Army defender)
     {
-        //mSkirmishes.add(StandardSkirmish());
+        //final StandardSkirmish f1 = new StandardSkirmish(attacker, defender, );
     }
 }
