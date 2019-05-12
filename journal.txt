@@ -12,4 +12,7 @@ concepts from what was origion ally put in the proposial.
 Billy worked the entire time to fix a memory leak to no avail. Jason worked the entire time to get multiplayer working, with many errors.
 
 5-10-19
-Completely reworked the combat system.
+Completely reworked the combat system. Along with this the signin prosses required to use google play games services is still giving 
+errors. At this point it is oddly enough at the best it has been sofar as the pre-signin dialog is operating, though prior to the signin 
+page displaying the error "4:" is consistantly given. I belive this is an error in linking the app the google's API. As of currently there 
+are a number of possible things that could be causing this, and I intend to work through them over the coming week.
