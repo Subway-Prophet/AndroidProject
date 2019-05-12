@@ -32,6 +32,7 @@ public class GameActivity extends AppCompatActivity {
         final Army army2 = new Army("Testburg second legion", 2, 200, 100, 75, 25);
         final Terrain planes = new Terrain("Planes", 300,  0, 2, 1, true,   false, false);
         final Terrain Hills = new Terrain("Hills", 200,  1, 1, 2, false,   true, false);
+        final Terrain Fort = new Terrain("Fort", 50,  2, 1, 3, false,   false, true);
         final Unit infantry = new Unit("Infantry", 2, 1, false);
         final Unit archer = new Unit ("Archer", 2, 1, true);
         final Unit cavalry = new Unit ("Cavalry", 5, 2, false);
@@ -51,28 +52,29 @@ public class GameActivity extends AppCompatActivity {
     //Hey is this working
 
         Bat.setOnClickListener(new View.OnClickListener()
-    {
-        @Override
-        public void onClick (View v)
         {
-            Thread thread = new Thread(new Runnable()
+            @Override
+            public void onClick (View v)
             {
-                @Override
-                public void run()
+                Thread thread = new Thread(new Runnable()
                 {
-                    //CombatEngine.battleLoop(army1, army2);
+                    @Override
+                    public void run()
+                    {
+                        //CombatEngine.battleLoop(army1, army2);
+                    }
+                });
+                try
+                {
+                    thread.join();
                 }
-            });
-            try
-            {
-                thread.join();
-            } catch (InterruptedException e)
-            {
+                catch (InterruptedException e)
+                {
                 e.printStackTrace();
+                }
             }
-        }
-    });
-}
+        });
+    }
 
 }
 

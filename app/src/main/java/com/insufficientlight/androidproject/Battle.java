@@ -10,7 +10,5 @@ public class Battle
     public void simulateRound()
     {
         //mSkirmishes.add(StandardSkirmish());
-
-
     }
 }

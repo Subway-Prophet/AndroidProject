@@ -19,6 +19,8 @@ class CombatEngine
         return r.nextInt((max - min) + 1) + min;
     }
 
+
+
     /**static void battleLoop(Army armyOne, Army armyTwo)
     {
         int counter = 0;
