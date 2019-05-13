@@ -1,6 +1,8 @@
 package com.insufficientlight.androidproject;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -57,7 +59,20 @@ public class BattleActivity extends GameActivity
         Army2.setText("Defender: " + battle.defender.armyName);
         Army1.append("\n Infantry: " + battle.attacker.numInf + "\n Archers: " + battle.attacker.numArc + "\n Cavalry :" + battle.attacker.numCav +"\n Siege Weapons: " + battle.attacker.numSie);
         Army2.append("\n Infantry: " + battle.defender.numInf + "\n Archers: " + battle.defender.numArc + "\n Cavalry :" + battle.defender.numCav +"\n Siege Weapons: " + battle.defender.numSie);
-
-
+        Bat.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Thread thread = new Thread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                       //CombatEngine(yeet);
+                    }
+                });
+            }
+        });
     }
 }
