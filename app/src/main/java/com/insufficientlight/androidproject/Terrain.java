@@ -18,6 +18,12 @@ public class Terrain
     boolean infantryFavored;
     //Are Siege Weapons Favored?
     boolean seigeWeaponFavored;
+
+    public String getTerrainType()
+    {
+        return terrainType;
+    }
+
     public Terrain(String terrainType, int frontLineCount, int retreatBonus, int attackerBonus, int defenderBonus
                     , boolean cavFavored, boolean infantryFavored, boolean seigeWeaponFavored)
     {
