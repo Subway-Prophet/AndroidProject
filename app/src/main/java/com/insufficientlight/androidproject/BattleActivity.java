@@ -39,6 +39,10 @@ public class BattleActivity extends GameActivity
         ArcherTactics.setMinValue(0);
         CavalryTactics.setMinValue(0);
 
+        Formation.setMaxValue(2);
+        ArcherTactics.setMaxValue(2);
+        CavalryTactics.setMaxValue(2);
+
         Formation.setDisplayedValues(Formations);
         ArcherTactics.setDisplayedValues(ArcTac);
         CavalryTactics.setDisplayedValues(CavTac);
@@ -53,5 +57,7 @@ public class BattleActivity extends GameActivity
         Army2.setText("Defender: " + battle.defender.armyName);
         Army1.append("\n Infantry: " + battle.attacker.numInf + "\n Archers: " + battle.attacker.numArc + "\n Cavalry :" + battle.attacker.numCav +"\n Siege Weapons: " + battle.attacker.numSie);
         Army2.append("\n Infantry: " + battle.defender.numInf + "\n Archers: " + battle.defender.numArc + "\n Cavalry :" + battle.defender.numCav +"\n Siege Weapons: " + battle.defender.numSie);
+
+
     }
 }
