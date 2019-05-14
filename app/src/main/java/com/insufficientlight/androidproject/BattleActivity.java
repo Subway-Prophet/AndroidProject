@@ -5,6 +5,8 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class BattleActivity extends GameActivity
 {
     private static Battle battle = null;
@@ -19,6 +21,8 @@ public class BattleActivity extends GameActivity
     }
     public void onCreate(Bundle savedInstanceState)
     {
+        DataPassing_Firestore.testData();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle);
 
