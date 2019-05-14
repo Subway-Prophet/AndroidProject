@@ -14,6 +14,16 @@ public class BattleActivity extends GameActivity
     public TextView Army1;
     public TextView Army2;
     public TextView Terrain;
+    private Button Bat;
+    private static int count;
+
+    public String p1t;
+    public String p1a;
+    public String p1c;
+
+    public String p2t;
+    public String p2a;
+    public String p2c;
 
     public static void setBattle (Battle yeet)
     {
@@ -25,13 +35,14 @@ public class BattleActivity extends GameActivity
         setContentView(R.layout.activity_battle);
 
         NumberPicker Formation = (NumberPicker) findViewById(R.id.form);
-        NumberPicker ArcherTactics = (NumberPicker) findViewById(R.id.arch);
+        final NumberPicker ArcherTactics = (NumberPicker) findViewById(R.id.arch);
         NumberPicker CavalryTactics = (NumberPicker) findViewById(R.id.cav);
 
         Title = findViewById(R.id.titleView);
         Army1 = findViewById(R.id.attackerView);
         Army2 = findViewById(R.id.defenderView);
         Terrain = findViewById(R.id.terrainView);
+        Bat = findViewById(R.id.button2);
 
         final String[] Formations = {"Shield Wall","Phalanx", "Turtle Formation"};
         final String[] ArcTac = {"Careful Volleys", "Full Volleys", "Protect Flanks"};
@@ -59,6 +70,35 @@ public class BattleActivity extends GameActivity
         Army2.setText("Defender: " + battle.defender.armyName);
         Army1.append("\n Infantry: " + battle.attacker.numInf + "\n Archers: " + battle.attacker.numArc + "\n Cavalry :" + battle.attacker.numCav +"\n Siege Weapons: " + battle.attacker.numSie);
         Army2.append("\n Infantry: " + battle.defender.numInf + "\n Archers: " + battle.defender.numArc + "\n Cavalry :" + battle.defender.numCav +"\n Siege Weapons: " + battle.defender.numSie);
+
+        Formation.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
+        {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal)
+            {
+                p1t = Formations[newVal];
+            }
+        });
+
+        ArcherTactics.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
+        {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal)
+            {
+                p1a = ArcTac[newVal];
+            }
+        });
+
+        CavalryTactics.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
+        {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal)
+            {
+                p1c = CavTac[newVal];
+            }
+        });
+
+
         Bat.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -69,7 +109,12 @@ public class BattleActivity extends GameActivity
                     @Override
                     public void run()
                     {
-                       //CombatEngine(yeet);
+                        p2t = "Shield Wall";
+                        p2a = "Careful Volleys";
+                        p2c = "Charge Front Lines";
+                        StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,                                                 p1t, p1c, p1a, p2t, p2c, p2a);
+                        count = count + 1;
+                        Terrain.setText("It woiked");
                     }
                 });
             }

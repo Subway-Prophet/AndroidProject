@@ -24,6 +24,38 @@ public class Terrain
         return terrainType;
     }
 
+    public int getFrontLineCount()
+    {
+        return frontLineCount;
+    }
+
+    public int getRetreatBonus() {
+        return retreatBonus;
+    }
+
+    public int getDefenderBonus() {
+        return defenderBonus;
+    }
+
+    public int getAttackerBonus() {
+        return attackerBonus;
+    }
+
+    public boolean isCavFavored()
+    {
+        return cavFavored;
+    }
+
+    public boolean isInfantryFavored()
+    {
+        return infantryFavored;
+    }
+
+    public boolean isSeigeWeaponFavored()
+    {
+        return seigeWeaponFavored;
+    }
+
     public Terrain(String terrainType, int frontLineCount, int retreatBonus, int attackerBonus, int defenderBonus
                     , boolean cavFavored, boolean infantryFavored, boolean seigeWeaponFavored)
     {
