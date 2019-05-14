@@ -62,7 +62,7 @@ public class DataPassing_Firestore
                          {
                              for (QueryDocumentSnapshot document: task.getResult())
                              {
-                                 Log.d(TAG, "getting data"+document.getId() + " => " + document.getData());
+                                 Log.d(TAG, "getting data1"+document.getId() + " => " + document.getData());
                              }
                          }
                          else
@@ -88,10 +88,10 @@ public class DataPassing_Firestore
              public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
                  if (documentSnapshot.exists())
                  {
-                     Log.d(TAG, "getting data" + DocumentSnapshot.getId() + " => " + document.getData());
+                     Log.d(TAG, "getting data2 " + documentSnapshot.getId() + " " + documentSnapshot.getString("first"));
                  }
              }
-         })
+         });
 
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -113,6 +113,26 @@ public class DataPassing_Firestore
             }
         });
 
+
+    }
+
+    public static void listen()
+    {
+        db.collection("users").document("xlDl9UcWmBYL0wsjLKjT").addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                Log.i(TAG, "getting data3 " + documentSnapshot.getId() + " " + documentSnapshot.getString("first"));
+            }
+        });
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                if (documentSnapshot.exists())
+                {
+                    Log.i(TAG, "getting data 4" + documentSnapshot.getId() + " " + documentSnapshot.getString("first"));
+                }
+            }
+        });
 
     }
 }

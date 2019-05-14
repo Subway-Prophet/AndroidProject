@@ -1,11 +1,15 @@
 package com.insufficientlight.androidproject;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class BattleActivity extends GameActivity
 {
@@ -14,7 +18,7 @@ public class BattleActivity extends GameActivity
     public TextView Army1;
     public TextView Army2;
     public TextView Terrain;
-
+    public static final String TAG = "DATAPASSING";
     public static void setBattle (Battle yeet)
     {
         battle = yeet;
@@ -22,6 +26,15 @@ public class BattleActivity extends GameActivity
     public void onCreate(Bundle savedInstanceState)
     {
         DataPassing_Firestore.testData();
+
+        DataPassing_Firestore.listen();
+         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document("xlDl9UcWmBYL0wsjLKjT").addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                Log.i(TAG, "getting data5 " + documentSnapshot.getId() + " " + documentSnapshot.getString("first"));
+            }
+        });
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle);
