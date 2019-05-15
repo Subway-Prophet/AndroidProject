@@ -67,8 +67,8 @@ class CombatEngine
             P1SA = true;
         }**/
         //The one is a place holder for the unit's combat bonus
-        skirmish.getBattle().getDefender().setNumInf(skirmish.getBattle().getDefender().getNumInf() - ((skirmish.getBattle().getAttacker().getNumInf() % 10)) + ((skirmish.getBattle().getAttacker().getNumArc() % 10)));
-        skirmish.battle.attacker.setNumInf(skirmish.battle.attacker.getNumInf() - ((skirmish.battle.defender.getNumInf() % 10)) + ((skirmish.battle.defender.getNumArc() % 10)));
+        skirmish.getBattle().getAttacker().setNumInf(111);
+        skirmish.getBattle().getDefender().setNumInf(250);
         Log.i("It ran an did not", "Noooo Halp");
 
     }
