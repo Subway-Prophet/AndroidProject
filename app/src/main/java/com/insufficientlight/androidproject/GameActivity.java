@@ -10,7 +10,6 @@ import android.widget.TextView;
 public class GameActivity extends AppCompatActivity
 {
     public static Button Bat;
-    MultiplayerData multiplayerData = new MultiplayerData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -39,7 +38,7 @@ public class GameActivity extends AppCompatActivity
             public void onClick (final View view)
             {
                 Battle battle1 = new Battle(army1, army2, Hills, "Yeetsburg");
-                Multiplayer_Logic.setBattleData(multiplayerData.getBattleDataReferance(), battle1);
+
                 BattleActivity.setBattle(battle1);
                 Intent myIntent = new Intent(view.getContext(), BattleActivity.class);
                 startActivityForResult(myIntent, 0);

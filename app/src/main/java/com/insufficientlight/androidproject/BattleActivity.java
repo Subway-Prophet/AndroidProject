@@ -107,7 +107,7 @@ public class BattleActivity extends GameActivity
             @Override
             public void onClick(View view) {
 
-                Multiplayer_Logic.setData(multiplayerData.getCombatCommandReferance(), multiplayerData.getCommandDecitionKey(), "retreat", "singleString");
+                Multiplayer_Logic.setData(multiplayerData.getCombatCommandReferance(), multiplayerData.getCommandDecitionKey(), "retreat");
             }
         });
 
@@ -116,7 +116,7 @@ public class BattleActivity extends GameActivity
         readyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Multiplayer_Logic.setData(multiplayerData.getCombatCommandReferance(), multiplayerData.getCommandDecitionKey(), "ready", "singleString");
+                Multiplayer_Logic.setData(multiplayerData.getCombatCommandReferance(), multiplayerData.getCommandDecitionKey(), "ready");
             }
         });
 

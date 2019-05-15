@@ -8,7 +8,7 @@ public class MultiplayerData
     //Place holders for the data locations in the database.
     public DocumentReference mGameReferance = FirebaseFirestore.getInstance().document("games/game1");
     public DocumentReference mCombatCommandReferance = FirebaseFirestore.getInstance().document("games/game1/commands/combatCommands");
-    public DocumentReference mBattleDataReferance = FirebaseFirestore.getInstance().document("games/game1/combatobject/battle");
+    public DocumentReference mBattleDataReferance = FirebaseFirestore.getInstance().document("games/game1/combatobject");
     public String mCommandDecitionKey = "decitionCommand";
 
 
