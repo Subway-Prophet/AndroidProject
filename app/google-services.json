@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "817187957292",
+    "firebase_url": "https://androidproject-39d15.firebaseio.com",
+    "project_id": "androidproject-39d15",
+    "storage_bucket": "androidproject-39d15.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817187957292:android:1aa0daf098778a60",
+        "android_client_info": {
+          "package_name": "com.insufficientlight.androidproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817187957292-isc17no5f2a350ntelbnllv0ul9tlags.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.insufficientlight.androidproject",
+            "certificate_hash": "f988f24cb2cd110b4edd042b60e1aeb0e984ec32"
+          }
+        },
+        {
+          "client_id": "817187957292-vjkihkg4bffhube7c0scjci26p30q15d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.insufficientlight.androidproject",
+            "certificate_hash": "d14b8bfcf96a3f03f50d9014e4776c1d29c3a7f1"
+          }
+        },
+        {
+          "client_id": "817187957292-fr3hn6hkrn9ek3csfmvmqescs1ni06k5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL069rid4NCG5CmeP-JH-k0HyVSgBWZkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817187957292-fr3hn6hkrn9ek3csfmvmqescs1ni06k5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
