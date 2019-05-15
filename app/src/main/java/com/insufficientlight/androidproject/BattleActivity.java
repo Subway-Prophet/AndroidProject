@@ -30,7 +30,7 @@ public class BattleActivity extends GameActivity
     public  Button readyButton;
     public  Button retreatButton;
     public static final String TAG = "DATAPASSING";
-    private DocumentReference mDocRef = FirebaseFirestore.getInstance().document("games/game1");
+    MultiplayerData multiplayerData = new MultiplayerData(); // The object that will hold importatn information pertaining to multiplayer functionality
     public static void setBattle (Battle yeet)
     {
         battle = yeet;
@@ -106,27 +106,26 @@ public class BattleActivity extends GameActivity
         retreatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<String, Object> game = new HashMap<String, Object>();
-                       game.put("command", "retreat");
-                mDocRef.set(game);
+
+                Multiplayer_Logic.setData(multiplayerData.getCombatCommandReferance(), multiplayerData.getCommandDecitionKey(), "retreat");
             }
         });
+
+
 
         readyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<String, Object> game = new HashMap<String, Object>();
-                game.put("command", "ready");
-                mDocRef.set(game);
+                Multiplayer_Logic.setData(multiplayerData.getCombatCommandReferance(), multiplayerData.getCommandDecitionKey(), "ready");
             }
         });
 
-        mDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        multiplayerData.getCombatCommandReferance().addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 if (documentSnapshot.exists())
                 {
-                    commandView.setText(documentSnapshot.getString("command"));
+                    commandView.setText(documentSnapshot.getString(multiplayerData.getCommandDecitionKey()));
                 }
             }
         });
