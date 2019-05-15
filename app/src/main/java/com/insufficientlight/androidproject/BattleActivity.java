@@ -2,6 +2,7 @@ package com.insufficientlight.androidproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -104,19 +105,19 @@ public class BattleActivity extends GameActivity
             @Override
             public void onClick(View v)
             {
-                Thread thread = new Thread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        p2t = "Shield Wall";
-                        p2a = "Careful Volleys";
-                        p2c = "Charge Front Lines";
-                        StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,                                                 p1t, p1c, p1a, p2t, p2c, p2a);
-                        count = count + 1;
-                        Terrain.setText("It woiked");
-                    }
-                });
+                Log.i("Helen, help lol", "onClick: don't die keed");
+                p2t = "Shield Wall";
+                p2a = "Careful Volleys";
+                p2c = "Charge Front Lines";
+                StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p1a, p2t, p2c, p2a);
+                CombatEngine.calculateLosses(skirmish);
+                count = count + 1;
+                Title.setText("The battle of "+ battle.getLocation()+"!");
+                Army1.setText("Attacker: " + battle.attacker.armyName);
+                Army2.setText("Defender: " + battle.defender.armyName);
+                Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
+                Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
+                Log.i("Sheed", "Noooo Halp");
             }
         });
     }

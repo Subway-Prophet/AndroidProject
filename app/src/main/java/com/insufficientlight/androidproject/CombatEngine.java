@@ -18,7 +18,7 @@ class CombatEngine
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
     }
-    public static int calculateLosses(StandardSkirmish skirmish)
+    public static void calculateLosses(StandardSkirmish skirmish)
     {
         Boolean P1TA = false;
         Boolean P1AA = false;
@@ -33,43 +33,43 @@ class CombatEngine
         int P1FLL = 0;
         int P2FLL = 0;
 
-        if ((skirmish.battle.attacker.numInf + skirmish.battle.attacker.numCav + skirmish.battle.attacker.numArc + skirmish.battle.attacker.numSie) == 0)
+        /**if ((skirmish.battle.attacker.getNumInf()+ skirmish.battle.attacker.getNumCav() + skirmish.battle.attacker.getNumArc() + skirmish.battle.attacker.getNumSie()) == 0)
         {
-            return skirmish.battle.defender.playerTag;
-        }
-        if ((skirmish.battle.defender.numInf + skirmish.battle.defender.numCav + skirmish.battle.defender.numArc + skirmish.battle.defender.numSie) == 0)
+            return skirmish.battle.defender.getPlayerTag();
+        }**/
+        /**if ((skirmish.battle.defender.getNumInf() + skirmish.battle.defender.getNumCav() + skirmish.battle.defender.getNumArc() + skirmish.battle.defender.getNumSie() == 0))
         {
-            return skirmish.battle.attacker.playerTag;
-        }
-        if (skirmish.player1Tactics.equals("Phalanx") && ("Phalanx").equals(skirmish.player2Tactics) == false)
+            return skirmish.battle.attacker.getPlayerTag();
+        }**/
+        /**if (skirmish.getPlayer1Tactics().equals("Phalanx") && !("Phalanx").equals(skirmish.getPlayer2Tactics()))
         {
             P1TA = true;
         }
-        if (skirmish.player2Tactics.equals("Phalanx") && ("Phalanx").equals(skirmish.player1Tactics) == false)
+        if (skirmish.getPlayer1Tactics().equals("Phalanx") && !("Phalanx").equals(skirmish.getPlayer1Tactics()))
         {
             P2TA = true;
         }
-        if (skirmish.player1Archery.equals("Full Volleys") && ("Turtle Formation").equals(skirmish.player2Tactics) == false)
+        if (skirmish.getPlayer1Archery().equals("Full Volleys") && !("Turtle Formation").equals(skirmish.getPlayer2Tactics()))
         {
             P1AA = true;
         }
-        if (skirmish.player2Archery.equals("Full Volleys") && ("Turtle Formation").equals(skirmish.player1Tactics) == false)
+        if (skirmish.getPlayer2Archery().equals("Full Volleys") && !("Turtle Formation").equals(skirmish.getPlayer1Tactics()))
         {
             P2AA = true;
         }
-        if (skirmish.battle.getTerrain().cavFavored)
+        if (skirmish.battle.getTerrain().isCavFavored())
         {
             P1CA = true;
             P2CA = true;
         }
-        if (skirmish.battle.getTerrain().seigeWeaponFavored)
+        if (skirmish.battle.getTerrain().isSeigeWeaponFavored())
         {
             P1SA = true;
-        }
+        }**/
         //The one is a place holder for the unit's combat bonus
-        skirmish.battle.defender.setNumInf(skirmish.battle.defender.numInf - ((skirmish.battle.attacker.getNumInf() % 10) * (1)) + ((skirmish.battle.attacker.getNumArc() % 10) * (1)));
-        skirmish.battle.attacker.setNumInf(skirmish.battle.attacker.numInf - ((skirmish.battle.defender.getNumInf() % 10) * (1)) + ((skirmish.battle.defender.getNumArc() % 10) * (1)));
-        return 0;
+        skirmish.getBattle().getDefender().setNumInf(skirmish.getBattle().getDefender().getNumInf() - ((skirmish.getBattle().getAttacker().getNumInf() % 10)) + ((skirmish.getBattle().getAttacker().getNumArc() % 10)));
+        skirmish.battle.attacker.setNumInf(skirmish.battle.attacker.getNumInf() - ((skirmish.battle.defender.getNumInf() % 10)) + ((skirmish.battle.defender.getNumArc() % 10)));
+        Log.i("It ran an did not", "Noooo Halp");
 
     }
 
