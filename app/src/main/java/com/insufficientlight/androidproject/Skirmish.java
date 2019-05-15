@@ -4,5 +4,6 @@ public abstract class Skirmish
 {
     Army Attacker = null;
     Army Defender = null;
+
 }
 
