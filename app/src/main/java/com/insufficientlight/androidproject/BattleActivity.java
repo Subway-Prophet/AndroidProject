@@ -31,35 +31,24 @@ public class BattleActivity extends GameActivity
     public  Button retreatButton;
     public static final String TAG = "DATAPASSING";
     MultiplayerData multiplayerData = new MultiplayerData(); // The object that will hold importatn information pertaining to multiplayer functionality
+
+    public String p1t;
+    public String p1a;
+    public String p1c;
+
+    private Button Bat;
+    private static int count;
+
+    public String p2t;
+    public String p2a;
+    public String p2c;
     public static void setBattle (Battle yeet)
     {
         battle = yeet;
     }
     public void onCreate(Bundle savedInstanceState)
     {
-        //DataPassing_Firestore.testData();
-
-        //DataPassing_Firestore.listen();
-
-        //Creates the base object for firestore transactions
-         //FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        /*db.collection("users").document("xlDl9UcWmBYL0wsjLKjT").addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                Log.i(TAG, "getting data5 " + documentSnapshot.getId() + " " + documentSnapshot.getString("first"));
-            }
-        });*/
-
-        //creates the base 'map' that will be loaded into the database.
-        //Map<String, Object> game = new HashMap<String, Object>();
-         //       game.put("command", "test");
-      //  mDocRef.set(game).addOnSuccessListener(new OnSuccessListener<Void>() {
-         //   @Override
-        //    public void onSuccess(Void aVoid) {
-         //       Log.i(TAG, "First Data Saved")
-        //    }
-      //  })
+        Multiplayer_Logic.setData(multiplayerData.getCommandDecitionKey(), "");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle);
@@ -72,9 +61,7 @@ public class BattleActivity extends GameActivity
         Army1 = findViewById(R.id.attackerView);
         Army2 = findViewById(R.id.defenderView);
         Terrain = findViewById(R.id.terrainView);
-        readyButton = findViewById(R.id.button2);
-        retreatButton = findViewById(R.id.button3);
-        commandView=findViewById(R.id.Commands);
+        Bat = findViewById(R.id.button2);
 
         final String[] Formations = {"Shield Wall","Phalanx", "Turtle Formation"};
         final String[] ArcTac = {"Careful Volleys", "Full Volleys", "Protect Flanks"};
@@ -103,24 +90,27 @@ public class BattleActivity extends GameActivity
         Army1.append("\n Infantry: " + battle.attacker.numInf + "\n Archers: " + battle.attacker.numArc + "\n Cavalry :" + battle.attacker.numCav +"\n Siege Weapons: " + battle.attacker.numSie);
         Army2.append("\n Infantry: " + battle.defender.numInf + "\n Archers: " + battle.defender.numArc + "\n Cavalry :" + battle.defender.numCav +"\n Siege Weapons: " + battle.defender.numSie);
 
-        retreatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Multiplayer_Logic.setData(multiplayerData.getCombatCommandReferance(), multiplayerData.getCommandDecitionKey(), "retreat");
+        Formation.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
+        {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal)
+            {
+                p1t = Formations[newVal];
             }
         });
 
-
-
-        readyButton.setOnClickListener(new View.OnClickListener() {
+        ArcherTactics.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
+        {
             @Override
-            public void onClick(View view) {
-                Multiplayer_Logic.setData(multiplayerData.getCombatCommandReferance(), multiplayerData.getCommandDecitionKey(), "ready");
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal)
+            {
+                p1a = ArcTac[newVal];
             }
         });
 
-        multiplayerData.getCombatCommandReferance().addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        CavalryTactics.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
+        {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal)
             {
@@ -128,32 +118,36 @@ public class BattleActivity extends GameActivity
             }
         });
 
-
         Bat.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                Log.i("Helen, help lol", "onClick: don't die keed");
-                p2t = "Shield Wall";
-                p2a = "Careful Volleys";
-                p2c = "Charge Front Lines";
-                StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p1a, p2t, p2c, p2a);
-                CombatEngine.calculateLosses(skirmish);
-                count = count + 1;
-                Title.setText("The battle of "+ battle.getLocation()+"!");
-                Army1.setText("Attacker: " + battle.attacker.armyName);
-                Army2.setText("Defender: " + battle.defender.armyName);
-                Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
-                Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
-                Log.i("Sheed", "Noooo Halp");
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                if (documentSnapshot.exists())
-                {
-                    commandView.setText(documentSnapshot.getString(multiplayerData.getCommandDecitionKey()));
-                }
+
+
+
+
             }
         });
 
     }
+    public void runBat()
+    {
+        Log.i("Helen, help lol", "onClick: don't die keed");
+        p2t = "Shield Wall";
+        p2a = "Careful Volleys";
+        p2c = "Charge Front Lines";
+        StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p1a, p2t, p2c, p2a);
+        CombatEngine.calculateLosses(skirmish);
+        count = count + 1;
+        Title.setText("The battle of "+ battle.getLocation()+"!");
+        Army1.setText("Attacker: " + battle.attacker.armyName);
+        Army2.setText("Defender: " + battle.defender.armyName);
+        Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
+        Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
+        Log.i("Sheed", "Noooo Halp");
+    }
 }
+
+//both players need to ready up, with confirmation on each device "player two is ready"
+//runns code (bat button) give alert about total troops lost
