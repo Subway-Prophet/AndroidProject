@@ -7,6 +7,7 @@ import java.util.Random;
 class CombatEngine
     //Combat engine is the handler for combats, it calculates the math and spits the results back out to the user
 {
+    //Generates a random number within the Provided range
     private static int getRandomNumberInRange(int min, int max)
     {
 
@@ -18,58 +19,58 @@ class CombatEngine
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
     }
-    public static int calculateLosses(StandardSkirmish skirmish)
+    public static void calculateLosses(StandardSkirmish skirmish)
     {
-        Boolean P1TA = false;
-        Boolean P1AA = false;
-        Boolean P1CA = false;
-        Boolean P1SA = false;
+        //Attacker losses
+        int attackerLosses = 100;
+        int attackerArcherLosses = 10;
+        int attackerCavLosses = 10;
+        int attackerSiegeLosses = 10;
 
-        Boolean P2TA = false;
-        Boolean P2AA = false;
-        Boolean P2CA = false;
-        Boolean P2SA = false;
+        //Attacker new army sizes
+        int attackerNewCount;
+        int attackerArcNewCount;
+        int attackerCavNewCount;
+        int attackerSiegeNewCount;
 
-        int P1FLL = 0;
-        int P2FLL = 0;
+        //Defender losses
+        int defenderLosses = 100;
+        int defenderArcherLosses = 10;
+        int defenderCavLosses = 10;
+        int defenderSiegeLosses = 10;
 
-        if ((skirmish.battle.attacker.numInf + skirmish.battle.attacker.numCav + skirmish.battle.attacker.numArc + skirmish.battle.attacker.numSie) == 0)
-        {
-            return skirmish.battle.defender.playerTag;
-        }
-        if ((skirmish.battle.defender.numInf + skirmish.battle.defender.numCav + skirmish.battle.defender.numArc + skirmish.battle.defender.numSie) == 0)
-        {
-            return skirmish.battle.attacker.playerTag;
-        }
-        if (skirmish.player1Tactics.equals("Phalanx") && ("Phalanx").equals(skirmish.player2Tactics) == false)
-        {
-            P1TA = true;
-        }
-        if (skirmish.player2Tactics.equals("Phalanx") && ("Phalanx").equals(skirmish.player1Tactics) == false)
-        {
-            P2TA = true;
-        }
-        if (skirmish.player1Archery.equals("Full Volleys") && ("Turtle Formation").equals(skirmish.player2Tactics) == false)
-        {
-            P1AA = true;
-        }
-        if (skirmish.player2Archery.equals("Full Volleys") && ("Turtle Formation").equals(skirmish.player1Tactics) == false)
-        {
-            P2AA = true;
-        }
-        if (skirmish.battle.getTerrain().cavFavored)
-        {
-            P1CA = true;
-            P2CA = true;
-        }
-        if (skirmish.battle.getTerrain().seigeWeaponFavored)
-        {
-            P1SA = true;
-        }
-        //The one is a place holder for the unit's combat bonus
-        skirmish.battle.defender.setNumInf(skirmish.battle.defender.numInf - ((skirmish.battle.attacker.getNumInf() % 10) * (1)) + ((skirmish.battle.attacker.getNumArc() % 10) * (1)));
-        skirmish.battle.attacker.setNumInf(skirmish.battle.attacker.numInf - ((skirmish.battle.defender.getNumInf() % 10) * (1)) + ((skirmish.battle.defender.getNumArc() % 10) * (1)));
-        return 0;
+        //Defender new army sizes
+        int defenderNewCount;
+        int defenderArcNewCount;
+        int defenderCavNewCount;
+        int defenderSiegeNewCount;
+
+
+        //Does some in between math because java hates me
+        attackerNewCount = (skirmish.getBattle().getAttacker().getNumInf() - attackerLosses);
+        attackerArcNewCount = (skirmish.getBattle().getAttacker().getNumArc() - attackerArcherLosses);
+        attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumCav() - attackerCavLosses);
+        attackerSiegeNewCount = (skirmish.getBattle().getAttacker().getNumSie() - attackerSiegeLosses);
+
+        //Does some in between math because java hates me
+        defenderNewCount = (skirmish.getBattle().getDefender().getNumInf() - defenderLosses);
+        defenderArcNewCount = (skirmish.getBattle().getDefender().getNumArc() - defenderArcherLosses);
+        defenderCavNewCount = (skirmish.getBattle().getDefender().getNumCav() - defenderCavLosses);
+        defenderSiegeNewCount = (skirmish.getBattle().getDefender().getNumSie() - defenderSiegeLosses);
+
+        //Sets the attackers losses
+        skirmish.getBattle().getAttacker().setNumInf(attackerNewCount);
+        skirmish.getBattle().getAttacker().setNumArc(attackerArcNewCount);
+        skirmish.getBattle().getAttacker().setNumCav(attackerCavNewCount);
+        skirmish.getBattle().getAttacker().setNumSie(attackerSiegeNewCount);
+
+        //Sets the Defender's losses
+        skirmish.getBattle().getDefender().setNumInf(defenderNewCount);
+        skirmish.getBattle().getDefender().setNumArc(defenderArcNewCount);
+        skirmish.getBattle().getDefender().setNumCav(defenderCavNewCount);
+        skirmish.getBattle().getDefender().setNumSie(defenderSiegeNewCount);
+
+        Log.i("It ran an did not", "Noooo Halp");
 
     }
 

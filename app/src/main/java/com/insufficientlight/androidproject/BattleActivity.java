@@ -122,6 +122,31 @@ public class BattleActivity extends GameActivity
 
         multiplayerData.getCombatCommandReferance().addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal)
+            {
+                p1c = CavTac[newVal];
+            }
+        });
+
+
+        Bat.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Log.i("Helen, help lol", "onClick: don't die keed");
+                p2t = "Shield Wall";
+                p2a = "Careful Volleys";
+                p2c = "Charge Front Lines";
+                StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p1a, p2t, p2c, p2a);
+                CombatEngine.calculateLosses(skirmish);
+                count = count + 1;
+                Title.setText("The battle of "+ battle.getLocation()+"!");
+                Army1.setText("Attacker: " + battle.attacker.armyName);
+                Army2.setText("Defender: " + battle.defender.armyName);
+                Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
+                Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
+                Log.i("Sheed", "Noooo Halp");
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 if (documentSnapshot.exists())
                 {

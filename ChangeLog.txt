@@ -23,3 +23,8 @@ combat
 -added several classed
 -restructured combat engine
 -maintianed my insanity
+
+5-11 to 5-15
+-Added the class and object MultiplayerData
+-Added the class Multiplayer_logic
+-Intigrated data pasing logic
