@@ -117,7 +117,7 @@ public class BattleActivity extends GameActivity
                 CombatEngine.calculateLosses(skirmish);
 
                 //count = count + 1;
-
+                //yeet
                 //Displays the updated battle information for both sides, the terrain, and the name of the area they're fighting in.
                 Title.setText("The battle of "+ battle.getLocation()+"!");
                 Army1.setText("Attacker: " + battle.attacker.armyName);
