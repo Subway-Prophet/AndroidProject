@@ -26,10 +26,12 @@ public class BattleActivity extends GameActivity
     public TextView Army1;
     public TextView Army2;
     public TextView Terrain;
+    public Button playerchoose;
     public TextView commandView;
     public  Button readyButton;
     public  Button retreatButton;
     public static final String TAG = "DATAPASSING";
+    public String player = "player1";
     MultiplayerData multiplayerData = new MultiplayerData(); // The object that will hold importatn information pertaining to multiplayer functionality
 
     public String p1t;
@@ -48,8 +50,8 @@ public class BattleActivity extends GameActivity
     }
     public void onCreate(Bundle savedInstanceState)
     {
-        Multiplayer_Logic.setData(multiplayerData.getCommandDecitionKey(), "");
-
+        Multiplayer_Logic.setData(multiplayerData.getCommandDecitionKey(), "player1", "not");
+        Multiplayer_Logic.setData(multiplayerData.getCommandDecitionKey(), "player2", "not");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle);
 
@@ -62,6 +64,7 @@ public class BattleActivity extends GameActivity
         Army2 = findViewById(R.id.defenderView);
         Terrain = findViewById(R.id.terrainView);
         Bat = findViewById(R.id.button2);
+        playerchoose = findViewById(R.id.button4);
 
         final String[] Formations = {"Shield Wall","Phalanx", "Turtle Formation"};
         final String[] ArcTac = {"Careful Volleys", "Full Volleys", "Protect Flanks"};
@@ -90,6 +93,13 @@ public class BattleActivity extends GameActivity
         Army1.append("\n Infantry: " + battle.attacker.numInf + "\n Archers: " + battle.attacker.numArc + "\n Cavalry :" + battle.attacker.numCav +"\n Siege Weapons: " + battle.attacker.numSie);
         Army2.append("\n Infantry: " + battle.defender.numInf + "\n Archers: " + battle.defender.numArc + "\n Cavalry :" + battle.defender.numCav +"\n Siege Weapons: " + battle.defender.numSie);
 
+        playerchoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                player = "player2";
+                Multiplayer_Logic.setData(multiplayerData.getCommandDecitionKey(), player, "not");
+            }
+        });
 
         Formation.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
         {
@@ -124,9 +134,20 @@ public class BattleActivity extends GameActivity
             public void onClick(View v)
             {
 
+                Multiplayer_Logic.setData(multiplayerData.getCommandDecitionKey(), player, "ready");
 
 
+            }
+        });
 
+        multiplayerData.getCommandDecitionKey().addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (documentSnapshot.exists())
+                {
+                    if (documentSnapshot.getString("player1").equals("ready") && documentSnapshot.getString("player2").equals("ready"))
+                    {runBat();}
+                }
             }
         });
 
