@@ -1,21 +1,18 @@
 package com.insufficientlight.androidproject;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -50,8 +47,8 @@ public class BattleActivity extends GameActivity
     }
     public void onCreate(Bundle savedInstanceState)
     {
-        Multiplayer_Logic.setData(multiplayerData.getCommandDecitionKey(), "player1", "not");
-        Multiplayer_Logic.setData(multiplayerData.getCommandDecitionKey(), "player2", "not");
+        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1","player2", "not","not");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle);
 
@@ -97,7 +94,7 @@ public class BattleActivity extends GameActivity
             @Override
             public void onClick(View v) {
                 player = "player2";
-                Multiplayer_Logic.setData(multiplayerData.getCommandDecitionKey(), player, "not");
+                //Multiplayer_Logic.setSingleData(multiplayerData.getCommandDecitionKey(), player, "not");
             }
         });
 
@@ -134,7 +131,36 @@ public class BattleActivity extends GameActivity
             public void onClick(View v)
             {
 
-                Multiplayer_Logic.setData(multiplayerData.getCommandDecitionKey(), player, "ready");
+
+                multiplayerData.getCommandDecitionKey().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists())
+                            {
+                                if (document.getData().get("player1").equals("ready") && document.getData().get("player2").equals("ready"))
+                                {runBat();}
+                                if (player.equals("player1"))
+                                {
+                                    if (document.getData().get("player2").equals("ready"))
+                                    {runBat();}
+                                    else
+                                    {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","not","ready");}
+                                }
+                                if (player.equals("player2"))
+                                {
+                                    if (document.getData().get("player1").equals("ready"))
+                                    {runBat();}
+                                    else
+                                    {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","not");}
+                                }
+                            }
+                        }
+                    }
+                });
+
 
 
             }
