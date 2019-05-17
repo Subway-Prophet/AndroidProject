@@ -16,3 +16,6 @@ Completely reworked the combat system. Along with this the signin prosses requir
 errors. At this point it is oddly enough at the best it has been sofar as the pre-signin dialog is operating, though prior to the signin 
 page displaying the error "4:" is consistantly given. I belive this is an error in linking the app the google's API. As of currently there 
 are a number of possible things that could be causing this, and I intend to work through them over the coming week.
+
+5-16-19
+The new combat system's ground work is layed out and we've begun the proccess of merging jason's branch into the main project.
