@@ -7,6 +7,17 @@ import java.util.Random;
 class CombatEngine
     //Combat engine is the handler for combats, it calculates the math and spits the results back out to the user
 {
+
+    public static int attackerLosses;
+    public static int attackerArcherLosses;
+    public static int attackerCavLosses;
+    public static int attackerSiegeLosses;
+    public static int defenderLosses;
+    public static int defenderArcherLosses;
+    public static int defenderCavLosses;
+    public static int defenderSiegeLosses;
+
+
     //Generates a random number within the Provided range
     private static int getRandomNumberInRange(int min, int max)
     {
@@ -22,10 +33,10 @@ class CombatEngine
     public static void calculateLosses(StandardSkirmish skirmish)
     {
         //Attacker losses
-        int attackerLosses = 100;
-        int attackerArcherLosses = 10;
-        int attackerCavLosses = 10;
-        int attackerSiegeLosses = 10;
+         attackerLosses = 100;
+         attackerArcherLosses = 10;
+         attackerCavLosses = 10;
+         attackerSiegeLosses = 10;
 
         //Attacker new army sizes
         int attackerNewCount;
@@ -34,10 +45,10 @@ class CombatEngine
         int attackerSiegeNewCount;
 
         //Defender losses
-        int defenderLosses = 100;
-        int defenderArcherLosses = 10;
-        int defenderCavLosses = 10;
-        int defenderSiegeLosses = 10;
+         defenderLosses = 100;
+         defenderArcherLosses = 10;
+         defenderCavLosses = 10;
+         defenderSiegeLosses = 10;
 
         //Defender new army sizes
         int defenderNewCount;

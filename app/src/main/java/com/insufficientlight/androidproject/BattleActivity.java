@@ -1,5 +1,8 @@
 package com.insufficientlight.androidproject;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -180,6 +183,7 @@ public class BattleActivity extends GameActivity
     }
     public void runBat()
     {
+        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","not","not");
         Log.i("Helen, help lol", "onClick: don't die keed");
         p2t = "Shield Wall";
         p2a = "Careful Volleys";
@@ -193,6 +197,34 @@ public class BattleActivity extends GameActivity
         Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
         Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
         Log.i("Sheed", "Noooo Halp");
+
+
+
+        //The following lines of code create the ater dialog that show the total troops losses for each palyer
+        //In the future player IDs will in some form be pulled from the battle object or simmiler
+        AlertDialog.Builder  builder = new AlertDialog.Builder(this);
+        String displayString = ""; // Builds the content of the dialog from the data of combat engine.
+
+        if (player.equals("player1"))
+        {displayString = "Infantry Lost: " +  CombatEngine.attackerLosses + "\n Archers Lost: " +
+            CombatEngine.attackerArcherLosses + "\n Cavalry Lost: " + CombatEngine.attackerCavLosses +
+            "\n Seige Weapons Lost: " + CombatEngine.attackerSiegeLosses;}
+
+        if (player.equals("player2"))
+        {displayString = "Infantry Lost: " +  CombatEngine.defenderLosses + "\n Archers Lost: " +
+                CombatEngine.defenderArcherLosses + "\n Cavalry Lost: " + CombatEngine.defenderCavLosses +
+                "\n Seige Weapons Lost: " + CombatEngine.defenderSiegeLosses;}
+
+        builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.setTitle("Troops Lost In Battle");
+        alert.show();
+        // ends building the alert dialog
     }
 }
 
