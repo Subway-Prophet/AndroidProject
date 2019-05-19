@@ -50,7 +50,7 @@ public class BattleActivity extends GameActivity
     }
     public void onCreate(Bundle savedInstanceState)
     {
-        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1","player2", "not","not");
+        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1","player2", "not","not"); // sets defualts, will probably be changed in the future as more complexity arrises.
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle);
@@ -146,13 +146,13 @@ public class BattleActivity extends GameActivity
                             {
                                 if (document.getData().get("player1").equals("ready") && document.getData().get("player2").equals("ready")) // Ensures both aren't already set to ready.
                                 {runBat();}
-                                if (player.equals("player1"))
+                                if (player.equals("player1"))//Breaks down actions depending on the player taking them, both are identical
                                 {
                                     Log.i("testy", player);
-                                    if (document.getData().get("player2").equals("ready"))
+                                    if (document.getData().get("player2").equals("ready")) //if the other player has already hit their button
                                     {
-                                        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","ready");
-                                        runBat();
+                                        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","ready"); // finalizes the command so the other devices know to run
+                                        runBat(); // runs the combat mechanics
                                     }
                                     else
                                     {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","not");}
@@ -177,6 +177,7 @@ public class BattleActivity extends GameActivity
             }
         });
 
+        //Monitors the battle command document for any changes, if both are set to ready it runs battle loop
         multiplayerData.getCommandDecitionKey().addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -193,7 +194,7 @@ public class BattleActivity extends GameActivity
         });
 
     }
-    //android.os.SystemClock.sleep(1000);
+    //The battle loop exicuting billy's code
     public void runBat()
     {
         //android.os.SystemClock.sleep(500);
@@ -213,11 +214,12 @@ public class BattleActivity extends GameActivity
 
 
 
-        //The following lines of code create the ater dialog that show the total troops losses for each palyer
+        //The following lines of code create the atert dialog that show the total troops losses for each palyer
         //In the future player IDs will in some form be pulled from the battle object or simmiler
         AlertDialog.Builder  builder = new AlertDialog.Builder(this);
         String displayString = ""; // Builds the content of the dialog from the data of combat engine.
 
+        //For testing player1 is the attacker and player2 is the defender. In the future this would be determined through stored player ids and their actions
         if (player.equals("player1"))
         {displayString = "Infantry Lost: " +  CombatEngine.attackerLosses + "\n Archers Lost: " +
             CombatEngine.attackerArcherLosses + "\n Cavalry Lost: " + CombatEngine.attackerCavLosses +
@@ -244,5 +246,3 @@ public class BattleActivity extends GameActivity
     }
 }
 
-//both players need to ready up, with confirmation on each device "player two is ready"
-//runns code (bat button) give alert about total troops lost

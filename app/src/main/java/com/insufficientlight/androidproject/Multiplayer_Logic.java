@@ -15,18 +15,20 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+//Contsins common methods used in setting, getting, and monitoring data in the database
 public class Multiplayer_Logic
 {
     MultiplayerData multiplayerData = new MultiplayerData();
     private static String out = "";
+
 
     public static void setSingleData(DocumentReference docRef, String key, Object data)
     {
         Map<String, Object> dataToSet = new HashMap<String, Object>();
         dataToSet.put(key,data);
         docRef.set(dataToSet);
-
     }
+
 
     public static void setTwoData(DocumentReference docRef, String key1,String key2, Object data, Object data2)
     {
@@ -34,7 +36,6 @@ public class Multiplayer_Logic
         dataToSet.put(key1,data);
         dataToSet.put(key2,data2);
         docRef.set(dataToSet);
-
     }
 
     public static void sendBattleResults(DocumentReference docref, String key, Object data)
