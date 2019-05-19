@@ -132,32 +132,34 @@ public class BattleActivity extends GameActivity
         {
             @Override
             public void onClick(View v)
-            {
+            {Log.i("testy", player);
 
-
+                //Handles setting the commands in the database.
+                //Starts by pulling down the current copy of the document
                 multiplayerData.getCommandDecitionKey().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful())
                         {
                             DocumentSnapshot document = task.getResult();
-                            if (document.exists())
+                            if (document.exists()) //Gets the data and reifies it exists
                             {
-                                if (document.getData().get("player1").equals("ready") && document.getData().get("player2").equals("ready"))
+                                if (document.getData().get("player1").equals("ready") && document.getData().get("player2").equals("ready")) // Ensures both aren't already set to ready.
                                 {runBat();}
                                 if (player.equals("player1"))
                                 {
+                                    Log.i("testy", player);
                                     if (document.getData().get("player2").equals("ready"))
                                     {runBat();}
                                     else
-                                    {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","not","ready");}
+                                    {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","not");}
                                 }
                                 if (player.equals("player2"))
-                                {
+                                {Log.i("testy", player);
                                     if (document.getData().get("player1").equals("ready"))
                                     {runBat();}
                                     else
-                                    {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","not");}
+                                    {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","not","ready");}
                                 }
                             }
                         }
