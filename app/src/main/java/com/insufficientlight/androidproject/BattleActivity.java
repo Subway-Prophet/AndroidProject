@@ -150,14 +150,20 @@ public class BattleActivity extends GameActivity
                                 {
                                     Log.i("testy", player);
                                     if (document.getData().get("player2").equals("ready"))
-                                    {runBat();}
+                                    {
+                                        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","ready");
+                                        runBat();
+                                    }
                                     else
                                     {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","not");}
                                 }
                                 if (player.equals("player2"))
                                 {Log.i("testy", player);
                                     if (document.getData().get("player1").equals("ready"))
-                                    {runBat();}
+                                    {
+                                        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","ready");
+                                        runBat();
+                                    }
                                     else
                                     {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","not","ready");}
                                 }
@@ -174,8 +180,12 @@ public class BattleActivity extends GameActivity
         multiplayerData.getCommandDecitionKey().addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
                 if (documentSnapshot.exists())
                 {
+                    Log.i("InSnapshot", documentSnapshot.getId());
+                    Log.i("InSnapshot", documentSnapshot.getString("player1"));
+                    Log.i("InSnapshot", documentSnapshot.getString("player2"));
                     if (documentSnapshot.getString("player1").equals("ready") && documentSnapshot.getString("player2").equals("ready"))
                     {runBat();}
                 }
@@ -183,9 +193,10 @@ public class BattleActivity extends GameActivity
         });
 
     }
+    //android.os.SystemClock.sleep(1000);
     public void runBat()
     {
-        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","not","not");
+        //android.os.SystemClock.sleep(500);
         Log.i("Helen, help lol", "onClick: don't die keed");
         p2t = "Shield Wall";
         p2a = "Careful Volleys";
@@ -220,6 +231,7 @@ public class BattleActivity extends GameActivity
         builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","not","not");
                 dialogInterface.cancel();
             }
         });
@@ -227,6 +239,8 @@ public class BattleActivity extends GameActivity
         alert.setTitle("Troops Lost In Battle");
         alert.show();
         // ends building the alert dialog
+
+
     }
 }
 
