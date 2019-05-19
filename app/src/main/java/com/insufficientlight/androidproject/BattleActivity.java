@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import javax.annotation.Nullable;
@@ -193,6 +194,28 @@ public class BattleActivity extends GameActivity
             }
         });
 
+        multiplayerData.getDefendLossesReferance().addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+            if (documentSnapshot.exists())
+            {
+                if (documentSnapshot.getString("defenderID").equals("player2"))
+                {
+                    int infLoss = (int) documentSnapshot.getData().get("infLosses");
+                    int archLosses =(int) documentSnapshot.getData().get("infLosses");
+                    int cavLosses = (int)documentSnapshot.getData().get("infLosses");
+                    int seigeLosses = (int)documentSnapshot.getData().get("infLosses");
+
+                    displayLosses(infLoss,archLosses,cavLosses,seigeLosses);
+                }
+
+            }
+
+
+            }
+        })
+
+
     }
     //The battle loop exicuting billy's code
     public void runBat()
@@ -210,6 +233,9 @@ public class BattleActivity extends GameActivity
         Army2.setText("Defender: " + battle.defender.armyName);
         Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
         Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
+
+       // FirebaseFirestore.getInstance().document("games/game1/Armys/army1").set(Army1);
+
         Log.i("Sheed", "Noooo Halp");
 
 
@@ -223,12 +249,20 @@ public class BattleActivity extends GameActivity
         if (player.equals("player1"))
         {displayString = "Infantry Lost: " +  CombatEngine.attackerLosses + "\n Archers Lost: " +
             CombatEngine.attackerArcherLosses + "\n Cavalry Lost: " + CombatEngine.attackerCavLosses +
-            "\n Seige Weapons Lost: " + CombatEngine.attackerSiegeLosses;}
+            "\n Seige Weapons Lost: " + CombatEngine.attackerSiegeLosses;
 
-        if (player.equals("player2"))
-        {displayString = "Infantry Lost: " +  CombatEngine.defenderLosses + "\n Archers Lost: " +
-                CombatEngine.defenderArcherLosses + "\n Cavalry Lost: " + CombatEngine.defenderCavLosses +
-                "\n Seige Weapons Lost: " + CombatEngine.defenderSiegeLosses;}
+        int infLoss = CombatEngine.defenderLosses;
+        int archLosses = CombatEngine.defenderArcherLosses;
+        int cavLosses = CombatEngine.defenderCavLosses;
+        int seigeLosses = CombatEngine.defenderSiegeLosses;
+
+        Multiplayer_Logic.setFiveData(multiplayerData.getDefendLossesReferance(), "defenderID","infLosses","archLosses","cavLosses","seigeLosses","player2", infLoss,archLosses,cavLosses,seigeLosses);
+
+
+
+        }
+
+
 
         builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
             @Override
@@ -244,5 +278,28 @@ public class BattleActivity extends GameActivity
 
 
     }
+
+    public void displayLosses(int infLoss, int archLoss,int cavLoss, int seigeLoss) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String displayString = "";
+
+        if (player.equals("player2")) {
+            displayString = "Infantry Lost: " + infLoss+ "\n Archers Lost: " +
+                    archLoss + "\n Cavalry Lost: " + cavLoss +
+                    "\n Seige Weapons Lost: " + seigeLoss;
+        }
+
+        builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.setTitle("Troops Lost In Battle");
+
+    }
+
+
 }
 
