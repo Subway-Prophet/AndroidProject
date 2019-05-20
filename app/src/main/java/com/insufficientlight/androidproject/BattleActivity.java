@@ -321,6 +321,15 @@ public class BattleActivity extends GameActivity
                     archLoss + "\n Cavalry Lost: " + cavLoss +
                     "\n Seige Weapons Lost: " + seigeLoss;
 
+            battle.getDefender().setNumInf(battle.getDefender().getNumInf()-(int)infLoss);
+            battle.getDefender().setNumCav(battle.getDefender().getNumCav()-(int)cavLoss);
+            battle.getDefender().setNumArc(battle.getDefender().getNumArc()-(int)archLoss);
+            battle.getDefender().setNumSie(battle.getDefender().getNumSie()-(int)seigeLoss);
+
+            //Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
+            Army2.setText("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
+
+
             //builds the alert dialog
             builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener()
             {
