@@ -1,5 +1,7 @@
 package com.insufficientlight.androidproject;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class Army
 {
     String armyName;
@@ -79,6 +81,7 @@ public class Army
         this.numArc = numArc;
         this.numSie = numSie;
         this.playerTag = playerTag;
+
     }
 
 }
