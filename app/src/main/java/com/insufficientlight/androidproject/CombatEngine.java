@@ -33,10 +33,12 @@ class CombatEngine
     public static void calculateLosses(StandardSkirmish skirmish)
     {
         //Attacker losses
+
          attackerLosses = 100;
          attackerArcherLosses = 10;
          attackerCavLosses = 10;
          attackerSiegeLosses = 10;
+
 
         //Attacker new army sizes
         int attackerNewCount;
@@ -45,10 +47,12 @@ class CombatEngine
         int attackerSiegeNewCount;
 
         //Defender losses
+
          defenderLosses = 100;
          defenderArcherLosses = 10;
          defenderCavLosses = 10;
          defenderSiegeLosses = 10;
+
 
         //Defender new army sizes
         int defenderNewCount;
@@ -57,6 +61,24 @@ class CombatEngine
         int defenderSiegeNewCount;
 
 
+        int defenderInf = skirmish.getBattle().getDefender().getNumInf();
+        int defenderArc = skirmish.getBattle().getDefender().getNumArc();
+        int defenderCav = skirmish.getBattle().getDefender().getNumCav();
+        int defenderSie = skirmish.getBattle().getDefender().getNumSie();
+
+        int attackerInf = skirmish.getBattle().getAttacker().getNumInf();
+        int attackerArc = skirmish.getBattle().getAttacker().getNumArc();
+        int attackerCav = skirmish.getBattle().getAttacker().getNumCav();
+        int attackerSie = skirmish.getBattle().getAttacker().getNumSie();
+        //Math is broken forever
+
+        attackerLosses = ((defenderInf % 100) * getRandomNumberInRange(2,3));
+        defenderLosses = ((attackerInf % 100) * getRandomNumberInRange(2,3));
+
+        attackerLosses = attackerLosses + (defenderArc % 100) * getRandomNumberInRange(2,4);
+        defenderLosses = defenderLosses + (attackerArc % 100) * getRandomNumberInRange(2,4);
+
+        Log.i("It ran an did not", "Noooo Halp " + defenderLosses);
         //Does some in between math because java hates me
         attackerNewCount = (skirmish.getBattle().getAttacker().getNumInf() - attackerLosses);
         attackerArcNewCount = (skirmish.getBattle().getAttacker().getNumArc() - attackerArcherLosses);
@@ -84,6 +106,27 @@ class CombatEngine
         Log.i("It ran an did not", "Noooo Halp");
 
     }
+   /**public static void infantryClash(Skirmish skirmish)
+    {
+        int attackerInf = skirmish.Attacker.getNumInf();
+        int defenderInf = skirmish.Defender.getNumInf();
+    }
+    public static int defenderArcherFire(Skirmish skirmish)
+    {
+        return 1;
+    }
+    public static int attackerArcherFire(Skirmish skirmish)
+    {
+        return 1;
+    }
+    public static int defenderCavAction(Skirmish skirmish)
+    {
+        return 1;
+    }
+    public static int attackerCavAction(Skirmish skirmish)
+    {
+        return 1;
+    }**/
 
 
 }

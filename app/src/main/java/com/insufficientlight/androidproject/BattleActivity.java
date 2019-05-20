@@ -75,7 +75,11 @@ public class BattleActivity extends GameActivity
         Army2 = findViewById(R.id.defenderView);
         Terrain = findViewById(R.id.terrainView);
         Bat = findViewById(R.id.button2);
+
         playerchoose = findViewById(R.id.button4);
+
+
+        //Set up for the tactics spinners
 
         final String[] Formations = {"Shield Wall","Phalanx", "Turtle Formation"};
         final String[] ArcTac = {"Careful Volleys", "Full Volleys", "Protect Flanks"};
@@ -97,12 +101,15 @@ public class BattleActivity extends GameActivity
         ArcherTactics.setWrapSelectorWheel(true);
         CavalryTactics.setWrapSelectorWheel(true);
 
+
+        //Displays the battle information for both sides, the terrain, and the name of the area they're fighting in.
         Terrain.setText(battle.getTerrain().getTerrainType());
         Title.setText("The battle of "+ battle.getLocation()+"!");
         Army1.setText("Attacker: " + battle.attacker.armyName);
         Army2.setText("Defender: " + battle.defender.armyName);
         Army1.append("\n Infantry: " + battle.attacker.numInf + "\n Archers: " + battle.attacker.numArc + "\n Cavalry :" + battle.attacker.numCav +"\n Siege Weapons: " + battle.attacker.numSie);
         Army2.append("\n Infantry: " + battle.defender.numInf + "\n Archers: " + battle.defender.numArc + "\n Cavalry :" + battle.defender.numCav +"\n Siege Weapons: " + battle.defender.numSie);
+
 
         playerchoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +119,9 @@ public class BattleActivity extends GameActivity
             }
         });
 
+
+        //Listeners for the tactics spinners
+
         Formation.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
         {
             @Override
@@ -120,7 +130,6 @@ public class BattleActivity extends GameActivity
                 p1t = Formations[newVal];
             }
         });
-
         ArcherTactics.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
         {
             @Override
@@ -129,7 +138,6 @@ public class BattleActivity extends GameActivity
                 p1a = ArcTac[newVal];
             }
         });
-
         CavalryTactics.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
         {
             @Override
@@ -212,6 +220,7 @@ public class BattleActivity extends GameActivity
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
             if (documentSnapshot.exists())
             {
+
                 Log.i("data10101", "before " + player + " " + documentSnapshot.getString("defenderID"));
                 if (documentSnapshot.getString("defenderID").equals(player))
                 {
@@ -224,6 +233,7 @@ public class BattleActivity extends GameActivity
                 }
 
             }
+
 
 
             }
