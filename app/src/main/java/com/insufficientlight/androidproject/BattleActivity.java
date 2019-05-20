@@ -115,7 +115,6 @@ public class BattleActivity extends GameActivity
 
                 StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p1a, p2t, p2c, p2a);
                 CombatEngine.calculateLosses(skirmish);
-
                 //count = count + 1;
                 //yeet
                 //Displays the updated battle information for both sides, the terrain, and the name of the area they're fighting in.
