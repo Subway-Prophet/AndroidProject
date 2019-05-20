@@ -254,6 +254,7 @@ public class BattleActivity extends GameActivity
                                 attackArchLoss =(long) documentSnapshot.getData().get("archLosses");
                                 attackCavLoss = (long)documentSnapshot.getData().get("cavLosses");
                                 attackSeigeLoss = (long)documentSnapshot.getData().get("seigeLosses");
+                                Log.i("data10101", "Inattacker into");
 
                             }
                         }
@@ -329,11 +330,11 @@ public class BattleActivity extends GameActivity
             public void onClick(DialogInterface dialogInterface, int i)
             {
 
-                dialogInterface.dismiss();
+                dialogInterface.cancel();
             }
         });
         AlertDialog alert = builder.create();
-        alert.setTitle("Troops Lost In Battle");
+        alert.setTitle("Troops Lost In Battle4434");
         alert.show();
         Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","not","not");
         // ends building the alert dialog
@@ -359,8 +360,11 @@ public class BattleActivity extends GameActivity
             battle.getAttacker().setNumArc(battle.getAttacker().getNumArc()-(int)attackArchLoss);
             battle.getAttacker().setNumSie(battle.getAttacker().getNumSie()-(int)attackSeigeLoss);
 
-            Army1.setText("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
-            Army2.setText("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
+            Army1.setText("Attacker: " + battle.attacker.armyName);
+            Army2.setText("Defender: " + battle.defender.armyName);
+
+            Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
+            Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
 
 
             //builds the alert dialog
@@ -370,12 +374,12 @@ public class BattleActivity extends GameActivity
                 public void onClick(DialogInterface dialogInterface, int i)
                 {
 
-                    dialogInterface.dismiss();
+                    dialogInterface.cancel();
                 }
             });
             //sets the title and shows it
             AlertDialog alert = builder.create();
-            alert.setTitle("Troops Lost In Battle");
+            alert.setTitle("Troops Lost In Battle1212");
             alert.show();
 
 
@@ -397,7 +401,7 @@ public class BattleActivity extends GameActivity
         {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
+                dialogInterface.dismiss();
             }
         });
         AlertDialog alert = builder.create();
