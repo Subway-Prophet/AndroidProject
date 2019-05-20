@@ -201,9 +201,11 @@ public class BattleActivity extends GameActivity
         /**
          * Monitors the battle command document for any changes, if both are set to ready it runs battle loop for the attacker only
          */
-        multiplayerData.getCommandDecitionKey().addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        multiplayerData.getCommandDecitionKey().addSnapshotListener(new EventListener<DocumentSnapshot>()
+        {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
+            {
 
                 if (documentSnapshot.exists())
                 {
@@ -215,9 +217,11 @@ public class BattleActivity extends GameActivity
         /**
          * When the attacker changes the defender loss data in the database this method is called, it then sets the local variables for the losses and runs the battle loop for the defender, creating the popup
          */
-        multiplayerData.getDefendLossesReferance().addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        multiplayerData.getDefendLossesReferance().addSnapshotListener(new EventListener<DocumentSnapshot>()
+        {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
+            {
             if (documentSnapshot.exists())
             {
 
@@ -241,7 +245,7 @@ public class BattleActivity extends GameActivity
 
 
     }
-    //The battle loop exicuting billy's code
+    //The battle loop executing billy's code
     public void runBat(String side)
     {
         AlertDialog.Builder  builder = new AlertDialog.Builder(this);
@@ -291,11 +295,13 @@ public class BattleActivity extends GameActivity
 
 
 
-        builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+        builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener()
+        {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
 
-                dialogInterface.cancel();
+                dialogInterface.dismiss();
             }
         });
         AlertDialog alert = builder.create();
@@ -316,11 +322,13 @@ public class BattleActivity extends GameActivity
                     "\n Seige Weapons Lost: " + seigeLoss;
 
             //builds the alert dialog
-            builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+            builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener()
+            {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+                public void onClick(DialogInterface dialogInterface, int i)
+                {
 
-                    dialogInterface.cancel();
+                    dialogInterface.dismiss();
                 }
             });
             //sets the title and shows it
@@ -332,7 +340,8 @@ public class BattleActivity extends GameActivity
         }
     }
 
-    public void displayLosses(int infLoss, int archLoss,int cavLoss, int seigeLoss) {
+    public void displayLosses(int infLoss, int archLoss,int cavLoss, int seigeLoss)
+    {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         String displayString = "";
 
@@ -342,7 +351,8 @@ public class BattleActivity extends GameActivity
                     "\n Seige Weapons Lost: " + seigeLoss;
         }
 
-        builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+        builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener()
+        {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.cancel();

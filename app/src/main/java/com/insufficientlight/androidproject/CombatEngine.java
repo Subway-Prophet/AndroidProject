@@ -34,10 +34,10 @@ class CombatEngine
     {
         //Attacker losses
 
-         attackerLosses = 100;
-         attackerArcherLosses = 10;
-         attackerCavLosses = 10;
-         attackerSiegeLosses = 10;
+         attackerLosses = 0;
+         attackerArcherLosses = 0;
+         attackerCavLosses = 0;
+         attackerSiegeLosses = 0;
 
 
         //Attacker new army sizes
@@ -48,10 +48,10 @@ class CombatEngine
 
         //Defender losses
 
-         defenderLosses = 100;
-         defenderArcherLosses = 10;
-         defenderCavLosses = 10;
-         defenderSiegeLosses = 10;
+         defenderLosses = 0;
+         defenderArcherLosses = 0;
+         defenderCavLosses = 0;
+         defenderSiegeLosses = 0;
 
 
         //Defender new army sizes
@@ -89,8 +89,8 @@ class CombatEngine
             attackerLosses = attackerLosses + (defenderArc / 50) * getRandomNumberInRange(2,4);
             defenderLosses = defenderLosses + (attackerArc / 50) * getRandomNumberInRange(2,4);
 
-            Log.i("It ran an did not", "Noooo Halp " + defenderLosses);
-            Log.i("It ran an did not", "Noooo Halp " + attackerLosses);
+            Log.i("It ran an did not", "Noooo Halp defender " + defenderLosses);
+            Log.i("It ran an did not", "Noooo Halp attacker " + attackerLosses);
 
             //Does some in between math because java hates me
             attackerNewCount = (skirmish.getBattle().getAttacker().getNumInf() - attackerLosses);
