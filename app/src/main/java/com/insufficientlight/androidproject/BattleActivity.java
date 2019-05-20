@@ -61,7 +61,8 @@ public class BattleActivity extends GameActivity
         Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1","player2", "not","not");
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1","player2", "not","not"); // sets defualts, will probably be changed in the future as more complexity arrises.
+        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1","player2", "not","not");
+        // sets defaults, will probably be changed in the future as more complexity happens.
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle);
@@ -157,9 +158,11 @@ public class BattleActivity extends GameActivity
             {Log.i("testy", player);
                 //Handles setting the commands in the database.
                 //Starts by pulling down the current copy of the document
-                multiplayerData.getCommandDecitionKey().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                multiplayerData.getCommandDecitionKey().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+                {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task)
+                    {
                         if (task.isSuccessful())
                         {
                             DocumentSnapshot document = task.getResult();
@@ -172,8 +175,10 @@ public class BattleActivity extends GameActivity
                                     Log.i("testy", player);
                                     if (document.getData().get("player2").equals("ready")) //if the other player has already hit their button
                                     {
-                                        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","ready"); // finalizes the command so the other devices know to run
-                                        runBat("attacker"); // runs the combat mechanics for the attacker
+                                        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","ready");
+                                                                                                            // finalizes the command so the other devices know to run
+                                        runBat("attacker");
+                                        // runs the combat mechanics for the attacker
                                     }
                                     else
                                     {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","not");} // changes player1's status command to ready
@@ -333,7 +338,7 @@ public class BattleActivity extends GameActivity
             });
             //sets the title and shows it
             AlertDialog alert = builder.create();
-            alert.setTitle("Troops Lost In Battle12");
+            alert.setTitle("Troops Lost In Battle");
             alert.show();
 
 
@@ -359,7 +364,7 @@ public class BattleActivity extends GameActivity
             }
         });
         AlertDialog alert = builder.create();
-        alert.setTitle("Troops Lost In Battle11");
+        alert.setTitle("Troops Lost In Battle");
 
 
 
