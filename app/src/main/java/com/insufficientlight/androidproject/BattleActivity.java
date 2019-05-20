@@ -45,12 +45,14 @@ public class BattleActivity extends GameActivity
     public String p2t;
     public String p2a;
     public String p2c;
+
     public static void setBattle (Battle yeet)
     {
         battle = yeet;
     }
     public void onCreate(Bundle savedInstanceState)
     {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1","player2", "not","not"); // sets defualts, will probably be changed in the future as more complexity arrises.
 
         super.onCreate(savedInstanceState);
@@ -199,21 +201,37 @@ public class BattleActivity extends GameActivity
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
             if (documentSnapshot.exists())
             {
-                if (documentSnapshot.getString("defenderID").equals("player2"))
+                if (documentSnapshot.getString("defenderID").equals(player))
                 {
                     int infLoss = (int) documentSnapshot.getData().get("infLosses");
-                    int archLosses =(int) documentSnapshot.getData().get("infLosses");
-                    int cavLosses = (int)documentSnapshot.getData().get("infLosses");
-                    int seigeLosses = (int)documentSnapshot.getData().get("infLosses");
+                    int archLoss =(int) documentSnapshot.getData().get("infLosses");
+                    int cavLoss = (int)documentSnapshot.getData().get("infLosses");
+                    int seigeLoss = (int)documentSnapshot.getData().get("infLosses");
 
-                    displayLosses(infLoss,archLosses,cavLosses,seigeLosses);
+                    String displayString;
+
+
+                    displayString = "Infantry Lost: " + infLoss+ "\n Archers Lost: " +
+                                archLoss + "\n Cavalry Lost: " + cavLoss +
+                                "\n Seige Weapons Lost: " + seigeLoss;
+
+
+                    builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    alert.setTitle("Troops Lost In Battle1");
+                    alert.show();
                 }
 
             }
 
 
             }
-        })
+        });
 
 
     }
@@ -267,13 +285,14 @@ public class BattleActivity extends GameActivity
         builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","not","not");
+
                 dialogInterface.cancel();
             }
         });
         AlertDialog alert = builder.create();
         alert.setTitle("Troops Lost In Battle");
         alert.show();
+        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","not","not");
         // ends building the alert dialog
 
 
