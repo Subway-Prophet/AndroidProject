@@ -10,7 +10,8 @@ public class MultiplayerData
     public DocumentReference mCombatCommandReferance = FirebaseFirestore.getInstance().document("games/game1/commands/combatCommands");
     ///public DocumentReference mBattleDataReferance = FirebaseFirestore.getInstance().document("games/game1/combatobject");
     public DocumentReference mCommandDecitionReferance = FirebaseFirestore.getInstance().document("games/game1/commands/combatCommands");
-    public DocumentReference mDefendLossesReferance = FirebaseFirestore.getInstance().document("games/game1/combatData/battle1");
+    public DocumentReference mDefendLossesReferance = FirebaseFirestore.getInstance().document("games/game1/combatData/battle1/losses/defenderLoss");
+    public DocumentReference mAttackerLossesReferance = FirebaseFirestore.getInstance().document("games/game1/combatData/battle1/losses/attackerLoss");
 
 
     //public DocumentReference getBattleDataReferance()
@@ -31,6 +32,9 @@ public class MultiplayerData
 
     public DocumentReference getDefendLossesReferance()
     { return mDefendLossesReferance; }
+
+    public DocumentReference getAttackerLossesReferance()
+    { return mAttackerLossesReferance; }
     public void setDefendLossesReferance(DocumentReference defendLossesReferance)
     { mDefendLossesReferance = defendLossesReferance; }
 
