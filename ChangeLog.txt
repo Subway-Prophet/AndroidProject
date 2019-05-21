@@ -31,3 +31,10 @@ combat
 
 5-16
 -revamped combat engine
+
+5-17 to 5-20
+-Overhualed battleActivity.java, 
+-Overhauled Multiplayer_logic.java
+-added to multiplayerData.java
+-Built basic Firestore databse structure
+-Began Syncing combat data between multiple devices
