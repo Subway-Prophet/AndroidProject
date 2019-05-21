@@ -68,18 +68,36 @@ class CombatEngine
         int attackerCav = skirmish.getBattle().getAttacker().getNumCav();
         int attackerSie = skirmish.getBattle().getAttacker().getNumSie();
 
-        attackerLosses = ((defenderInf / 50) * getRandomNumberInRange(2, 3));
 
-        attackerLosses = attackerLosses + (defenderArc / 50) * getRandomNumberInRange(2, 4);
+        // Fail safes for empty ranks
+        if (defenderInf > 0)
+        {
+            attackerLosses = ((defenderInf / 50) * getRandomNumberInRange(2, 3));
+        }
+        if (defenderArc > 0)
+        {
+            attackerLosses = attackerLosses + (defenderArc / 50) * getRandomNumberInRange(2, 4);
+        }
+        if (defenderCav > 0)
+        {
+            attackerArcherLosses = (defenderCav / 50) * getRandomNumberInRange(2, 5);
+        }
+        // Fail safes for empty ranks
+        if (attackerInf > 0)
+        {
+            defenderLosses = ((attackerInf / 50) * getRandomNumberInRange(2, 3));
+        }
+        if (attackerArc > 0)
+        {
+            defenderLosses = defenderLosses + (attackerArc / 50) * getRandomNumberInRange(2, 4);
+        }
+        if (attackerCav > 0)
+        {
+            defenderArcherLosses = (attackerCav / 50) * getRandomNumberInRange(2, 5);
+        }
 
-        attackerArcherLosses = (defenderCav / 50) * getRandomNumberInRange(2, 5);
 
-        defenderLosses = ((attackerInf / 50) * getRandomNumberInRange(2, 3));
-
-        defenderLosses = defenderLosses + (attackerArc / 50) * getRandomNumberInRange(2, 4);
-
-        defenderArcherLosses = (attackerCav / 50) * getRandomNumberInRange(2, 5);
-
+        // Fail Safes for depleted ranks
         if (defenderInf - defenderLosses <= 0)
         {
             defenderNewCount = 0;
@@ -105,8 +123,36 @@ class CombatEngine
             defenderCavNewCount = (skirmish.getBattle().getDefender().getNumArc() - defenderArcherLosses);
         }
 
+        // Fail Safes for depleted ranks
+        if (attackerInf - attackerLosses <= 0)
+        {
+            attackerNewCount = 0;
+        }
+        else
+        {
+            attackerNewCount = (skirmish.getBattle().getAttacker().getNumInf() - attackerLosses);
+        }
+        if (attackerArc - attackerArcherLosses <= 0)
+        {
+            attackerArcNewCount = 0;
+        }
+        else
+        {
+            attackerArcNewCount = (skirmish.getBattle().getAttacker().getNumArc() - attackerArcherLosses);
+        }
+        if (attackerCav - attackerCavLosses <= 0)
+        {
+            attackerCavNewCount = 0;
+        }
+        else
+        {
+            attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumArc() - attackerArcherLosses);
+        }
 
-            Log.i("It ran an did not", "Noooo Halp defender " + defenderLosses);
+
+
+
+        Log.i("It ran an did not", "Noooo Halp defender " + defenderLosses);
             Log.i("It ran an did not", "Noooo Halp attacker " + attackerLosses);
 
             //Does some in between math because java hates me
