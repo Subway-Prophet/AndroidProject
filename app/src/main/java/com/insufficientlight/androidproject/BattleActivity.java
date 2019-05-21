@@ -177,7 +177,7 @@ public class BattleActivity extends GameActivity
                                     Log.i("testy", player);
                                     if (document.getData().get("player2").equals("ready")) //if the other player has already hit their button
                                     {
-                                        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","ready"); // finalizes the command so the other devices know to run
+                                        //Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","ready"); // finalizes the command so the other devices know to run
                                         runBat("attacker"); // runs the combat mechanics for the attacker
                                     }
                                     else
