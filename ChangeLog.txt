@@ -36,4 +36,5 @@ combat
 -Overhualed battleActivity.java, 
 -Overhauled Multiplayer_logic.java
 -added to multiplayerData.java
--created Firestore databse structure
+-Built basic Firestore databse structure
+-Began Syncing combat data between multiple devices
