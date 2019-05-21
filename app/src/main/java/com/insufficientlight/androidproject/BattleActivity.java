@@ -56,6 +56,7 @@ public class BattleActivity extends GameActivity
     public long attackArchLoss;
     public long attackCavLoss;
     public long attackSeigeLoss;
+    public int batRan;
 
     public static void setBattle (Battle yeet)
     {
@@ -63,6 +64,7 @@ public class BattleActivity extends GameActivity
     }
     public void onCreate(Bundle savedInstanceState)
     {
+        batRan = 0;
         Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1","player2", "not","not");
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -165,6 +167,7 @@ public class BattleActivity extends GameActivity
                 multiplayerData.getCommandDecitionKey().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        batRan = 0;
                         if (task.isSuccessful())
                         {
                             DocumentSnapshot document = task.getResult();
@@ -269,132 +272,131 @@ public class BattleActivity extends GameActivity
     //The battle loop executing billy's code
     public void runBat(String side)
     {
-        AlertDialog.Builder  builder = new AlertDialog.Builder(this);
+        if (batRan == 0) {
+            batRan = 1;
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            String displayString = "";
+
+            if (side.equals("attacker")) { //android.os.SystemClock.sleep(500);
+                Log.i("1010", "ATTATCKERBATTLLE CALLED");
+                Log.i("Helen, help lol", "onClick: don't die keed");
+                p2t = "Shield Wall";
+                p2a = "Careful Volleys";
+                p2c = "Charge Front Lines";
+                StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle, p1t, p1c, p1a, p2t, p2c, p2a);
+                CombatEngine.calculateLosses(skirmish);
+                count = count + 1;
+                Title.setText("The battle of " + battle.getLocation() + "!");
+                Army1.setText("Attacker: " + battle.attacker.armyName);
+                Army2.setText("Defender: " + battle.defender.armyName);
+                Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() + "\n Siege Weapons: " + battle.getAttacker().getNumSie());
+                Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() + "\n Siege Weapons: " + battle.getDefender().getNumSie());
+
+
+                Log.i("Sheed", "Noooo Halp");
+
+
+                //The following lines of code create the atert dialog that show the total troops losses for each palyer
+                //In the future player IDs will in some form be pulled from the battle object or simmiler
+                // Builds the content of the dialog from the data of combat engine.
+
+                //For testing player1 is the attacker and player2 is the defender. In the future this would be determined through stored player ids and their actions
+
+                displayString = "Infantry Lost: " + CombatEngine.attackerLosses + "\n Archers Lost: " +
+                        CombatEngine.attackerArcherLosses + "\n Cavalry Lost: " + CombatEngine.attackerCavLosses +
+                        "\n Seige Weapons Lost: " + CombatEngine.attackerSiegeLosses;
+
+                int infLoss = CombatEngine.defenderLosses;
+                int archLosses = CombatEngine.defenderArcherLosses;
+                int cavLosses = CombatEngine.defenderCavLosses;
+                int seigeLosses = CombatEngine.defenderSiegeLosses;
+
+
+                Multiplayer_Logic.setFiveData(multiplayerData.getDefendLossesReferance(), "defenderID", "infLosses", "archLosses", "cavLosses", "seigeLosses", "player2", infLoss, archLosses, cavLosses, seigeLosses);
+                Multiplayer_Logic.setFiveData(multiplayerData.getAttackerLossesReferance(), "attackerID", "infLosses", "archLosses", "cavLosses", "seigeLosses", "player2", CombatEngine.attackerNewCount, CombatEngine.attackerArcNewCount, CombatEngine.attackerCavNewCount, CombatEngine.attackerSiegeNewCount);
+
+
+                builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.setTitle("Troops Lost In Battle");
+                alert.show();
+                Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1", "player2", "not", "not");
+                // ends building the alert dialog
+
+            }
+
+            if (side.equals("defender")) {
+                Log.i("1010", "DEFENDERBATTLLE CALLED");
+                Log.i("110101001111011", "working " + infLoss);
+
+
+                multiplayerData.getAttackerLossesReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            attackInfLoss = (long) documentSnapshot.getData().get("infLosses");
+                            attackArchLoss = (long) documentSnapshot.getData().get("archLosses");
+                            attackCavLoss = (long) documentSnapshot.getData().get("cavLosses");
+                            attackSeigeLoss = (long) documentSnapshot.getData().get("seigeLosses");
+                            Log.i("attackloss", "attackers lost " + attackInfLoss);
+                            finishBat();
+                        }
+                    }
+
+                });
+
+            }
+        }
+    }
+
+    public void finishBat()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         String displayString = "";
 
-        if (side.equals("attacker"))
-        { //android.os.SystemClock.sleep(500);
-            Log.i("1010", "ATTATCKERBATTLLE CALLED");
-        Log.i("Helen, help lol", "onClick: don't die keed");
-        p2t = "Shield Wall";
-        p2a = "Careful Volleys";
-        p2c = "Charge Front Lines";
-        StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p1a, p2t, p2c, p2a);
-        CombatEngine.calculateLosses(skirmish);
-        count = count + 1;
-        Title.setText("The battle of "+ battle.getLocation()+"!");
-        Army1.setText("Attacker: " + battle.attacker.armyName);
+        //creates the string to display from losses data
+        displayString = "Infantry Lost: " + infLoss + "\n Archers Lost: " +
+                archLoss + "\n Cavalry Lost: " + cavLoss +
+                "\n Seige Weapons Lost: " + seigeLoss;
+
+        battle.getDefender().setNumInf(battle.getDefender().getNumInf() - (int) infLoss);
+        battle.getDefender().setNumCav(battle.getDefender().getNumCav() - (int) cavLoss);
+        battle.getDefender().setNumArc(battle.getDefender().getNumArc() - (int) archLoss);
+        battle.getDefender().setNumSie(battle.getDefender().getNumSie() - (int) seigeLoss);
+
+        battle.getAttacker().setNumInf((int) attackInfLoss);
+        battle.getAttacker().setNumCav((int) attackCavLoss);
+        battle.getAttacker().setNumArc((int) attackArchLoss);
+        battle.getAttacker().setNumSie((int) attackSeigeLoss);
+        Log.i("attackloss", "attackers tot " + battle.getAttacker().getNumInf());
+        Army1.setText("Attacker: " + battle.attacker.armyName + battle.getAttacker().getNumInf());
         Army2.setText("Defender: " + battle.defender.armyName);
-        Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
-        Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
 
 
-
-        Log.i("Sheed", "Noooo Halp");
-
-
-
-        //The following lines of code create the atert dialog that show the total troops losses for each palyer
-        //In the future player IDs will in some form be pulled from the battle object or simmiler
-         // Builds the content of the dialog from the data of combat engine.
-
-        //For testing player1 is the attacker and player2 is the defender. In the future this would be determined through stored player ids and their actions
-
-            displayString = "Infantry Lost: " +  CombatEngine.attackerLosses + "\n Archers Lost: " +
-            CombatEngine.attackerArcherLosses + "\n Cavalry Lost: " + CombatEngine.attackerCavLosses +
-            "\n Seige Weapons Lost: " + CombatEngine.attackerSiegeLosses;
-
-        int infLoss = CombatEngine.defenderLosses;
-        int archLosses = CombatEngine.defenderArcherLosses;
-        int cavLosses = CombatEngine.defenderCavLosses;
-        int seigeLosses = CombatEngine.defenderSiegeLosses;
+        Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() + "\n Siege Weapons: " + battle.getDefender().getNumSie());
+        Army1.append("\n Infantry: " + String.valueOf(battle.getAttacker().getNumInf()) + "\n Archers: " + String.valueOf(battle.getAttacker().getNumArc()) + "\n Cavalry :" + String.valueOf(battle.getAttacker().getNumCav()) + "\n Siege Weapons: " + String.valueOf(battle.getAttacker().getNumSie()));
 
 
-
-        Multiplayer_Logic.setFiveData(multiplayerData.getDefendLossesReferance(), "defenderID","infLosses","archLosses","cavLosses","seigeLosses","player2", infLoss,archLosses,cavLosses,seigeLosses);
-        Multiplayer_Logic.setFiveData(multiplayerData.getAttackerLossesReferance(), "attackerID","infLosses","archLosses","cavLosses","seigeLosses","player2", CombatEngine.attackerNewCount,CombatEngine.attackerArcNewCount,CombatEngine.attackerCavNewCount,CombatEngine.attackerSiegeNewCount);
-
-
-
-
-
-
-        builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener()
-        {
+        //builds the alert dialog
+        builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i)
-            {
+            public void onClick(DialogInterface dialogInterface, int i) {
 
                 dialogInterface.dismiss();
             }
         });
+        //sets the title and shows it
         AlertDialog alert = builder.create();
-        alert.setTitle("Troops Lost In Battle");
+        alert.setTitle("Troops Lost In Battle12");
         alert.show();
-        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","not","not");
-        // ends building the alert dialog
-
-        }
-
-        if (side.equals("defender"))
-        {
-            Log.i("1010", "DEFENDERBATTLLE CALLED");
-            Log.i("110101001111011", "working " + infLoss);
-
-            //creates the string to display from losses data
-            displayString = "Infantry Lost: " + infLoss + "\n Archers Lost: " +
-                    archLoss + "\n Cavalry Lost: " + cavLoss +
-                    "\n Seige Weapons Lost: " + seigeLoss;
-
-            multiplayerData.getAttackerLossesReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    if (documentSnapshot.exists())
-                    {
-                        attackInfLoss = (long) documentSnapshot.getData().get("infLosses");
-                        attackArchLoss =(long) documentSnapshot.getData().get("archLosses");
-                        attackCavLoss = (long)documentSnapshot.getData().get("cavLosses");
-                        attackSeigeLoss = (long)documentSnapshot.getData().get("seigeLosses");
-                        Log.i("attackloss", "attackers lost " + attackInfLoss);
-                    }
-                }
-
-            });
-
-            battle.getDefender().setNumInf(battle.getDefender().getNumInf()-(int)infLoss);
-            battle.getDefender().setNumCav(battle.getDefender().getNumCav()-(int)cavLoss);
-            battle.getDefender().setNumArc(battle.getDefender().getNumArc()-(int)archLoss);
-            battle.getDefender().setNumSie(battle.getDefender().getNumSie()-(int)seigeLoss);
-
-            battle.getAttacker().setNumInf((int)attackInfLoss);
-            battle.getAttacker().setNumCav((int)attackCavLoss);
-            battle.getAttacker().setNumArc((int)attackArchLoss);
-            battle.getAttacker().setNumSie((int)attackSeigeLoss);
-            Log.i("attackloss", "attackers tot " + battle.getAttacker().getNumInf());
-            Army1.setText("Attacker: " + battle.attacker.armyName);
-            Army2.setText("Defender: " + battle.defender.armyName);
-
-            Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
-            Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
 
 
-            //builds the alert dialog
-            builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i)
-                {
-
-                    dialogInterface.dismiss();
-                }
-            });
-            //sets the title and shows it
-            AlertDialog alert = builder.create();
-            alert.setTitle("Troops Lost In Battle12");
-            alert.show();
-
-
-        }
     }
 
     public void displayLosses(int infLoss, int archLoss,int cavLoss, int seigeLoss)
