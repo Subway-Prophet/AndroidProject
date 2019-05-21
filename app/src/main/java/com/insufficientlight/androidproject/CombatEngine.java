@@ -16,7 +16,15 @@ class CombatEngine
     public static int defenderArcherLosses;
     public static int defenderCavLosses;
     public static int defenderSiegeLosses;
-
+    //Defender new army sizes
+    public static int defenderNewCount;
+    public static int defenderArcNewCount;
+    public static int defenderCavNewCount;
+    public static int defenderSiegeNewCount;
+    public static int attackerNewCount;
+    public static int attackerArcNewCount;
+    public static int attackerCavNewCount;
+    public static int attackerSiegeNewCount;
 
     //Generates a random number within the Provided range
     private static int getRandomNumberInRange(int min, int max)
@@ -41,10 +49,7 @@ class CombatEngine
 
 
         //Attacker new army sizes
-        int attackerNewCount;
-        int attackerArcNewCount;
-        int attackerCavNewCount;
-        int attackerSiegeNewCount;
+
 
         //Defender losses
 
@@ -54,11 +59,7 @@ class CombatEngine
          defenderSiegeLosses = 0;
 
 
-        //Defender new army sizes
-        int defenderNewCount;
-        int defenderArcNewCount;
-        int defenderCavNewCount;
-        int defenderSiegeNewCount;
+
 
 
         int defenderInf = skirmish.getBattle().getDefender().getNumInf();

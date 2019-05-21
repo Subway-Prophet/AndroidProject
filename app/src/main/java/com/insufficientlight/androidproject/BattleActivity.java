@@ -240,7 +240,7 @@ public class BattleActivity extends GameActivity
                     seigeLoss = (long)documentSnapshot.getData().get("seigeLosses");
 
 
-                    multiplayerData.getAttackerLossesReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    /*multiplayerData.getAttackerLossesReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if (documentSnapshot.exists())
@@ -253,7 +253,7 @@ public class BattleActivity extends GameActivity
                             }
                         }
 
-                    });
+                    });*/
                     runBat("defender");
                 }
 
@@ -274,6 +274,7 @@ public class BattleActivity extends GameActivity
 
         if (side.equals("attacker"))
         { //android.os.SystemClock.sleep(500);
+            Log.i("1010", "ATTATCKERBATTLLE CALLED");
         Log.i("Helen, help lol", "onClick: don't die keed");
         p2t = "Shield Wall";
         p2a = "Careful Volleys";
@@ -311,7 +312,7 @@ public class BattleActivity extends GameActivity
 
 
         Multiplayer_Logic.setFiveData(multiplayerData.getDefendLossesReferance(), "defenderID","infLosses","archLosses","cavLosses","seigeLosses","player2", infLoss,archLosses,cavLosses,seigeLosses);
-        Multiplayer_Logic.setFiveData(multiplayerData.getAttackerLossesReferance(), "attackerID","infLosses","archLosses","cavLosses","seigeLosses","player2", CombatEngine.attackerLosses,CombatEngine.attackerArcherLosses,CombatEngine.attackerCavLosses,CombatEngine.attackerSiegeLosses);
+        Multiplayer_Logic.setFiveData(multiplayerData.getAttackerLossesReferance(), "attackerID","infLosses","archLosses","cavLosses","seigeLosses","player2", CombatEngine.attackerNewCount,CombatEngine.attackerArcNewCount,CombatEngine.attackerCavNewCount,CombatEngine.attackerSiegeNewCount);
 
 
 
@@ -337,6 +338,7 @@ public class BattleActivity extends GameActivity
 
         if (side.equals("defender"))
         {
+            Log.i("1010", "DEFENDERBATTLLE CALLED");
             Log.i("110101001111011", "working " + infLoss);
 
             //creates the string to display from losses data
@@ -344,18 +346,36 @@ public class BattleActivity extends GameActivity
                     archLoss + "\n Cavalry Lost: " + cavLoss +
                     "\n Seige Weapons Lost: " + seigeLoss;
 
+            multiplayerData.getAttackerLossesReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists())
+                    {
+                        attackInfLoss = (long) documentSnapshot.getData().get("infLosses");
+                        attackArchLoss =(long) documentSnapshot.getData().get("archLosses");
+                        attackCavLoss = (long)documentSnapshot.getData().get("cavLosses");
+                        attackSeigeLoss = (long)documentSnapshot.getData().get("seigeLosses");
+                        Log.i("attackloss", "attackers lost " + attackInfLoss);
+                    }
+                }
+
+            });
+
             battle.getDefender().setNumInf(battle.getDefender().getNumInf()-(int)infLoss);
             battle.getDefender().setNumCav(battle.getDefender().getNumCav()-(int)cavLoss);
             battle.getDefender().setNumArc(battle.getDefender().getNumArc()-(int)archLoss);
             battle.getDefender().setNumSie(battle.getDefender().getNumSie()-(int)seigeLoss);
 
-            battle.getAttacker().setNumInf(battle.getAttacker().getNumInf()-(int)attackInfLoss);
-            battle.getAttacker().setNumCav(battle.getAttacker().getNumCav()-(int)attackCavLoss);
-            battle.getAttacker().setNumArc(battle.getAttacker().getNumArc()-(int)attackArchLoss);
-            battle.getAttacker().setNumSie(battle.getAttacker().getNumSie()-(int)attackSeigeLoss);
+            battle.getAttacker().setNumInf((int)attackInfLoss);
+            battle.getAttacker().setNumCav((int)attackCavLoss);
+            battle.getAttacker().setNumArc((int)attackArchLoss);
+            battle.getAttacker().setNumSie((int)attackSeigeLoss);
+            Log.i("attackloss", "attackers tot " + battle.getAttacker().getNumInf());
+            Army1.setText("Attacker: " + battle.attacker.armyName);
+            Army2.setText("Defender: " + battle.defender.armyName);
 
-            Army1.setText("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
-            Army2.setText("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
+            Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
+            Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
 
 
             //builds the alert dialog
