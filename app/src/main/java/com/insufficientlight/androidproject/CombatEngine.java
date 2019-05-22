@@ -72,7 +72,7 @@ class CombatEngine
         // Fail safes for empty ranks
         if (defenderInf > 0)
         {
-            attackerLosses = ((defenderInf / 50) * getRandomNumberInRange(2, 3));
+            attackerLosses = ((defenderInf / 10) * getRandomNumberInRange(2, 3));
         }
         if (defenderArc > 0)
         {
@@ -129,7 +129,7 @@ class CombatEngine
         }
         else
         {
-            defenderCavNewCount = (skirmish.getBattle().getDefender().getNumArc() - defenderArcherLosses);
+            defenderCavNewCount = (skirmish.getBattle().getDefender().getNumCav() - defenderCavLosses);
         }
 
         // Fail Safes for depleted ranks
@@ -155,7 +155,7 @@ class CombatEngine
         }
         else
         {
-            attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumArc() - attackerArcherLosses);
+            attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumCav() - attackerCavLosses);
         }
 
 

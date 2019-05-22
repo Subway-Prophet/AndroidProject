@@ -7,15 +7,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+//import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.auth.FirebaseUser;
+
 public class GameActivity extends AppCompatActivity
 {
     public static Button Bat;
+    public Button signInBut;
+    //private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         //Don't put stuff before the super.onCreate
         super.onCreate(savedInstanceState);
+
+        //mAuth = FirebaseAuth.getInstance();
+
         setContentView(R.layout.activity_main);
         final Army army1 = new Army("Testville first company", 1,300, 100, 0 , 10 );
         final Army army2 = new Army("Testburg second legion", 2, 200, 100, 75, 25);
@@ -27,6 +35,7 @@ public class GameActivity extends AppCompatActivity
         final Unit cavalry = new Unit ("Cavalry", 5, 2, false);
         final Unit siegeWeapon = new Unit ("Ballista", 1, 3, true);
         Bat = findViewById(R.id.button);
+      //  signInBut = findViewById(R.id.signInButton);
 
         //CombatEngine.battleLoop( army1, army2);
 
@@ -63,7 +72,23 @@ public class GameActivity extends AppCompatActivity
                 }
             }**/
         });
+
+        //signInBut.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+       //     public void onClick(View view) {
+
+       //     }
+     //   });
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        //FirebaseUser currentUser = mAuth.getCurrentUser();
+        //updateUI(currentUser);
+    }
+
 
 }
 
