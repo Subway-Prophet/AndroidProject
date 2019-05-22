@@ -75,7 +75,6 @@ public class BattleActivity extends GameActivity
         setContentView(R.layout.activity_battle);
 
         NumberPicker Formation = (NumberPicker) findViewById(R.id.form);
-        NumberPicker ArcherTactics = (NumberPicker) findViewById(R.id.arch);
         NumberPicker CavalryTactics = (NumberPicker) findViewById(R.id.cav);
 
         Title = findViewById(R.id.titleView);
@@ -90,23 +89,18 @@ public class BattleActivity extends GameActivity
         //Set up for the tactics spinners
 
         final String[] Formations = {"Shield Wall","Phalanx", "Turtle Formation"};
-        final String[] ArcTac = {"Careful Volleys", "Full Volleys", "Protect Flanks"};
         final String[] CavTac = {"Charge Front Lines","Flanking Operation", "Hold Cavalry"};
 
         Formation.setMinValue(0);
-        ArcherTactics.setMinValue(0);
         CavalryTactics.setMinValue(0);
 
         Formation.setMaxValue(2);
-        ArcherTactics.setMaxValue(2);
         CavalryTactics.setMaxValue(2);
 
         Formation.setDisplayedValues(Formations);
-        ArcherTactics.setDisplayedValues(ArcTac);
         CavalryTactics.setDisplayedValues(CavTac);
 
         Formation.setWrapSelectorWheel(true);
-        ArcherTactics.setWrapSelectorWheel(true);
         CavalryTactics.setWrapSelectorWheel(true);
 
 
@@ -119,9 +113,11 @@ public class BattleActivity extends GameActivity
         Army2.append("\n Infantry: " + battle.defender.numInf + "\n Archers: " + battle.defender.numArc + "\n Cavalry :" + battle.defender.numCav +"\n Siege Weapons: " + battle.defender.numSie);
 
 
-        playerchoose.setOnClickListener(new View.OnClickListener() {
+        playerchoose.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 player = "player2";
                 //Multiplayer_Logic.setSingleData(multiplayerData.getCommandDecitionKey(), player, "not");
             }
@@ -136,14 +132,6 @@ public class BattleActivity extends GameActivity
             public void onValueChange(NumberPicker picker, int oldVal, int newVal)
             {
                 p1t = Formations[newVal];
-            }
-        });
-        ArcherTactics.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
-        {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal)
-            {
-                p1a = ArcTac[newVal];
             }
         });
         CavalryTactics.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
@@ -284,6 +272,19 @@ public class BattleActivity extends GameActivity
                 Army2.setText("Defender: " + battle.defender.armyName);
                 Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() + "\n Siege Weapons: " + battle.getAttacker().getNumSie());
                 Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() + "\n Siege Weapons: " + battle.getDefender().getNumSie());
+        if (side.equals("attacker"))
+        { //android.os.SystemClock.sleep(500);
+        Log.i("Helen, help lol", "onClick: don't die keed");
+        p2t = "Shield Wall";
+        p2c = "Charge Front Lines";
+        StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p2t, p2c);
+        CombatEngine.calculateLosses(skirmish);
+        count = count + 1;
+        Title.setText("The battle of "+ battle.getLocation()+"!");
+        Army1.setText("Attacker: " + battle.attacker.armyName);
+        Army2.setText("Defender: " + battle.defender.armyName);
+        Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
+        Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
 
 
                 Log.i("Sheed", "Noooo Halp");
@@ -372,6 +373,11 @@ public class BattleActivity extends GameActivity
 
                 Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() + "\n Siege Weapons: " + battle.getDefender().getNumSie());
                 Army1.append("\n Infantry: " + String.valueOf(battle.getAttacker().getNumInf()) + "\n Archers: " + String.valueOf(battle.getAttacker().getNumArc()) + "\n Cavalry :" + String.valueOf(battle.getAttacker().getNumCav()) + "\n Siege Weapons: " + String.valueOf(battle.getAttacker().getNumSie()));
+            Army1.setText("Attacker: " + battle.attacker.armyName);
+            Army2.setText("Defender: " + battle.defender.armyName);
+
+            Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
+            Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
 
 
                 //builds the alert dialog
