@@ -306,8 +306,6 @@ public class BattleActivity extends GameActivity
                 int seigeLosses = CombatEngine.defenderSiegeLosses;
 
 
-                Multiplayer_Logic.setFiveData(multiplayerData.getDefendLossesReferance(), "defenderID", "infLosses", "archLosses", "cavLosses", "seigeLosses", "player2", infLoss, archLosses, cavLosses, seigeLosses);
-                Multiplayer_Logic.setFiveData(multiplayerData.getAttackerLossesReferance(), "attackerID", "infLosses", "archLosses", "cavLosses", "seigeLosses", "player2", CombatEngine.attackerNewCount, CombatEngine.attackerArcNewCount, CombatEngine.attackerCavNewCount, CombatEngine.attackerSiegeNewCount);
 
 
                 builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
@@ -321,7 +319,14 @@ public class BattleActivity extends GameActivity
                 alert.setTitle("Troops Lost In Battle");
                 alert.show();
                 Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1", "player2", "not", "not");
+
+
+
+
                 // ends building the alert dialog
+
+                Multiplayer_Logic.setSixData(multiplayerData.getDefendLossesReferance(), "defenderID", "infLosses", "archLosses", "cavLosses", "seigeLosses",  "changeCheck","player2", infLoss, archLosses, cavLosses, seigeLosses, "changed"+Math.random());
+                Multiplayer_Logic.setSixData(multiplayerData.getAttackerLossesReferance(), "attackerID", "infLosses", "archLosses", "cavLosses", "seigeLosses", "changeCheck","player1", skirmish.getBattle().getAttacker().getNumInf(), skirmish.getBattle().getAttacker().getNumArc(), skirmish.getBattle().getAttacker().getNumCav(), skirmish.getBattle().getAttacker().getNumSie(),"changed"+Math.random());
 
             }
 
@@ -381,15 +386,9 @@ public class BattleActivity extends GameActivity
                 AlertDialog alert = builder.create();
                 alert.setTitle("Troops Lost In Battle12");
                 alert.show();
-                    dialogInterface.dismiss();
-                }
-            });
-            //sets the title and shows it
-            AlertDialog alert = builder.create();
-            alert.setTitle("Troops Lost In Battle");
-            alert.show();
 
-            }
+                }
+
         }
     }
 
