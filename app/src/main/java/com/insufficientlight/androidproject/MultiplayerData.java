@@ -26,9 +26,13 @@ public class MultiplayerData
     { mGameReferance = gameReferance; }
 
     public DocumentReference getCombatCommandReferance()
-    { return mCombatCommandReferance; }
+    {
+        return mCombatCommandReferance;
+    }
     public void setCombatCommandReferance(DocumentReference combatCommandReferance)
-    { mCombatCommandReferance = combatCommandReferance; }
+    {
+        mCombatCommandReferance = combatCommandReferance;
+    }
 
     public DocumentReference getDefendLossesReferance()
     { return mDefendLossesReferance; }
