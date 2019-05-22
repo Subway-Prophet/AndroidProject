@@ -27,5 +27,6 @@ how to do it properly the first day was better than having to redo it after not 
 thing left now is to figure out how to export each province svg indivdually and position them correctly in the xml files.
 Jason got the datapassing portion of the combat engine working using Cloud Firesstore. Once the signin portion of the Google Games Services was working it became more and more apparent that it's restrictive nature wouldn't work for all parts of the app. Eventually it may be sued for the turn transfer, though for the time being FireStore will be used.
 
-
+5-21-19
+Levy created banners for player identification
 
