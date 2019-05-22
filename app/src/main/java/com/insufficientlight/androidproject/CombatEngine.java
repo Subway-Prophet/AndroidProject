@@ -191,6 +191,3 @@ class CombatEngine
             Log.i("It ran an did not", "Noooo Halp");
     }
 }
-
-
-
