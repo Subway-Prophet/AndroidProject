@@ -258,22 +258,8 @@ public class BattleActivity extends GameActivity
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             String displayString = "";
 
-            if (side.equals("attacker")) { //android.os.SystemClock.sleep(500);
-                Log.i("1010", "ATTATCKERBATTLLE CALLED");
-                Log.i("Helen, help lol", "onClick: don't die keed");
-                p2t = "Shield Wall";
-                p2a = "Careful Volleys";
-                p2c = "Charge Front Lines";
-                StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle, p1t, p1c, p1a, p2t, p2c, p2a);
-                CombatEngine.calculateLosses(skirmish);
-                count = count + 1;
-                Title.setText("The battle of " + battle.getLocation() + "!");
-                Army1.setText("Attacker: " + battle.attacker.armyName);
-                Army2.setText("Defender: " + battle.defender.armyName);
-                Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() + "\n Siege Weapons: " + battle.getAttacker().getNumSie());
-                Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() + "\n Siege Weapons: " + battle.getDefender().getNumSie());
         if (side.equals("attacker"))
-        { //android.os.SystemClock.sleep(500);
+        {
         Log.i("Helen, help lol", "onClick: don't die keed");
         p2t = "Shield Wall";
         p2c = "Charge Front Lines";
@@ -366,18 +352,18 @@ public class BattleActivity extends GameActivity
                 battle.getAttacker().setNumCav((int) attackCavLoss);
                 battle.getAttacker().setNumArc((int) attackArchLoss);
                 battle.getAttacker().setNumSie((int) attackSeigeLoss);
-                Log.i("attackloss", "attackers tot " + battle.getAttacker().getNumInf());
-                Army1.setText("Attacker: " + battle.attacker.armyName + battle.getAttacker().getNumInf());
+                Log.i("defffffff", "defffffff tot " + battle.getDefender().getNumCav());
+
+                Army1.setText("Attacker: " + battle.attacker.armyName);
                 Army2.setText("Defender: " + battle.defender.armyName);
 
 
                 Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() + "\n Siege Weapons: " + battle.getDefender().getNumSie());
                 Army1.append("\n Infantry: " + String.valueOf(battle.getAttacker().getNumInf()) + "\n Archers: " + String.valueOf(battle.getAttacker().getNumArc()) + "\n Cavalry :" + String.valueOf(battle.getAttacker().getNumCav()) + "\n Siege Weapons: " + String.valueOf(battle.getAttacker().getNumSie()));
-            Army1.setText("Attacker: " + battle.attacker.armyName);
-            Army2.setText("Defender: " + battle.defender.armyName);
 
-            Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
-            Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
+
+            //Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
+           // Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
 
 
                 //builds the alert dialog
@@ -399,4 +385,5 @@ public class BattleActivity extends GameActivity
     }
 
 }
+
 
