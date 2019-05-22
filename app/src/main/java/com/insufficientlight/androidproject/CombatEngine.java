@@ -129,7 +129,7 @@ class CombatEngine
         }
         else
         {
-            defenderCavNewCount = (skirmish.getBattle().getDefender().getNumArc() - defenderArcherLosses);
+            defenderCavNewCount = (skirmish.getBattle().getDefender().getNumCav() - defenderCavLosses);
         }
 
         // Fail Safes for depleted ranks
@@ -155,7 +155,7 @@ class CombatEngine
         }
         else
         {
-            attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumArc() - attackerArcherLosses);
+            attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumCav() - attackerCavLosses);
         }
 
 
