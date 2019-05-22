@@ -157,7 +157,7 @@ class CombatEngine
         {
             attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumCav() - attackerCavLosses);
         }
-
+        // Yeet
 
 
 
