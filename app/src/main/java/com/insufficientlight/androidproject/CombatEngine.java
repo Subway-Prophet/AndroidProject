@@ -156,15 +156,15 @@ class CombatEngine
             Log.i("It ran an did not", "Noooo Halp attacker " + attackerLosses);
 
             //Does some in between math because java hates me
-            attackerNewCount = (skirmish.getBattle().getAttacker().getNumInf() - attackerLosses);
-            attackerArcNewCount = (skirmish.getBattle().getAttacker().getNumArc() - attackerArcherLosses);
-            attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumCav() - attackerCavLosses);
+            //attackerNewCount = (skirmish.getBattle().getAttacker().getNumInf() - attackerLosses);
+            //attackerArcNewCount = (skirmish.getBattle().getAttacker().getNumArc() - attackerArcherLosses);
+            //attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumCav() - attackerCavLosses);
             attackerSiegeNewCount = (skirmish.getBattle().getAttacker().getNumSie() - attackerSiegeLosses);
 
             //Does some in between math because java hates me
-            defenderNewCount = (skirmish.getBattle().getDefender().getNumInf() - defenderLosses);
-            defenderArcNewCount = (skirmish.getBattle().getDefender().getNumArc() - defenderArcherLosses);
-            defenderCavNewCount = (skirmish.getBattle().getDefender().getNumCav() - defenderCavLosses);
+            //defenderNewCount = (skirmish.getBattle().getDefender().getNumInf() - defenderLosses);
+            //defenderArcNewCount = (skirmish.getBattle().getDefender().getNumArc() - defenderArcherLosses);
+            //defenderCavNewCount = (skirmish.getBattle().getDefender().getNumCav() - defenderCavLosses);
             defenderSiegeNewCount = (skirmish.getBattle().getDefender().getNumSie() - defenderSiegeLosses);
 
             //Sets the attackers losses
