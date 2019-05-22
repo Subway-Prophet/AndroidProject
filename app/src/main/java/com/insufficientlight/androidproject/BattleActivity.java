@@ -117,9 +117,11 @@ public class BattleActivity extends GameActivity
         Army2.append("\n Infantry: " + battle.defender.numInf + "\n Archers: " + battle.defender.numArc + "\n Cavalry :" + battle.defender.numCav +"\n Siege Weapons: " + battle.defender.numSie);
 
 
-        playerchoose.setOnClickListener(new View.OnClickListener() {
+        playerchoose.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 player = "player2";
                 //Multiplayer_Logic.setSingleData(multiplayerData.getCommandDecitionKey(), player, "not");
             }

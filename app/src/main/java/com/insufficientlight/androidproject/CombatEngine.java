@@ -82,6 +82,11 @@ class CombatEngine
         {
             attackerArcherLosses = (defenderCav / 50) * getRandomNumberInRange(2, 5);
         }
+        if (defenderSie > 0)
+        {
+            attackerLosses = attackerLosses + (defenderSie) * getRandomNumberInRange(2, 6);
+        }
+
         // Fail safes for empty ranks
         if (attackerInf > 0)
         {
@@ -94,6 +99,10 @@ class CombatEngine
         if (attackerCav > 0)
         {
             defenderArcherLosses = (attackerCav / 50) * getRandomNumberInRange(2, 5);
+        }
+        if (attackerSie > 0)
+        {
+            defenderLosses = defenderLosses + (attackerSie) * getRandomNumberInRange(2, 6);
         }
 
 
