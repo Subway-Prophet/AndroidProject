@@ -72,7 +72,7 @@ class CombatEngine
         // Fail safes for empty ranks
         if (defenderInf > 0)
         {
-            attackerLosses = ((defenderInf / 50) * getRandomNumberInRange(2, 3));
+            attackerLosses = ((defenderInf / 10) * getRandomNumberInRange(2, 3));
         }
         if (defenderArc > 0)
         {
