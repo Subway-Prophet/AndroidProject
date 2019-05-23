@@ -41,8 +41,8 @@ public class GameActivity extends AppCompatActivity
 
 
         setContentView(R.layout.activity_main);
-        final Army army1 = new Army("Testville first company", 1,300, 100, 0 , 10 );
-        final Army army2 = new Army("Testburg second legion", 2, 200, 100, 75, 25);
+        final Army army1 = new Army("Testville first company", 1,600, 300, 150 , 25 );
+        final Army army2 = new Army("Testburg second legion", 2, 500, 300, 200, 30);
         final Terrain Planes = new Terrain("Planes", 300,  0, 2, 1, true,   false, false);
         final Terrain Hills = new Terrain("Hills", 200,  1, 1, 2, false,   true, false);
         final Terrain Fort = new Terrain("Fort", 50,  2, 1, 3, false,   false, true);
