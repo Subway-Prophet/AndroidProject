@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class GameActivity extends AppCompatActivity
 {
@@ -26,7 +25,7 @@ public class GameActivity extends AppCompatActivity
         final Unit archer = new Unit ("Archer", 2, 1, true);
         final Unit cavalry = new Unit ("Cavalry", 5, 2, false);
         final Unit siegeWeapon = new Unit ("Ballista", 1, 3, true);
-        Bat = findViewById(R.id.button);
+        Bat = findViewById(R.id.startButton);
 
         //CombatEngine.battleLoop( army1, army2);
 

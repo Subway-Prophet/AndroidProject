@@ -73,7 +73,7 @@ public class BattleActivity extends GameActivity
         setContentView(R.layout.activity_battle);
 
         NumberPicker Formation = (NumberPicker) findViewById(R.id.form);
-        NumberPicker ArcherTactics = (NumberPicker) findViewById(R.id.arch);
+        //NumberPicker ArcherTactics = (NumberPicker) findViewById(R.id.arch);
         NumberPicker CavalryTactics = (NumberPicker) findViewById(R.id.cav);
 
         Title = findViewById(R.id.titleView);
@@ -92,19 +92,19 @@ public class BattleActivity extends GameActivity
         final String[] CavTac = {"Charge Front Lines","Flanking Operation", "Hold Cavalry"};
 
         Formation.setMinValue(0);
-        ArcherTactics.setMinValue(0);
+        //ArcherTactics.setMinValue(0);
         CavalryTactics.setMinValue(0);
 
         Formation.setMaxValue(2);
-        ArcherTactics.setMaxValue(2);
+        //ArcherTactics.setMaxValue(2);
         CavalryTactics.setMaxValue(2);
 
         Formation.setDisplayedValues(Formations);
-        ArcherTactics.setDisplayedValues(ArcTac);
+       //ArcherTactics.setDisplayedValues(ArcTac);
         CavalryTactics.setDisplayedValues(CavTac);
 
         Formation.setWrapSelectorWheel(true);
-        ArcherTactics.setWrapSelectorWheel(true);
+       //ArcherTactics.setWrapSelectorWheel(true);
         CavalryTactics.setWrapSelectorWheel(true);
 
 
@@ -136,14 +136,14 @@ public class BattleActivity extends GameActivity
                 p1t = Formations[newVal];
             }
         });
-        ArcherTactics.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
+        /*ArcherTactics.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
         {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal)
             {
                 p1a = ArcTac[newVal];
             }
-        });
+        });*/
         CavalryTactics.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
         {
             @Override
