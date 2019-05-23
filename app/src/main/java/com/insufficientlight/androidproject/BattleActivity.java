@@ -354,6 +354,12 @@ public class BattleActivity extends GameActivity
         p2t = "Shield Wall";
         p2c = "Charge Front Lines";
 
+        int infAtk = battle.getAttacker().getNumInf();
+        int archAtk = battle.getAttacker().getNumArc();
+        int cavAtk = battle.getAttacker().getNumCav();
+        int sieAtk = battle.getAttacker().getNumSie();
+
+
         StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p2t, p2c);
         CombatEngine.calculateLosses(skirmish);
         count = count + 1;
@@ -366,14 +372,18 @@ public class BattleActivity extends GameActivity
 
                 Log.i("Sheed", "Noooo Halp");
 
+            int infAtkLoss =infAtk- battle.getAttacker().getNumInf();
+            int archAtkLoss = archAtk - battle.getAttacker().getNumArc();
+            int cavAtkLoss = cavAtk -battle.getAttacker().getNumCav();
+            int sieAtkLoss = sieAtk -battle.getAttacker().getNumSie();
 
 
                 //The following lines of code create the atert dialog that show the total troops losses for each palyer
                 //In the future player IDs will in some form be pulled from the battle object or simmiler
                 // Builds the content of the dialog from the data of combat engine.
-                displayString = "Infantry Lost: " + CombatEngine.attackerLosses + "\n Archers Lost: " +
-                        CombatEngine.attackerArcherLosses + "\n Cavalry Lost: " + CombatEngine.attackerCavLosses +
-                        "\n Seige Weapons Lost: " + CombatEngine.attackerSiegeLosses;
+                displayString = "Infantry Lost: " + infAtkLoss + "\n Archers Lost: " +
+                        archAtkLoss + "\n Cavalry Lost: " + cavAtkLoss +
+                        "\n Seige Weapons Lost: " + sieAtkLoss;
 
 
 
@@ -406,10 +416,10 @@ public class BattleActivity extends GameActivity
 
 
                 //sets the new army size for the defender defend
-                int infLoss = battle.getDefender().getNumInf() - (int) defendInf;
-                int cavLoss = battle.getDefender().getNumCav()-(int) defendCav;
-                int archLoss = battle.getDefender().getNumArc()-(int) defendArch;
-                int sieLoss = battle.getDefender().getNumSie()-(int) defendSiege;
+                int infLossDef = battle.getDefender().getNumInf() - (int) defendInf;
+                int cavLossDef = battle.getDefender().getNumCav()-(int) defendCav;
+                int archLossDef = battle.getDefender().getNumArc()-(int) defendArch;
+                int sieLossDef = battle.getDefender().getNumSie()-(int) defendSiege;
 
 
                 battle.getDefender().setNumInf((int) defendInf);
@@ -431,9 +441,9 @@ public class BattleActivity extends GameActivity
 
 
                 //creates the string to display from losses data
-                displayString = "Infantry Lost: " + infLoss + "\n Archers Lost: " +
-                        archLoss + "\n Cavalry Lost: " + cavLoss +
-                        "\n Seige Weapons Lost: " + sieLoss;
+                displayString = "Infantry Lost: " + infLossDef + "\n Archers Lost: " +
+                        archLossDef + "\n Cavalry Lost: " + cavLossDef +
+                        "\n Seige Weapons Lost: " + sieLossDef;
 
                 //builds the alert dialog
                 builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
