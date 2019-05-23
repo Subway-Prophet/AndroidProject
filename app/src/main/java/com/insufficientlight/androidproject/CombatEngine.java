@@ -72,7 +72,11 @@ class CombatEngine
         // Fail safes for empty ranks
         if (defenderInf > 0)
         {
-            attackerLosses = ((defenderInf / 10) * getRandomNumberInRange(2, 3));
+            attackerLosses = ((defenderInf / 50) * getRandomNumberInRange(2, 3));
+            if ((attackerCav > 0) && (defenderInf > attackerInf) && (defenderCav == 0))
+            {
+                attackerCavLosses = (defenderInf /100) * getRandomNumberInRange(1, 5);
+            }
         }
         if (defenderArc > 0)
         {
@@ -80,7 +84,23 @@ class CombatEngine
         }
         if (defenderCav > 0)
         {
-            attackerArcherLosses = (defenderCav / 50) * getRandomNumberInRange(2, 5);
+            if (attackerCav == 0 && attackerArc != 0)
+            {
+                attackerArcherLosses = attackerArcherLosses + (defenderCav / 40) * getRandomNumberInRange(2, 5);
+            }
+            else if (attackerCav != 0)
+            {
+                attackerCavLosses = attackerCavLosses + (defenderCav / 40) * getRandomNumberInRange(2, 5);
+            }
+            else if (defenderSie > 0)
+            {
+                attackerSiegeLosses = attackerSiegeLosses + (defenderCav / 40) * getRandomNumberInRange(2, 5);
+            }
+            else
+            {
+                attackerLosses = attackerLosses + ((defenderCav / 40) * getRandomNumberInRange(2, 5));
+            }
+
         }
         if (defenderSie > 0)
         {
@@ -91,6 +111,10 @@ class CombatEngine
         if (attackerInf > 0)
         {
             defenderLosses = ((attackerInf / 50) * getRandomNumberInRange(2, 3));
+            if ((defenderCav > 0) && (attackerInf > defenderInf) && (attackerCav == 0))
+            {
+                attackerCavLosses = (attackerInf /100) * getRandomNumberInRange(1, 5);
+            }
         }
         if (attackerArc > 0)
         {
@@ -98,7 +122,22 @@ class CombatEngine
         }
         if (attackerCav > 0)
         {
-            defenderArcherLosses = (attackerCav / 50) * getRandomNumberInRange(2, 5);
+            if (defenderCav == 0 && defenderArc != 0)
+            {
+                defenderArcherLosses = defenderArcherLosses + (attackerCav / 40) * getRandomNumberInRange(2, 5);
+            }
+            else if (defenderCav != 0)
+            {
+                defenderCavLosses = defenderCavLosses + (attackerCav / 40) * getRandomNumberInRange(2, 5);
+            }
+            else if (defenderSie > 0)
+            {
+                defenderSiegeLosses = defenderSiegeLosses + (attackerCav / 40) * getRandomNumberInRange(2, 5);
+            }
+            else
+            {
+                defenderLosses = defenderLosses + ((attackerCav / 40) * getRandomNumberInRange(2, 5));
+            }
         }
         if (attackerSie > 0)
         {
@@ -160,8 +199,7 @@ class CombatEngine
 
 
 
-
-        Log.i("It ran an did not", "Noooo Halp defender " + defenderLosses);
+            Log.i("It ran an did not", "Noooo Halp defender " + defenderLosses);
             Log.i("It ran an did not", "Noooo Halp attacker " + attackerLosses);
 
             //Does some in between math because java hates me
