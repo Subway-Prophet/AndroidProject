@@ -22,7 +22,7 @@ class CombatEngine
         if (min >= max)
         {
             throw new IllegalArgumentException("max must be greater than min");
-            //yeet
+
         }
 
         Random r = new Random();
@@ -96,7 +96,23 @@ class CombatEngine
         }
         if (defenderArc > 0)
         {
-            attackerLosses = attackerLosses + (defenderArc / 50) * getRandomNumberInRange(2, 4);
+            if (attackerInf > 0)
+            {
+                attackerLosses = attackerLosses + (defenderArc / 50) * getRandomNumberInRange(2, 4);
+            }
+            else if (attackerArc > 0)
+            {
+                attackerArcherLosses = attackerArcherLosses + (defenderArc / 50) * getRandomNumberInRange(2, 4);
+            }
+            else if (attackerCav > 0)
+            {
+                attackerCavLosses = attackerCavLosses + (defenderArc / 50) * getRandomNumberInRange(2, 4);
+            }
+            else if (attackerSie > 0)
+            {
+                attackerSiegeLosses = attackerSiegeLosses + (defenderArc / 50) * getRandomNumberInRange(2, 4);
+            }
+
         }
         if (defenderCav > 0)
         {
@@ -148,7 +164,22 @@ class CombatEngine
         }
         if (attackerArc > 0)
         {
-            defenderLosses = defenderLosses + (attackerArc / 50) * getRandomNumberInRange(2, 4);
+            if (defenderInf > 0)
+            {
+                defenderLosses = defenderLosses + (attackerArc / 50) * getRandomNumberInRange(2, 4);
+            }
+            else if (defenderArc > 0)
+            {
+                defenderArcherLosses = defenderArcherLosses + (attackerArc / 50) * getRandomNumberInRange(2, 4);
+            }
+            else if (defenderCav > 0)
+            {
+                defenderCavLosses = defenderCavLosses + (attackerArc / 50) * getRandomNumberInRange(2, 4);
+            }
+            else if (defenderSie > 0)
+            {
+                defenderSiegeLosses = defenderSiegeLosses + (attackerArc / 50) * getRandomNumberInRange(2, 4);
+            }
         }
         if (attackerCav > 0)
         {
