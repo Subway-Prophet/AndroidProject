@@ -70,30 +70,35 @@ public class BattleActivity extends GameActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle);
         // sets defaults, will probably be changed in the future as more complexity happens.
+
+
+        //Shows prograss dialog while important tasks are completed. Will be dissmissed after player data is set
         final ProgressDialog pDialog = ProgressDialog.show(BattleActivity.this,
                 "Please Wait",
                 "Loading...",
                 true);
 
+
+        //Sets the userId to the Uid(unique ID) provided by firebase for the signed in user
         final String  userID = user.getUid();
 
 
         //Batrun is a control variable that ensures the combat engine only runs once per cycle
         batRan = 0;
 
+
         // creates the builder that will be used for alert dialogs
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
 
         //Clears out the commands document prior the rest of the code running
         Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecisionKey(), "attacker1","defender1", "not","not");
 
 
-
-
-
         //Number pickers used for strategy
         NumberPicker Formation = (NumberPicker) findViewById(R.id.form);
         NumberPicker CavalryTactics = (NumberPicker) findViewById(R.id.cav);
+
 
         Title = findViewById(R.id.titleView);
         Army1 = findViewById(R.id.attackerView);
@@ -127,6 +132,13 @@ public class BattleActivity extends GameActivity
         Army2.append("\n Infantry: " + battle.defender.numInf + "\n Archers: " + battle.defender.numArc + "\n Cavalry :" + battle.defender.numCav +"\n Siege Weapons: " + battle.defender.numSie);
 
 
+        /**
+         * The following button starts a set of tasks that accomplish the following:
+         * -Determine if the userIDs in the data abse are new or old,
+         * -Determine if there is another user already set
+         * -If a user is there it sets the current user as the opposite
+         * -If there is none it picks randomly between attacker/defender and uploads the data
+         */
         multiplayerData.getmUserIdReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -142,7 +154,6 @@ public class BattleActivity extends GameActivity
                                 player = "defender1";
                                 Title.append(" You are the DEFENDER1");
                             }
-
                         }
                         else {
                             if (documentSnapshot.contains("attacker") && !documentSnapshot.contains("defender")) {
@@ -183,8 +194,10 @@ public class BattleActivity extends GameActivity
             }
         });
 
-        //Listeners for the tactics spinners
 
+
+
+        //Listeners for the tactics spinners
         Formation.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
         {
             @Override
@@ -201,6 +214,7 @@ public class BattleActivity extends GameActivity
                 p1c = CavTac[newVal];
             }
         });
+
 
         /**
          * When the ready button is clicked this method will run. It handles setting commands on the database and running them if possible.
@@ -248,6 +262,8 @@ public class BattleActivity extends GameActivity
                 });
             }
         });
+
+
 
         /**
          * Monitors the battle command document for any changes, if both are set to ready it runs battle loop for the attacker only
@@ -309,8 +325,16 @@ public class BattleActivity extends GameActivity
     }
 
 
-
-    //The battle loop executing billy's code
+    /**
+     * RunBat is the method called to run the combat engine when both players are ready. In doing so it completes the following tasks
+     * -Determines if it is the defender or attacker running the method.
+     *
+     * If it's the attacker it will run combatEngine, update the troop numbers on screen, show an alertDialog with troop losses, and uploads the new troop counts to the database for the defender to pull.
+     *
+     * If it's the defender it will  be trigered by the database being updated.
+     * It then updates the troop counts with the pulled data, and displaies an alertDialog with the troop losses.
+     *
+     */
     public void runBat(String side)
     {
         multiplayerData.getmUserIdReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -329,6 +353,7 @@ public class BattleActivity extends GameActivity
         Log.i("Helen, help lol", "onClick: don't die keed");
         p2t = "Shield Wall";
         p2c = "Charge Front Lines";
+
         StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p2t, p2c);
         CombatEngine.calculateLosses(skirmish);
         count = count + 1;
@@ -346,9 +371,6 @@ public class BattleActivity extends GameActivity
                 //The following lines of code create the atert dialog that show the total troops losses for each palyer
                 //In the future player IDs will in some form be pulled from the battle object or simmiler
                 // Builds the content of the dialog from the data of combat engine.
-
-                //For testing player1 is the attacker and player2 is the defender. In the future this would be determined through stored player ids and their actions
-
                 displayString = "Infantry Lost: " + CombatEngine.attackerLosses + "\n Archers Lost: " +
                         CombatEngine.attackerArcherLosses + "\n Cavalry Lost: " + CombatEngine.attackerCavLosses +
                         "\n Seige Weapons Lost: " + CombatEngine.attackerSiegeLosses;
@@ -427,10 +449,7 @@ public class BattleActivity extends GameActivity
                 alert.show();
 
                 }
-
         }
-
-
     }
 
     public void cancelLoadDialog(ProgressDialog dialog)
