@@ -45,3 +45,10 @@ combat
 -Fixed battleActivity error where troop counts would be updated before data was synced
 -Reworked combat logic in CombateEngine
 -Fixed combat bug where troop counts would go bellow 0
+
+5-22 to 5-24
+-Intigrated home screen UI
+-Intigrated battle screen UI
+-Minor Bug Fixed
+-Added logic to combat engine
+
