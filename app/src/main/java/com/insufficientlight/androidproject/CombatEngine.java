@@ -177,7 +177,7 @@ class CombatEngine
         }
         else
         {
-            defenderSiegeNewCount = (skirmish.getBattle().getAttacker().getNumSie() - attackerSiegeLosses);
+            defenderSiegeNewCount = (skirmish.getBattle().getDefender().getNumSie() - defenderSiegeLosses);
         }
 
         // Fail Safes for depleted ranks

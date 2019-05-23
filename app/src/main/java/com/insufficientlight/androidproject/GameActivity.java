@@ -20,7 +20,7 @@ import java.util.List;
 public class GameActivity extends AppCompatActivity
 {
     public static Button Bat;
-    public com.google.android.gms.common.SignInButton signInBut;
+    public Button signInBut;
     private FirebaseAuth mAuth;
     private int RC_SIGN_IN = 1;
 
