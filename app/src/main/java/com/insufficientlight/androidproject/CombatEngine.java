@@ -22,6 +22,7 @@ class CombatEngine
         if (min >= max)
         {
             throw new IllegalArgumentException("max must be greater than min");
+            //yeet
         }
 
         Random r = new Random();
