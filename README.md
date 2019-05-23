@@ -15,26 +15,26 @@ See deployment for notes on how to deploy the project on a live system.
 
 ## Installation and Setup
 After Cloning your copy of the program you will need to add firebase to the project, follow these steps in android studio:
-- Click tools in the toolbar, hit firebase
-- Then scroll down to Firestore and expand it and click the blue link "read and write..."
-- Click the button in #1 and sign in with the your android development account,
-- In the "Connect to Firebase" dialog that shows up you will need to select "create new..."
-- Then hit "Add Cloud Firestore to your app" in #2 and accept the dependencies
+1. Click tools in the toolbar, hit firebase
+2. Then scroll down to Firestore and expand it and click the blue link "read and write..."
+3 Click the button in #1 and sign in with the your android development account,
+4. In the "Connect to Firebase" dialog that shows up you will need to select "create new..."
+5. Then hit "Add Cloud Firestore to your app" in #2 and accept the dependencies
 
 At this point you will need to add the Auth dependencies. You can do so by going back to tools, Firebase, and then hitting "Authentication", and clicking on the linked dialog. Then hit the button in #2.
 
 Lastly you will need to setup the database, and authentication though the firebase consol.
-- Go to https://console.firebase.google.com and login with your development account
-- On the left side click on "Database" and then the "Create Database" button in the middle of the screen
-- We are currently using "test mode" though you could use locked mode if you wanted to setup the security rules
+1. Go to https://console.firebase.google.com and login with your development account
+2  On the left side click on "Database" and then the "Create Database" button in the middle of the screen
+3. We are currently using "test mode" though you could use locked mode if you wanted to setup the security rules
 
 The databse is now configered. The structure will be added automaticly on app start.
 
 To add authentication click "Authentication" on the left side of the screen
-- Click "Sign-in Method" on the top bar
-- Click "Google"
-- Click the "Enable" switch and input a project name.
-- Hit save.
+1. Click "Sign-in Method" on the top bar
+2. Click "Google"
+3. Click the "Enable" switch and input a project name.
+4 Hit save.
 
 You should now be done with the basic setup.
 
