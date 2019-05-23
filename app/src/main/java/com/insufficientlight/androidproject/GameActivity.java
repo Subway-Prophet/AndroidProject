@@ -35,8 +35,7 @@ public class GameActivity extends AppCompatActivity
 
         mAuth = FirebaseAuth.getInstance();
         final List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.GoogleBuilder().build(),
-                new AuthUI.IdpConfig.EmailBuilder().build());
+                new AuthUI.IdpConfig.GoogleBuilder().build());
 
 
 

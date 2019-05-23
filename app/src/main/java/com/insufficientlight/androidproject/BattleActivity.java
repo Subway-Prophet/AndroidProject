@@ -151,31 +151,31 @@ public class BattleActivity extends GameActivity
                             if (Math.random() < 0.5) {
                                 Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "attacker", "playCheck", userID, "false");
                                 player = "attacker1";
-                                Title.append(" You are the ATTACKER1");
+                                Title.append(" \n You are the ATTACKER");
                             } else {
                                 Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "defender", "playCheck", userID, "false");
                                 player = "defender1";
-                                Title.append(" You are the DEFENDER1");
+                                Title.append(" \n You are the DEFENDER");
                             }
                         }
                         else {
                             if (documentSnapshot.contains("attacker") && !documentSnapshot.contains("defender")) {
                                 Multiplayer_Logic.setThreeData(multiplayerData.mUserIdReferance, "attacker", "defender", "playCheck", documentSnapshot.getString("attacker"), userID, "false");
                                 player = "defender1";
-                                Title.append(" You are the DEFENDER2");
+                                Title.append("\n You are the DEFENDER");
                             } else if (documentSnapshot.contains("defender") && !documentSnapshot.contains("attacker")) {
                                 Multiplayer_Logic.setThreeData(multiplayerData.mUserIdReferance, "attacker", "defender","playCheck", userID, documentSnapshot.getString("defender"),"false");
                                 player = "attacker1";
-                                Title.append(" You are the ATTACKER2");
+                                Title.append(" \n You are the ATTACKER");
                             } else {
                                 if (Math.random() < 0.5) {
                                     Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "attacker", "playCheck", userID, "false");
                                     player = "attacker1";
-                                    Title.append(" You are the ATTACKER3");
+                                    Title.append(" \n You are the ATTACKER");
                                 } else {
                                     Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "defender", "playCheck", userID, "false");
                                     player = "defender1";
-                                    Title.append(" You are the DEFENDER3");
+                                    Title.append(" \n You are the DEFENDER");
                                 }
                             }
                         }
@@ -185,11 +185,11 @@ public class BattleActivity extends GameActivity
                         if (Math.random() < 0.5) {
                             Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "attacker", "playCheck", userID, "false");
                             player = "attacker1";
-                            Title.append(" You are the ATTACKER");
+                            Title.append(" \n You are the ATTACKER");
                         } else {
                             Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "defender", "playCheck", userID, "false");
                             player = "defender1";
-                            Title.append(" You are the DEFENDER");
+                            Title.append(" \n You are the DEFENDER");
                         }
                     }
                 }
