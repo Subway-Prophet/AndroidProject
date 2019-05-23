@@ -357,7 +357,7 @@ public class BattleActivity extends GameActivity
         StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p2t, p2c);
         CombatEngine.calculateLosses(skirmish);
         count = count + 1;
-        Title.setText("The battle of "+ battle.getLocation()+"!");
+        //Title.setText("The battle of "+ battle.getLocation()+"!");
         Army1.setText("Attacker: " + battle.attacker.armyName);
         Army2.setText("Defender: " + battle.defender.armyName);
         Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());

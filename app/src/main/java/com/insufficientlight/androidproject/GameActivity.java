@@ -78,7 +78,7 @@ public class GameActivity extends AppCompatActivity
 
                 } else {
                     // No user is signed in
-                    dialogBuilder.setMessage(getString(R.string.sign_in_alert_message)).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+                    dialogBuilder.setMessage("Please Sign in").setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -86,7 +86,7 @@ public class GameActivity extends AppCompatActivity
                         }
                     });
                     AlertDialog alert = dialogBuilder.create();
-                    alert.setTitle(getString(R.string.sign_in_title));
+                    alert.setTitle("All users need to sign in before proceeding");
                     alert.show();
 
                 }
