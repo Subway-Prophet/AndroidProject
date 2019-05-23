@@ -14,12 +14,15 @@ See deployment for notes on how to deploy the project on a live system.
 - Android Studio
 
 ## Installing
-After Cloning your copy of the program, follow these steps in android studio:
+After Cloning your copy of the program you will need to add firebase to the project, follow these steps in android studio:
 - Click tools in the toolbar, hit firebase
 - Then scroll down to Firestore and expand it and click the blue link "read and write..."
 - Click the button in #1 and sign in with the your android development account,
-- In the "Connect to Firebase" dialog that shows up select "Choose and existing Project" along with "AndroidProject".
-You may also need to hit "add cloud firestore to your..." in #2, though I don't think you will have to
+- In the "Connect to Firebase" dialog that shows up you will need to select "create new..."
+- Then hit "Add Cloud Firestore to your app" in #2 and accept the dependencies
+At this point you will need to add the Auth dependencies. You can do so by going back to tools, Firebase, and then hitting "Authentication", and clicking on the linked dialog. Then hit the button in #2.
+
+The next steps will need to be done in the Firebase console while logged into
 
 ## Deployment
 You will need two devices who both have the current version of the app.
