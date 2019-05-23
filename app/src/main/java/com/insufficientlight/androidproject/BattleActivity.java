@@ -97,6 +97,7 @@ public class BattleActivity extends GameActivity
 
         //Number pickers used for strategy
         NumberPicker Formation = (NumberPicker) findViewById(R.id.form);
+        
         NumberPicker CavalryTactics = (NumberPicker) findViewById(R.id.cav);
 
 
@@ -111,6 +112,7 @@ public class BattleActivity extends GameActivity
         final String[] CavTac = {"Charge Front Lines","Flanking Operation", "Hold Cavalry"};
 
         Formation.setMinValue(0);
+
         CavalryTactics.setMinValue(0);
 
         Formation.setMaxValue(2);
@@ -120,6 +122,7 @@ public class BattleActivity extends GameActivity
         CavalryTactics.setDisplayedValues(CavTac);
 
         Formation.setWrapSelectorWheel(true);
+
         CavalryTactics.setWrapSelectorWheel(true);
 
 
@@ -206,6 +209,7 @@ public class BattleActivity extends GameActivity
                 p1t = Formations[newVal];
             }
         });
+
         CavalryTactics.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
         {
             @Override

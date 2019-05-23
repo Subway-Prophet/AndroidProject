@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -52,8 +51,10 @@ public class GameActivity extends AppCompatActivity
         final Unit archer = new Unit ("Archer", 2, 1, true);
         final Unit cavalry = new Unit ("Cavalry", 5, 2, false);
         final Unit siegeWeapon = new Unit ("Ballista", 1, 3, true);
-        Bat = findViewById(R.id.button);
+
+        Bat = findViewById(R.id.startButton);
         signInBut = findViewById(R.id.signInButton);
+
 
         //CombatEngine.battleLoop( army1, army2);
 
