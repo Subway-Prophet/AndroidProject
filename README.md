@@ -12,6 +12,7 @@ See deployment for notes on how to deploy the project on a live system.
 ## Prerequisites
 - Java
 - Android Studio
+- A valid Google account
 
 ## Installation and Setup
 After Cloning your copy of the program you will need to integrat Cloud Firestore and Authentication through Firebase.
@@ -44,7 +45,7 @@ After Cloning your copy of the program you will need to integrat Cloud Firestore
 You should now be done with the basic setup.
 
 ## Deployment
-You will need two devices who both have the current version of the app and working Google accounts.
+You will need two devices that both have the current version of the app and working Google accounts.
 
 ## Built With
 - Android Studio
