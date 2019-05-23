@@ -1,7 +1,7 @@
 package com.insufficientlight.androidproject;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,9 +14,10 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import javax.annotation.Nullable;
@@ -35,6 +36,8 @@ public class BattleActivity extends GameActivity
     public static final String TAG = "DATAPASSING";
     public String player = "player1";
     MultiplayerData multiplayerData = new MultiplayerData(); // The object that will hold importatn information pertaining to multiplayer functionality
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
     public String p1t;
     public String p1a;
@@ -47,15 +50,15 @@ public class BattleActivity extends GameActivity
     public String p2a;
     public String p2c;
 
-    public long infLoss;
-    public long archLoss;
-    public long cavLoss;
-    public long seigeLoss;
+    public long defendInf;
+    public long defendArch;
+    public long defendCav;
+    public long defendSiege;
 
-    public long attackInfLoss;
-    public long attackArchLoss;
-    public long attackCavLoss;
-    public long attackSeigeLoss;
+    public long attackInf;
+    public long attackArch;
+    public long attackCav;
+    public long attackSeige;
     public int batRan;
 
     public static void setBattle (Battle yeet)
@@ -64,18 +67,38 @@ public class BattleActivity extends GameActivity
     }
     public void onCreate(Bundle savedInstanceState)
     {
-        batRan = 0;
-        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1","player2", "not","not");
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1","player2", "not","not");
-        // sets defaults, will probably be changed in the future as more complexity happens.
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle);
+        // sets defaults, will probably be changed in the future as more complexity happens.
 
+
+        //Shows prograss dialog while important tasks are completed. Will be dissmissed after player data is set
+        final ProgressDialog pDialog = ProgressDialog.show(BattleActivity.this,
+                "Please Wait",
+                "Loading...",
+                true);
+
+
+        //Sets the userId to the Uid(unique ID) provided by firebase for the signed in user
+        final String  userID = user.getUid();
+
+
+        //Batrun is a control variable that ensures the combat engine only runs once per cycle
+        batRan = 0;
+
+
+        // creates the builder that will be used for alert dialogs
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+
+        //Clears out the commands document prior the rest of the code running
+        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecisionKey(), "attacker1","defender1", "not","not");
+
+
+        //Number pickers used for strategy
         NumberPicker Formation = (NumberPicker) findViewById(R.id.form);
         NumberPicker CavalryTactics = (NumberPicker) findViewById(R.id.cav);
+
 
         Title = findViewById(R.id.titleView);
         Army1 = findViewById(R.id.attackerView);
@@ -83,11 +106,7 @@ public class BattleActivity extends GameActivity
         Terrain = findViewById(R.id.terrainView);
         Bat = findViewById(R.id.button2);
 
-        playerchoose = findViewById(R.id.button4);
-
-
         //Set up for the tactics spinners
-
         final String[] Formations = {"Shield Wall","Phalanx", "Turtle Formation"};
         final String[] CavTac = {"Charge Front Lines","Flanking Operation", "Hold Cavalry"};
 
@@ -113,19 +132,72 @@ public class BattleActivity extends GameActivity
         Army2.append("\n Infantry: " + battle.defender.numInf + "\n Archers: " + battle.defender.numArc + "\n Cavalry :" + battle.defender.numCav +"\n Siege Weapons: " + battle.defender.numSie);
 
 
-        playerchoose.setOnClickListener(new View.OnClickListener()
-        {
+        /**
+         * The following button starts a set of tasks that accomplish the following:
+         * -Determine if the userIDs in the data abse are new or old,
+         * -Determine if there is another user already set
+         * -If a user is there it sets the current user as the opposite
+         * -If there is none it picks randomly between attacker/defender and uploads the data
+         */
+        multiplayerData.getmUserIdReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View v)
-            {
-                player = "player2";
-                //Multiplayer_Logic.setSingleData(multiplayerData.getCommandDecitionKey(), player, "not");
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    if (documentSnapshot.contains("playCheck")) {
+                        if (documentSnapshot.get("playCheck").equals("true")) {
+                            if (Math.random() < 0.5) {
+                                Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "attacker", "playCheck", userID, "false");
+                                player = "attacker1";
+                                Title.append(" You are the ATTACKER1");
+                            } else {
+                                Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "defender", "playCheck", userID, "false");
+                                player = "defender1";
+                                Title.append(" You are the DEFENDER1");
+                            }
+                        }
+                        else {
+                            if (documentSnapshot.contains("attacker") && !documentSnapshot.contains("defender")) {
+                                Multiplayer_Logic.setThreeData(multiplayerData.mUserIdReferance, "attacker", "defender", "playCheck", documentSnapshot.getString("attacker"), userID, "false");
+                                player = "defender1";
+                                Title.append(" You are the DEFENDER2");
+                            } else if (documentSnapshot.contains("defender") && !documentSnapshot.contains("attacker")) {
+                                Multiplayer_Logic.setThreeData(multiplayerData.mUserIdReferance, "attacker", "defender","playCheck", userID, documentSnapshot.getString("defender"),"false");
+                                player = "attacker1";
+                                Title.append(" You are the ATTACKER2");
+                            } else {
+                                if (Math.random() < 0.5) {
+                                    Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "attacker", "playCheck", userID, "false");
+                                    player = "attacker1";
+                                    Title.append(" You are the ATTACKER3");
+                                } else {
+                                    Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "defender", "playCheck", userID, "false");
+                                    player = "defender1";
+                                    Title.append(" You are the DEFENDER3");
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (Math.random() < 0.5) {
+                            Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "attacker", "playCheck", userID, "false");
+                            player = "attacker1";
+                            Title.append(" You are the ATTACKER");
+                        } else {
+                            Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "defender", "playCheck", userID, "false");
+                            player = "defender1";
+                            Title.append(" You are the DEFENDER");
+                        }
+                    }
+                }
+                cancelLoadDialog(pDialog);
             }
         });
 
 
-        //Listeners for the tactics spinners
 
+
+        //Listeners for the tactics spinners
         Formation.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
         {
             @Override
@@ -143,6 +215,7 @@ public class BattleActivity extends GameActivity
             }
         });
 
+
         /**
          * When the ready button is clicked this method will run. It handles setting commands on the database and running them if possible.
          */
@@ -153,7 +226,7 @@ public class BattleActivity extends GameActivity
             {Log.i("testy", player);
                 //Handles setting the commands in the database.
                 //Starts by pulling down the current copy of the document
-                multiplayerData.getCommandDecitionKey().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+                multiplayerData.getCommandDecisionKey().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
                 {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -163,25 +236,25 @@ public class BattleActivity extends GameActivity
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) //Gets the data and reifies it exists
                             {
-                                if (player.equals("player1"))//Breaks down actions depending on the player taking them, both are identical
+                                if (player.equals("attacker1"))//Breaks down actions depending on the player taking them, both are identical
                                 {
                                     Log.i("testy", player);
-                                    if (document.getData().get("player2").equals("ready")) //if the other player has already hit their button
+                                    if (document.getData().get("defender1").equals("ready")) //if the other player has already hit their button
                                     {
                                         runBat("attacker"); // runs the combat mechanics for the attacker
                                     }
                                     else
-                                    {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","not");} // changes player1's status command to ready
+                                    {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecisionKey(),"attacker1","defender1","ready","not");} // changes player1's status command to ready
                                 }
-                                if (player.equals("player2"))
+                                if (player.equals("defender1"))
                                 {Log.i("testy", player);
-                                    if (document.getData().get("player1").equals("ready"))//if the other player has already hit their button it sets both to ready. allowing the attacker to run their cooodesss
+                                    if (document.getData().get("attacker1").equals("ready"))//if the other player has already hit their button it sets both to ready. allowing the attacker to run their cooodesss
                                     {
-                                        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","ready","ready");
+                                        Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecisionKey(),"attacker1","defender1","ready","ready");
                                         //runBat();
                                     }
                                     else
-                                    {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(),"player1","player2","not","ready");}// changes player2's status command to ready
+                                    {Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecisionKey(),"attacker1","defender1","not","ready");}// changes player2's status command to ready
                                 }
                             }
                         }
@@ -190,10 +263,12 @@ public class BattleActivity extends GameActivity
             }
         });
 
+
+
         /**
          * Monitors the battle command document for any changes, if both are set to ready it runs battle loop for the attacker only
          */
-        multiplayerData.getCommandDecitionKey().addSnapshotListener(new EventListener<DocumentSnapshot>()
+        multiplayerData.getCommandDecisionKey().addSnapshotListener(new EventListener<DocumentSnapshot>()
         {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
@@ -201,7 +276,7 @@ public class BattleActivity extends GameActivity
 
                 if (documentSnapshot.exists())
                 {
-                    if (documentSnapshot.getString("player1").equals("ready") && documentSnapshot.getString("player2").equals("ready") && player.equals("player1"))
+                    if (documentSnapshot.getString("attacker1").equals("ready") && documentSnapshot.getString("defender1").equals("ready") && player.equals("attacker1"))
                     {runBat("attacker");}
                 }
             }
@@ -218,15 +293,14 @@ public class BattleActivity extends GameActivity
             {
                 if (documentSnapshot.exists())
                 {
-
                     Log.i("data10101", "before " + player + " " + documentSnapshot.getString("defenderID"));
                     if (documentSnapshot.getString("defenderID").equals(player))
                     {
                         Log.i("data10101", "working");
-                        infLoss = (long) documentSnapshot.getData().get("infLosses");
-                        archLoss =(long) documentSnapshot.getData().get("archLosses");
-                        cavLoss = (long)documentSnapshot.getData().get("cavLosses");
-                        seigeLoss = (long)documentSnapshot.getData().get("seigeLosses");
+                        defendInf = (long) documentSnapshot.getData().get("inf");
+                        defendArch =(long) documentSnapshot.getData().get("arch");
+                        defendCav = (long)documentSnapshot.getData().get("cav");
+                        defendSiege = (long)documentSnapshot.getData().get("siege");
 
                         //This retreaves the attacker army size from the database to be displayed on screen. Once it's done it runs the method runBat()
                         multiplayerData.getAttackerLossesReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -234,10 +308,10 @@ public class BattleActivity extends GameActivity
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 if (documentSnapshot.exists())
                                 {
-                                    attackInfLoss = (long) documentSnapshot.getData().get("infLosses");
-                                    attackArchLoss =(long) documentSnapshot.getData().get("archLosses");
-                                    attackCavLoss = (long)documentSnapshot.getData().get("cavLosses");
-                                    attackSeigeLoss = (long)documentSnapshot.getData().get("seigeLosses");
+                                    attackInf = (long) documentSnapshot.getData().get("inf");
+                                    attackArch =(long) documentSnapshot.getData().get("arch");
+                                    attackCav = (long)documentSnapshot.getData().get("cav");
+                                    attackSeige = (long)documentSnapshot.getData().get("siege");
                                     runBat("defender");
                                 }
                             }
@@ -250,9 +324,25 @@ public class BattleActivity extends GameActivity
 
     }
 
-    //The battle loop executing billy's code
+
+    /**
+     * RunBat is the method called to run the combat engine when both players are ready. In doing so it completes the following tasks
+     * -Determines if it is the defender or attacker running the method.
+     *
+     * If it's the attacker it will run combatEngine, update the troop numbers on screen, show an alertDialog with troop losses, and uploads the new troop counts to the database for the defender to pull.
+     *
+     * If it's the defender it will  be trigered by the database being updated.
+     * It then updates the troop counts with the pulled data, and displaies an alertDialog with the troop losses.
+     *
+     */
     public void runBat(String side)
     {
+        multiplayerData.getmUserIdReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Multiplayer_Logic.setThreeData(multiplayerData.mUserIdReferance, "attacker", "defender", "playCheck", documentSnapshot.getString("attacker"), documentSnapshot.getString("defender"), "true");
+            }
+        });
         if (batRan == 0) {
             batRan = 1;
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -263,10 +353,17 @@ public class BattleActivity extends GameActivity
         Log.i("Helen, help lol", "onClick: don't die keed");
         p2t = "Shield Wall";
         p2c = "Charge Front Lines";
+
+        int infAtk = battle.getAttacker().getNumInf();
+        int archAtk = battle.getAttacker().getNumArc();
+        int cavAtk = battle.getAttacker().getNumCav();
+        int sieAtk = battle.getAttacker().getNumSie();
+
+
         StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p2t, p2c);
         CombatEngine.calculateLosses(skirmish);
         count = count + 1;
-        Title.setText("The battle of "+ battle.getLocation()+"!");
+        //Title.setText("The battle of "+ battle.getLocation()+"!");
         Army1.setText("Attacker: " + battle.attacker.armyName);
         Army2.setText("Defender: " + battle.defender.armyName);
         Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
@@ -275,22 +372,18 @@ public class BattleActivity extends GameActivity
 
                 Log.i("Sheed", "Noooo Halp");
 
+            int infAtkLoss =infAtk- battle.getAttacker().getNumInf();
+            int archAtkLoss = archAtk - battle.getAttacker().getNumArc();
+            int cavAtkLoss = cavAtk -battle.getAttacker().getNumCav();
+            int sieAtkLoss = sieAtk -battle.getAttacker().getNumSie();
 
 
                 //The following lines of code create the atert dialog that show the total troops losses for each palyer
                 //In the future player IDs will in some form be pulled from the battle object or simmiler
                 // Builds the content of the dialog from the data of combat engine.
-
-                //For testing player1 is the attacker and player2 is the defender. In the future this would be determined through stored player ids and their actions
-
-                displayString = "Infantry Lost: " + CombatEngine.attackerLosses + "\n Archers Lost: " +
-                        CombatEngine.attackerArcherLosses + "\n Cavalry Lost: " + CombatEngine.attackerCavLosses +
-                        "\n Seige Weapons Lost: " + CombatEngine.attackerSiegeLosses;
-
-                int infLoss = CombatEngine.defenderLosses;
-                int archLosses = CombatEngine.defenderArcherLosses;
-                int cavLosses = CombatEngine.defenderCavLosses;
-                int seigeLosses = CombatEngine.defenderSiegeLosses;
+                displayString = "Infantry Lost: " + infAtkLoss + "\n Archers Lost: " +
+                        archAtkLoss + "\n Cavalry Lost: " + cavAtkLoss +
+                        "\n Seige Weapons Lost: " + sieAtkLoss;
 
 
 
@@ -305,66 +398,52 @@ public class BattleActivity extends GameActivity
                 AlertDialog alert = builder.create();
                 alert.setTitle("Troops Lost In Battle");
                 alert.show();
-                Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecitionKey(), "player1", "player2", "not", "not");
+                Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecisionKey(), "attacker1", "defender1", "not", "not");
 
 
 
 
                 // ends building the alert dialog
 
-                Multiplayer_Logic.setSixData(multiplayerData.getDefendLossesReferance(), "defenderID", "infLosses", "archLosses", "cavLosses", "seigeLosses",  "changeCheck","player2", infLoss, archLosses, cavLosses, seigeLosses, "changed"+Math.random());
-                Multiplayer_Logic.setSixData(multiplayerData.getAttackerLossesReferance(), "attackerID", "infLosses", "archLosses", "cavLosses", "seigeLosses", "changeCheck","player1", skirmish.getBattle().getAttacker().getNumInf(), skirmish.getBattle().getAttacker().getNumArc(), skirmish.getBattle().getAttacker().getNumCav(), skirmish.getBattle().getAttacker().getNumSie(),"changed"+Math.random());
+                Multiplayer_Logic.setSixData(multiplayerData.getAttackerLossesReferance(), "attackerID", "inf", "arch", "cav", "siege", "changeCheck","attacker1", skirmish.getBattle().getAttacker().getNumInf(), skirmish.getBattle().getAttacker().getNumArc(), skirmish.getBattle().getAttacker().getNumCav(), skirmish.getBattle().getAttacker().getNumSie(),"changed"+Math.random());
+                Multiplayer_Logic.setSixData(multiplayerData.getDefendLossesReferance(), "defenderID", "inf", "arch", "cav", "siege",  "changeCheck","defender1", skirmish.getBattle().getDefender().getNumInf(), skirmish.getBattle().getDefender().getNumArc(), skirmish.getBattle().getDefender().getNumCav(), skirmish.getBattle().getDefender().getNumSie(),"changed"+Math.random());
 
             }
 
             if (side.equals("defender")) {
                 Log.i("1010", "DEFENDERBATTLLE CALLED");
-                Log.i("110101001111011", "working " + infLoss);
+                Log.i("110101001111011", "working " + defendInf);
 
 
-                multiplayerData.getAttackerLossesReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            attackInfLoss = (long) documentSnapshot.getData().get("infLosses");
-                            attackArchLoss = (long) documentSnapshot.getData().get("archLosses");
-                            attackCavLoss = (long) documentSnapshot.getData().get("cavLosses");
-                            attackSeigeLoss = (long) documentSnapshot.getData().get("seigeLosses");
-                            Log.i("attackloss", "attackers lost " + attackInfLoss);
+                //sets the new army size for the defender defend
+                int infLossDef = battle.getDefender().getNumInf() - (int) defendInf;
+                int cavLossDef = battle.getDefender().getNumCav()-(int) defendCav;
+                int archLossDef = battle.getDefender().getNumArc()-(int) defendArch;
+                int sieLossDef = battle.getDefender().getNumSie()-(int) defendSiege;
 
-                        }
-                    }
 
-                });
-                //creates the string to display from losses data
-                displayString = "Infantry Lost: " + infLoss + "\n Archers Lost: " +
-                        archLoss + "\n Cavalry Lost: " + cavLoss +
-                        "\n Seige Weapons Lost: " + seigeLoss;
-
-                //sets the new army size for the defender
-                battle.getDefender().setNumInf(battle.getDefender().getNumInf() - (int) infLoss);
-                battle.getDefender().setNumCav(battle.getDefender().getNumCav() - (int) cavLoss);
-                battle.getDefender().setNumArc(battle.getDefender().getNumArc() - (int) archLoss);
-                battle.getDefender().setNumSie(battle.getDefender().getNumSie() - (int) seigeLoss);
+                battle.getDefender().setNumInf((int) defendInf);
+                battle.getDefender().setNumCav((int) defendCav);
+                battle.getDefender().setNumArc((int) defendArch);
+                battle.getDefender().setNumSie((int) defendSiege);
 
                 //set the new army size for the attacker
-                battle.getAttacker().setNumInf((int) attackInfLoss);
-                battle.getAttacker().setNumCav((int) attackCavLoss);
-                battle.getAttacker().setNumArc((int) attackArchLoss);
-                battle.getAttacker().setNumSie((int) attackSeigeLoss);
+                battle.getAttacker().setNumInf((int) attackInf);
+                battle.getAttacker().setNumCav((int) attackCav);
+                battle.getAttacker().setNumArc((int) attackArch);
+                battle.getAttacker().setNumSie((int) attackSeige);
                 Log.i("defffffff", "defffffff tot " + battle.getDefender().getNumCav());
 
                 Army1.setText("Attacker: " + battle.attacker.armyName);
                 Army2.setText("Defender: " + battle.defender.armyName);
-
-
                 Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() + "\n Siege Weapons: " + battle.getDefender().getNumSie());
-                Army1.append("\n Infantry: " + String.valueOf(battle.getAttacker().getNumInf()) + "\n Archers: " + String.valueOf(battle.getAttacker().getNumArc()) + "\n Cavalry :" + String.valueOf(battle.getAttacker().getNumCav()) + "\n Siege Weapons: " + String.valueOf(battle.getAttacker().getNumSie()));
+                Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() + "\n Siege Weapons: " + battle.getAttacker().getNumSie());
 
 
-            //Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
-           // Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
-
+                //creates the string to display from losses data
+                displayString = "Infantry Lost: " + infLossDef + "\n Archers Lost: " +
+                        archLossDef + "\n Cavalry Lost: " + cavLossDef +
+                        "\n Seige Weapons Lost: " + sieLossDef;
 
                 //builds the alert dialog
                 builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
@@ -380,8 +459,12 @@ public class BattleActivity extends GameActivity
                 alert.show();
 
                 }
-
         }
+    }
+
+    public void cancelLoadDialog(ProgressDialog dialog)
+    {
+        dialog.dismiss();
     }
 
 }
