@@ -29,5 +29,6 @@ Jason got the datapassing portion of the combat engine working using Cloud Fires
 Games Services was working it became more and more apparent that it's restrictive nature wouldn't work for all parts of the app.
  Eventually it may be sued for the turn transfer, though for the time being FireStore will be used.
 
-shge;bh
+5-21-19
+Levy created banners for player identification
 
