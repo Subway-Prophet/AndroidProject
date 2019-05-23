@@ -67,5 +67,7 @@ Und, Unteroffizier Levy Ford IV
 
 ## Acknowledgments
 Hat tip to Mr. Linburg
+
 Inspiration from Paradox Interactive, Conspiracy, Risk, and Diplomacy
+
 Thanks to the country of Ireland
