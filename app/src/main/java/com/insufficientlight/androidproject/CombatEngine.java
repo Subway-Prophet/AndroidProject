@@ -22,6 +22,7 @@ class CombatEngine
         if (min >= max)
         {
             throw new IllegalArgumentException("max must be greater than min");
+            //yeet
         }
 
         Random r = new Random();
@@ -73,6 +74,10 @@ class CombatEngine
         if (defenderInf > 0)
         {
             attackerLosses = ((defenderInf / 50) * getRandomNumberInRange(2, 3));
+            if ((attackerCav > 0) && (defenderInf > attackerInf) && (defenderCav == 0))
+            {
+                attackerCavLosses = (defenderInf /100) * getRandomNumberInRange(1, 5);
+            }
         }
         if (defenderArc > 0)
         {
@@ -80,12 +85,37 @@ class CombatEngine
         }
         if (defenderCav > 0)
         {
-            attackerArcherLosses = (defenderCav / 50) * getRandomNumberInRange(2, 5);
+            if (attackerCav == 0 && attackerArc != 0)
+            {
+                attackerArcherLosses = attackerArcherLosses + (defenderCav / 40) * getRandomNumberInRange(2, 5);
+            }
+            else if (attackerCav != 0)
+            {
+                attackerCavLosses = attackerCavLosses + (defenderCav / 40) * getRandomNumberInRange(2, 5);
+            }
+            else if (defenderSie > 0)
+            {
+                attackerSiegeLosses = attackerSiegeLosses + (defenderCav / 40) * getRandomNumberInRange(2, 5);
+            }
+            else
+            {
+                attackerLosses = attackerLosses + ((defenderCav / 40) * getRandomNumberInRange(2, 5));
+            }
+
         }
+        if (defenderSie > 0)
+        {
+            attackerLosses = attackerLosses + (defenderSie) * getRandomNumberInRange(2, 6);
+        }
+
         // Fail safes for empty ranks
         if (attackerInf > 0)
         {
             defenderLosses = ((attackerInf / 50) * getRandomNumberInRange(2, 3));
+            if ((defenderCav > 0) && (attackerInf > defenderInf) && (attackerCav == 0))
+            {
+                attackerCavLosses = (attackerInf /100) * getRandomNumberInRange(1, 5);
+            }
         }
         if (attackerArc > 0)
         {
@@ -93,7 +123,26 @@ class CombatEngine
         }
         if (attackerCav > 0)
         {
-            defenderArcherLosses = (attackerCav / 50) * getRandomNumberInRange(2, 5);
+            if (defenderCav == 0 && defenderArc != 0)
+            {
+                defenderArcherLosses = defenderArcherLosses + (attackerCav / 40) * getRandomNumberInRange(2, 5);
+            }
+            else if (defenderCav != 0)
+            {
+                defenderCavLosses = defenderCavLosses + (attackerCav / 40) * getRandomNumberInRange(2, 5);
+            }
+            else if (defenderSie > 0)
+            {
+                defenderSiegeLosses = defenderSiegeLosses + (attackerCav / 40) * getRandomNumberInRange(2, 5);
+            }
+            else
+            {
+                defenderLosses = defenderLosses + ((attackerCav / 40) * getRandomNumberInRange(2, 5));
+            }
+        }
+        if (attackerSie > 0)
+        {
+            defenderLosses = defenderLosses + (attackerSie) * getRandomNumberInRange(2, 6);
         }
 
 
@@ -120,7 +169,15 @@ class CombatEngine
         }
         else
         {
-            defenderCavNewCount = (skirmish.getBattle().getDefender().getNumArc() - defenderArcherLosses);
+            defenderCavNewCount = (skirmish.getBattle().getDefender().getNumCav() - defenderCavLosses);
+        }
+        if (defenderSie - defenderSiegeLosses <= 0)
+        {
+            defenderSiegeNewCount = 0;
+        }
+        else
+        {
+            defenderSiegeNewCount = (skirmish.getBattle().getAttacker().getNumSie() - attackerSiegeLosses);
         }
 
         // Fail Safes for depleted ranks
@@ -146,7 +203,15 @@ class CombatEngine
         }
         else
         {
-            attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumArc() - attackerArcherLosses);
+            attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumCav() - attackerCavLosses);
+        }
+        if (attackerSie - attackerSiegeLosses <= 0)
+        {
+            attackerSiegeNewCount = 0;
+        }
+        else
+        {
+            attackerSiegeNewCount = (skirmish.getBattle().getAttacker().getNumSie() - attackerSiegeLosses);
         }
 
 
@@ -156,16 +221,16 @@ class CombatEngine
             Log.i("It ran an did not", "Noooo Halp attacker " + attackerLosses);
 
             //Does some in between math because java hates me
-            attackerNewCount = (skirmish.getBattle().getAttacker().getNumInf() - attackerLosses);
-            attackerArcNewCount = (skirmish.getBattle().getAttacker().getNumArc() - attackerArcherLosses);
-            attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumCav() - attackerCavLosses);
-            attackerSiegeNewCount = (skirmish.getBattle().getAttacker().getNumSie() - attackerSiegeLosses);
+            //attackerNewCount = (skirmish.getBattle().getAttacker().getNumInf() - attackerLosses);
+            //attackerArcNewCount = (skirmish.getBattle().getAttacker().getNumArc() - attackerArcherLosses);
+            //attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumCav() - attackerCavLosses);
+            //attackerSiegeNewCount = (skirmish.getBattle().getAttacker().getNumSie() - attackerSiegeLosses);
 
             //Does some in between math because java hates me
-            defenderNewCount = (skirmish.getBattle().getDefender().getNumInf() - defenderLosses);
-            defenderArcNewCount = (skirmish.getBattle().getDefender().getNumArc() - defenderArcherLosses);
-            defenderCavNewCount = (skirmish.getBattle().getDefender().getNumCav() - defenderCavLosses);
-            defenderSiegeNewCount = (skirmish.getBattle().getDefender().getNumSie() - defenderSiegeLosses);
+            //defenderNewCount = (skirmish.getBattle().getDefender().getNumInf() - defenderLosses);
+            //defenderArcNewCount = (skirmish.getBattle().getDefender().getNumArc() - defenderArcherLosses);
+            //defenderCavNewCount = (skirmish.getBattle().getDefender().getNumCav() - defenderCavLosses);
+            //defenderSiegeNewCount = (skirmish.getBattle().getDefender().getNumSie() - defenderSiegeLosses);
 
             //Sets the attackers losses
             skirmish.getBattle().getAttacker().setNumInf(attackerNewCount);
@@ -182,6 +247,3 @@ class CombatEngine
             Log.i("It ran an did not", "Noooo Halp");
     }
 }
-
-
-

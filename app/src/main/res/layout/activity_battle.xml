@@ -12,6 +12,7 @@
         android:layout_height="109dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+
         android:background="#0E0F10"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -236,5 +237,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

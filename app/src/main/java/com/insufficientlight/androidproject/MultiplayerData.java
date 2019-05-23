@@ -9,21 +9,25 @@ public class MultiplayerData
     public DocumentReference mGameReferance = FirebaseFirestore.getInstance().document("games/game1");
     public DocumentReference mCombatCommandReferance = FirebaseFirestore.getInstance().document("games/game1/commands/combatCommands");
     ///public DocumentReference mBattleDataReferance = FirebaseFirestore.getInstance().document("games/game1/combatobject");
-    public DocumentReference mCommandDecitionReferance = FirebaseFirestore.getInstance().document("games/game1/commands/combatCommands");
-    public DocumentReference mDefendLossesReferance = FirebaseFirestore.getInstance().document("games/game1/combatData/battle1/losses/defenderLoss");
-    public DocumentReference mAttackerLossesReferance = FirebaseFirestore.getInstance().document("games/game1/combatData/battle1/losses/attackerLoss");
+    public DocumentReference mCommandDecisionReference = FirebaseFirestore.getInstance().document("games/game1/commands/combatCommands");
+    public DocumentReference mDefendLossesReference = FirebaseFirestore.getInstance().document("games/game1/combatData/battle1/losses/defenderLoss");
+    public DocumentReference mAttackerLossesReference = FirebaseFirestore.getInstance().document("games/game1/combatData/battle1/losses/attackerLoss");
+    public DocumentReference mUserIdReferance = FirebaseFirestore.getInstance().document("games/game1/users/userIds");
 
 
     //public DocumentReference getBattleDataReferance()
    // { return mBattleDataReferance; }
     //public void setBattleDataReferance(DocumentReference battleDataReferance)
     //{ mBattleDataReferance = battleDataReferance; }
-    public DocumentReference getCommandDecitionKey()
-    { return mCommandDecitionReferance; }
+    public DocumentReference getCommandDecisionKey()
+    { return mCommandDecisionReference; }
     public DocumentReference getGameReferance()
     { return mGameReferance; }
     public void setGameReferance(DocumentReference gameReferance)
     { mGameReferance = gameReferance; }
+
+    public DocumentReference getmUserIdReferance()
+    { return mUserIdReferance; }
 
     public DocumentReference getCombatCommandReferance()
     {
@@ -35,12 +39,12 @@ public class MultiplayerData
     }
 
     public DocumentReference getDefendLossesReferance()
-    { return mDefendLossesReferance; }
+    { return mDefendLossesReference; }
 
     public DocumentReference getAttackerLossesReferance()
-    { return mAttackerLossesReferance; }
+    { return mAttackerLossesReference; }
     public void setDefendLossesReferance(DocumentReference defendLossesReferance)
-    { mDefendLossesReferance = defendLossesReferance; }
+    { mDefendLossesReference = defendLossesReferance; }
 
 
 
