@@ -73,10 +73,25 @@ class CombatEngine
         // Fail safes for empty ranks
         if (defenderInf > 0)
         {
-            attackerLosses = ((defenderInf / 50) * getRandomNumberInRange(2, 3));
+
             if ((attackerCav > 0) && (defenderInf > attackerInf) && (defenderCav == 0))
             {
                 attackerCavLosses = (defenderInf /100) * getRandomNumberInRange(1, 5);
+            }
+            if (attackerInf == 0)
+            {
+                if (attackerArc > 0)
+                {
+                    attackerArcherLosses = ((defenderInf / 50) * getRandomNumberInRange(2, 3));
+                }
+                else
+                {
+                    attackerSiegeLosses = ((defenderInf / 50) * getRandomNumberInRange(2, 3));
+                }
+            }
+            else
+            {
+                attackerLosses = ((defenderInf / 50) * getRandomNumberInRange(2, 3));
             }
         }
         if (defenderArc > 0)
@@ -109,12 +124,26 @@ class CombatEngine
         }
 
         // Fail safes for empty ranks
-        if (attackerInf > 0)
+        if (defenderInf > 0)
         {
-            defenderLosses = ((attackerInf / 50) * getRandomNumberInRange(2, 3));
             if ((defenderCav > 0) && (attackerInf > defenderInf) && (attackerCav == 0))
             {
-                attackerCavLosses = (attackerInf /100) * getRandomNumberInRange(1, 5);
+                defenderCavLosses = (attackerInf /100) * getRandomNumberInRange(1, 5);
+            }
+            if (defenderInf == 0)
+            {
+                if (defenderArc > 0)
+                {
+                    defenderArcherLosses = ((attackerInf / 50) * getRandomNumberInRange(2, 3));
+                }
+                else
+                {
+                    defenderSiegeLosses = ((attackerInf / 50) * getRandomNumberInRange(2, 3));
+                }
+            }
+            else
+            {
+                defenderLosses = ((attackerInf / 50) * getRandomNumberInRange(2, 3));
             }
         }
         if (attackerArc > 0)
