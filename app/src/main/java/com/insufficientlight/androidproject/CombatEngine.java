@@ -170,6 +170,14 @@ class CombatEngine
         {
             defenderCavNewCount = (skirmish.getBattle().getDefender().getNumCav() - defenderCavLosses);
         }
+        if (defenderSie - defenderSiegeLosses <= 0)
+        {
+            defenderSiegeNewCount = 0;
+        }
+        else
+        {
+            defenderSiegeNewCount = (skirmish.getBattle().getAttacker().getNumSie() - attackerSiegeLosses);
+        }
 
         // Fail Safes for depleted ranks
         if (attackerInf - attackerLosses <= 0)
@@ -196,23 +204,32 @@ class CombatEngine
         {
             attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumCav() - attackerCavLosses);
         }
+        if (attackerSie - attackerSiegeLosses <= 0)
+        {
+            attackerSiegeNewCount = 0;
+        }
+        else
+        {
+            attackerSiegeNewCount = (skirmish.getBattle().getAttacker().getNumSie() - attackerSiegeLosses);
+        }
 
 
 
-            Log.i("It ran an did not", "Noooo Halp defender " + defenderLosses);
+
+        Log.i("It ran an did not", "Noooo Halp defender " + defenderLosses);
             Log.i("It ran an did not", "Noooo Halp attacker " + attackerLosses);
 
             //Does some in between math because java hates me
             //attackerNewCount = (skirmish.getBattle().getAttacker().getNumInf() - attackerLosses);
             //attackerArcNewCount = (skirmish.getBattle().getAttacker().getNumArc() - attackerArcherLosses);
             //attackerCavNewCount = (skirmish.getBattle().getAttacker().getNumCav() - attackerCavLosses);
-            attackerSiegeNewCount = (skirmish.getBattle().getAttacker().getNumSie() - attackerSiegeLosses);
+            //attackerSiegeNewCount = (skirmish.getBattle().getAttacker().getNumSie() - attackerSiegeLosses);
 
             //Does some in between math because java hates me
             //defenderNewCount = (skirmish.getBattle().getDefender().getNumInf() - defenderLosses);
             //defenderArcNewCount = (skirmish.getBattle().getDefender().getNumArc() - defenderArcherLosses);
             //defenderCavNewCount = (skirmish.getBattle().getDefender().getNumCav() - defenderCavLosses);
-            defenderSiegeNewCount = (skirmish.getBattle().getDefender().getNumSie() - defenderSiegeLosses);
+            //defenderSiegeNewCount = (skirmish.getBattle().getDefender().getNumSie() - defenderSiegeLosses);
 
             //Sets the attackers losses
             skirmish.getBattle().getAttacker().setNumInf(attackerNewCount);
