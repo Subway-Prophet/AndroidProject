@@ -20,9 +20,13 @@ After Cloning your copy of the program you will need to add firebase to the proj
 - Click the button in #1 and sign in with the your android development account,
 - In the "Connect to Firebase" dialog that shows up you will need to select "create new..."
 - Then hit "Add Cloud Firestore to your app" in #2 and accept the dependencies
+
 At this point you will need to add the Auth dependencies. You can do so by going back to tools, Firebase, and then hitting "Authentication", and clicking on the linked dialog. Then hit the button in #2.
 
-The next steps will need to be done in the Firebase console while logged into
+Lastly you will need to setup the database, and authentication though the firebase consol.
+- Go to https://console.firebase.google.com and login with your development account
+- On the left side click on "Database" and then the "Create Database" button in the middle of the screen
+- We are currently using "test mode" though you could use locked mode if you wanted to setup the security rules
 
 ## Deployment
 You will need two devices who both have the current version of the app.
