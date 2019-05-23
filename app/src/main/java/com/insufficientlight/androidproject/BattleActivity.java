@@ -35,7 +35,7 @@ public class BattleActivity extends GameActivity
     public  Button retreatButton;
     public static final String TAG = "DATAPASSING";
     public String player = "player1";
-    MultiplayerData multiplayerData = new MultiplayerData(); // The object that will hold importatn information pertaining to multiplayer functionality
+    MultiplayerData multiplayerData = new MultiplayerData(); // The object that will hold important information pertaining to multi-player functionality
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
@@ -72,7 +72,7 @@ public class BattleActivity extends GameActivity
         // sets defaults, will probably be changed in the future as more complexity happens.
 
 
-        //Shows prograss dialog while important tasks are completed. Will be dissmissed after player data is set
+        //Shows progress dialog while important tasks are completed. Will be dismissed after player data is set
         final ProgressDialog pDialog = ProgressDialog.show(BattleActivity.this,
                 "Please Wait",
                 "Loading...",
@@ -302,7 +302,7 @@ public class BattleActivity extends GameActivity
                         defendCav = (long)documentSnapshot.getData().get("cav");
                         defendSiege = (long)documentSnapshot.getData().get("siege");
 
-                        //This retreaves the attacker army size from the database to be displayed on screen. Once it's done it runs the method runBat()
+                        //This retrieves the attacker army size from the database to be displayed on screen. Once it's done it runs the method runBat()
                         multiplayerData.getAttackerLossesReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -378,8 +378,8 @@ public class BattleActivity extends GameActivity
             int sieAtkLoss = sieAtk -battle.getAttacker().getNumSie();
 
 
-                //The following lines of code create the atert dialog that show the total troops losses for each palyer
-                //In the future player IDs will in some form be pulled from the battle object or simmiler
+                //The following lines of code create the atert dialog that show the total troop losses for each player
+                //In the future player IDs will in some form be pulled from the battle object or the like.
                 // Builds the content of the dialog from the data of combat engine.
                 displayString = "Infantry Lost: " + infAtkLoss + "\n Archers Lost: " +
                         archAtkLoss + "\n Cavalry Lost: " + cavAtkLoss +
