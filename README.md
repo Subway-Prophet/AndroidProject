@@ -45,8 +45,8 @@ You will need two devices who both have the current version of the app and worki
 - Android Studio
 - Google Play
 - Firebase
--  Cloud Firestore
--  Authentication
+  -  Cloud Firestore
+  -  Authentication
 
 ## Contributing
 - Please Don't
