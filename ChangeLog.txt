@@ -38,3 +38,10 @@ combat
 -added to multiplayerData.java
 -Built basic Firestore databse structure
 -Began Syncing combat data between multiple devices
+
+5-21 to 5-22
+-Intigrated Firebase authentication
+-Implimented user sign in and user Ids
+-Fixed battleActivity error where troop counts would be updated before data was synced
+-Reworked combat logic in CombateEngine
+-Fixed combat bug where troop counts would go bellow 0
