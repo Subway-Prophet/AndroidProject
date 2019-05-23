@@ -32,6 +32,7 @@ After Cloning your copy of the program you will need to integrat Cloud Firestore
 1. Go to https://console.firebase.google.com and login with your development account
 2  On the left side click on "Database" and then the "Create Database" button in the middle of the screen
 3. We are currently using "test mode" though you could use locked mode if you wanted to, though you will need to setup the security rules
+
 *This is all the setup that is needed. The app will automaticaly build the database structure once it runs*
 
 ### Setup Authentication in the Firebase console
