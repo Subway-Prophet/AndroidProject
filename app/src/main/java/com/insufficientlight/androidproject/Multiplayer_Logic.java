@@ -38,6 +38,15 @@ public class Multiplayer_Logic
         docRef.set(dataToSet);
     }
 
+    public static void setThreeData(DocumentReference docRef, String key1,String key2,String key3, Object data, Object data2,Object data3)
+    {
+        Map<String, Object> dataToSet = new HashMap<String, Object>();
+        dataToSet.put(key1,data);
+        dataToSet.put(key2,data2);
+        dataToSet.put(key3,data3);
+        docRef.set(dataToSet);
+    }
+
     public static void setFiveData(DocumentReference docRef, String key1,String key2,String key3,String key4,String key5, Object data, Object data2,Object data3, Object data4,Object data5)
     {
         Map<String, Object> dataToSet = new HashMap<String, Object>();
