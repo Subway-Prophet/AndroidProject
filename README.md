@@ -28,6 +28,16 @@ Lastly you will need to setup the database, and authentication though the fireba
 - On the left side click on "Database" and then the "Create Database" button in the middle of the screen
 - We are currently using "test mode" though you could use locked mode if you wanted to setup the security rules
 
+The databse is now configered. The structure will be added automaticly on app start.
+
+To add authentication click "Authentication" on the left side of the screen
+- Click "Sign-in Method" on the top bar
+- Click "Google"
+- Click the "Enable" switch and input a project name.
+- Hit save.
+
+You should now be done with the basic setup.
+
 ## Deployment
 You will need two devices who both have the current version of the app.
 
