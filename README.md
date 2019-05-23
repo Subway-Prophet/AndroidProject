@@ -13,7 +13,7 @@ See deployment for notes on how to deploy the project on a live system.
 - Java
 - Android Studio
 
-## Installing
+## Installation and Setup
 After Cloning your copy of the program you will need to add firebase to the project, follow these steps in android studio:
 - Click tools in the toolbar, hit firebase
 - Then scroll down to Firestore and expand it and click the blue link "read and write..."
@@ -39,12 +39,14 @@ To add authentication click "Authentication" on the left side of the screen
 You should now be done with the basic setup.
 
 ## Deployment
-You will need two devices who both have the current version of the app.
+You will need two devices who both have the current version of the app and working Google accounts.
 
 ## Built With
 - Android Studio
 - Google Play
 - Firebase
+ - Cloud Firestore
+ - Authentication
 
 ## Contributing
 - Please Don't
