@@ -107,7 +107,8 @@ public class GameActivity extends AppCompatActivity
                 {e.printStackTrace();}*/
         });
 
-
+        //This button gets rid of the data in the UserId document.
+        // This is nessesary because of the fact that this battle is on it's own, without it the defender/attacker will overlap
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

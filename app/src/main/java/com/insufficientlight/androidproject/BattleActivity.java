@@ -33,6 +33,7 @@ public class BattleActivity extends GameActivity
     public TextView commandView;
     public  Button readyButton;
     public  Button retreatButton;
+
     public static final String TAG = "DATAPASSING";
     public String player = "player1";
     MultiplayerData multiplayerData = new MultiplayerData(); // The object that will hold important information pertaining to multi-player functionality
@@ -95,32 +96,25 @@ public class BattleActivity extends GameActivity
 
         //Number pickers used for strategy
         NumberPicker Formation = (NumberPicker) findViewById(R.id.form);
-        
         NumberPicker CavalryTactics = (NumberPicker) findViewById(R.id.cav);
-
 
         Title = findViewById(R.id.titleView);
         Army1 = findViewById(R.id.attackerView);
         Army2 = findViewById(R.id.defenderView);
         Terrain = findViewById(R.id.terrainView);
         Bat = findViewById(R.id.button2);
+        retreatButton = findViewById(R.id.button3);
 
         //Set up for the tactics spinners
         final String[] Formations = {"Shield Wall","Phalanx", "Turtle Formation"};
         final String[] CavTac = {"Charge Front Lines","Flanking Operation", "Hold Cavalry"};
-
         Formation.setMinValue(0);
-
         CavalryTactics.setMinValue(0);
-
         Formation.setMaxValue(2);
         CavalryTactics.setMaxValue(2);
-
         Formation.setDisplayedValues(Formations);
         CavalryTactics.setDisplayedValues(CavTac);
-
         Formation.setWrapSelectorWheel(true);
-
         CavalryTactics.setWrapSelectorWheel(true);
 
 
@@ -135,13 +129,14 @@ public class BattleActivity extends GameActivity
 
 
 
-        /**
-         * The following button starts a set of tasks that accomplish the following:
+        /** **There is a duplicate of this code in a method setSides. This allows it to be rerun when needed but avoids variable errors in the anonymous inner classes**
+         * The following code starts a set of tasks that accomplish the following:
          * -Determine if the userIDs in the data abse are new or old,
          * -Determine if there is another user already set
          * -If a user is there it sets the current user as the opposite
          * -If there is none it picks randomly between attacker/defender and uploads the data
          */
+        //See the seperate method for line by line commenting
         multiplayerData.getmUserIdReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -223,6 +218,22 @@ public class BattleActivity extends GameActivity
             }
         });
 
+        //This button allows the user to retreat by sending the retreat command
+        retreatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (player.equals("attacker1"))
+                {
+                    Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecisionKey(),"attacker1","defender1","retreat","temp");
+                }
+                if (player.equals("defender1"))
+                {
+                    Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecisionKey(),"attacker1","defender1","temp","retreat");
+                }
+            }
+        });
+
+
 
         /**
          * When the ready button is clicked this method will run. It handles setting commands on the database and running them if possible.
@@ -274,18 +285,49 @@ public class BattleActivity extends GameActivity
 
 
         /**
-         * Monitors the battle command document for any changes, if both are set to ready it runs battle loop for the attacker only
+         * Monitors the battle command document for any changes, if both are set to ready it runs battle loop for the attacker only.
+         * If a user elects to retreat it takes the command and shows a dialog.
          */
         multiplayerData.getCommandDecisionKey().addSnapshotListener(new EventListener<DocumentSnapshot>()
         {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
             {
-
                 if (documentSnapshot.exists())
                 {
-                    if (documentSnapshot.getString("attacker1").equals("ready") && documentSnapshot.getString("defender1").equals("ready") && player.equals("attacker1"))
-                    { runBat("attacker",pDialog); }
+                    if (documentSnapshot.contains("attacker1") && documentSnapshot.contains("defender1") && documentSnapshot.getString("defender1") !=null && documentSnapshot.getString("attacker1")!=null)
+                    {
+                        if (documentSnapshot.getString("attacker1").equals("ready") && documentSnapshot.getString("defender1").equals("ready") && player.equals("attacker1")) {
+                            runBat("attacker", pDialog);
+                        }
+                        if (documentSnapshot.getString("attacker1").equals("retreat"))
+                        {
+                            builder.setMessage("The attacker has retreated.").setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    finish();
+                                    dialogInterface.dismiss();
+                                }
+                            });
+                            AlertDialog alert = builder.create();
+                            alert.setTitle("Attacker Retreat");
+                            alert.show();
+                        }
+                        if (documentSnapshot.getString("defender1").equals("retreat"))
+                        {
+                            builder.setMessage("The defender has retreated.").setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    finish();
+                                    dialogInterface.dismiss();
+                                }
+                            });
+                            AlertDialog alert = builder.create();
+                            alert.setTitle("Defender Retreat");
+                            alert.show();
+                        }
+                    }
                 }
             }
         });
@@ -302,7 +344,7 @@ public class BattleActivity extends GameActivity
                 if (documentSnapshot.exists())
                 {
                     Log.i("data10101", "before " + player + " " + documentSnapshot.getString("defenderID"));
-                    if (documentSnapshot.getString("defenderID").equals(player))
+                    if (documentSnapshot.getString("defenderID") != null && documentSnapshot.getString("defenderID").equals(player))
                     {
                         pDialog.show();
                         Log.i("data10101", "working");
@@ -346,8 +388,10 @@ public class BattleActivity extends GameActivity
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
+                    //Play check acts to ensure the battle isn't aon old one. If it's true a new battle is overwriten
                     if (documentSnapshot.contains("playCheck")) {
                         if (documentSnapshot.get("playCheck").equals("true")) {
+                            //Randomly picks whether the user is the attacker or defender
                             if (Math.random() < 0.5) {
                                 Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "attacker", "playCheck", userID, "false");
                                 player = "attacker1";
@@ -359,15 +403,18 @@ public class BattleActivity extends GameActivity
                             }
                         }
                         else {
+                            //If there is already an attacker make this user a defender
                             if (documentSnapshot.contains("attacker") && !documentSnapshot.contains("defender")) {
                                 Multiplayer_Logic.setThreeData(multiplayerData.mUserIdReferance, "attacker", "defender", "playCheck", documentSnapshot.getString("attacker"), userID, "false");
                                 player = "defender1";
                                 Title.append("\n You are the DEFENDER");
+                                //If there is already a defender make this user an attacker
                             } else if (documentSnapshot.contains("defender") && !documentSnapshot.contains("attacker")) {
                                 Multiplayer_Logic.setThreeData(multiplayerData.mUserIdReferance, "attacker", "defender","playCheck", userID, documentSnapshot.getString("defender"),"false");
                                 player = "attacker1";
                                 Title.append(" \n You are the ATTACKER");
                             } else {
+                                //Randomly pick if there is no other user yet
                                 if (Math.random() < 0.5) {
                                     Multiplayer_Logic.setTwoData(multiplayerData.mUserIdReferance, "attacker", "playCheck", userID, "false");
                                     player = "attacker1";
@@ -395,6 +442,7 @@ public class BattleActivity extends GameActivity
                 }
                 else
                 {
+                    //If the UserId document doesn't exist yet this creates it with fillers and reruns the code to set the defender/attacker. This prevents nullPointerExceptions
                     Multiplayer_Logic.setSingleData(multiplayerData.getmUserIdReferance(),"temp","temp");
                     setSides();
                 }
@@ -411,54 +459,56 @@ public class BattleActivity extends GameActivity
      *
      * If it's the attacker it will run combatEngine, update the troop numbers on screen, show an alertDialog with troop losses, and uploads the new troop counts to the database for the defender to pull.
      *
-     * If it's the defender it will  be trigered by the database being updated.
-     * It then updates the troop counts with the pulled data, and displaies an alertDialog with the troop losses.
+     * If it's the defender it will  be triggered by the database being updated.
+     * It then updates the troop counts with the pulled data, and displays an alertDialog with the troop losses.
      *
      */
     public void runBat(String side, ProgressDialog progressDialog)
     {
+        //Pulls down the user data to allow it to be reloaded with a change
         multiplayerData.getmUserIdReferance().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                //Sets placeCheck to true indicating that the battle has been used
                 Multiplayer_Logic.setThreeData(multiplayerData.mUserIdReferance, "attacker", "defender", "playCheck", documentSnapshot.getString("attacker"), documentSnapshot.getString("defender"), "true");
             }
         });
+        //This allows the method to run only once per hit of the ready button
         if (batRan == 0) {
             batRan = 1;
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             String displayString = "";
 
-        if (side.equals("attacker"))
-        {
+            if (side.equals("attacker"))
+            {
+                Log.i("Helen, help lol", "onClick: don't die keed");
+                p2t = "Shield Wall";
+                p2c = "Charge Front Lines";
 
+                //sets the attackers troop count prior to combat
+                int infAtk = battle.getAttacker().getNumInf();
+                int archAtk = battle.getAttacker().getNumArc();
+                int cavAtk = battle.getAttacker().getNumCav();
+                int sieAtk = battle.getAttacker().getNumSie();
 
+                //runs the combat
+                StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p2t, p2c);
+                CombatEngine.calculateLosses(skirmish);
 
-            Log.i("Helen, help lol", "onClick: don't die keed");
-            p2t = "Shield Wall";
-            p2c = "Charge Front Lines";
-
-            int infAtk = battle.getAttacker().getNumInf();
-            int archAtk = battle.getAttacker().getNumArc();
-            int cavAtk = battle.getAttacker().getNumCav();
-            int sieAtk = battle.getAttacker().getNumSie();
-
-
-            StandardSkirmish skirmish = new StandardSkirmish(count, battle.attacker.playerTag, battle.defender.playerTag, battle,p1t, p1c, p2t, p2c);
-            CombatEngine.calculateLosses(skirmish);
-            count = count + 1;
-            //Title.setText("The battle of "+ battle.getLocation()+"!");
-            Army1.setText("Attacker: " + battle.attacker.armyName);
-            Army2.setText("Defender: " + battle.defender.armyName);
-            Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
-            Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
+                count = count + 1;
+                //Updates the screen's troop count
+                Army1.setText("Attacker: " + battle.attacker.armyName);
+                Army2.setText("Defender: " + battle.defender.armyName);
+                Army1.append("\n Infantry: " + battle.getAttacker().getNumInf() + "\n Archers: " + battle.getAttacker().getNumArc() + "\n Cavalry :" + battle.getAttacker().getNumCav() +"\n Siege Weapons: " + battle.getAttacker().getNumSie());
+                Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() +"\n Siege Weapons: " + battle.getDefender().getNumSie());
 
 
                 Log.i("Sheed", "Noooo Halp");
-
-            int infAtkLoss =infAtk- battle.getAttacker().getNumInf();
-            int archAtkLoss = archAtk - battle.getAttacker().getNumArc();
-            int cavAtkLoss = cavAtk -battle.getAttacker().getNumCav();
-            int sieAtkLoss = sieAtk -battle.getAttacker().getNumSie();
+                //Sets the losses of the attacker to be displayed
+                int infAtkLoss =infAtk- battle.getAttacker().getNumInf();
+                int archAtkLoss = archAtk - battle.getAttacker().getNumArc();
+                int cavAtkLoss = cavAtk -battle.getAttacker().getNumCav();
+                int sieAtkLoss = sieAtk -battle.getAttacker().getNumSie();
 
 
                 //The following lines of code create the atert dialog that show the total troop losses for each player
@@ -468,8 +518,7 @@ public class BattleActivity extends GameActivity
                         archAtkLoss + "\n Cavalry Lost: " + cavAtkLoss +
                         "\n Seige Weapons Lost: " + sieAtkLoss;
 
-
-
+                //Cancels the load dialog
                 cancelLoadDialog(progressDialog);
                 builder.setMessage(displayString).setCancelable(false).setNegativeButton("Okay", new DialogInterface.OnClickListener() {
                     @Override
@@ -482,12 +531,9 @@ public class BattleActivity extends GameActivity
                 alert.setTitle("Troops Lost In Battle");
                 alert.show();
                 Multiplayer_Logic.setTwoData(multiplayerData.getCommandDecisionKey(), "attacker1", "defender1", "not", "not");
-
-
-
-
                 // ends building the alert dialog
 
+                //Uploads the new numbers to the database
                 Multiplayer_Logic.setSixData(multiplayerData.getAttackerLossesReferance(), "attackerID", "inf", "arch", "cav", "siege", "changeCheck","attacker1", skirmish.getBattle().getAttacker().getNumInf(), skirmish.getBattle().getAttacker().getNumArc(), skirmish.getBattle().getAttacker().getNumCav(), skirmish.getBattle().getAttacker().getNumSie(),"changed"+Math.random());
                 Multiplayer_Logic.setSixData(multiplayerData.getDefendLossesReferance(), "defenderID", "inf", "arch", "cav", "siege",  "changeCheck","defender1", skirmish.getBattle().getDefender().getNumInf(), skirmish.getBattle().getDefender().getNumArc(), skirmish.getBattle().getDefender().getNumCav(), skirmish.getBattle().getDefender().getNumSie(),"changed"+Math.random());
 
@@ -499,13 +545,13 @@ public class BattleActivity extends GameActivity
                 Log.i("110101001111011", "working " + defendInf);
 
 
-                //sets the new army size for the defender defend
+                //sets the defender losses
                 int infLossDef = battle.getDefender().getNumInf() - (int) defendInf;
                 int cavLossDef = battle.getDefender().getNumCav()-(int) defendCav;
                 int archLossDef = battle.getDefender().getNumArc()-(int) defendArch;
                 int sieLossDef = battle.getDefender().getNumSie()-(int) defendSiege;
 
-
+                //sets the new defender troop counts
                 battle.getDefender().setNumInf((int) defendInf);
                 battle.getDefender().setNumCav((int) defendCav);
                 battle.getDefender().setNumArc((int) defendArch);
@@ -518,6 +564,7 @@ public class BattleActivity extends GameActivity
                 battle.getAttacker().setNumSie((int) attackSeige);
                 Log.i("defffffff", "defffffff tot " + battle.getDefender().getNumCav());
 
+                //updates the player's screen
                 Army1.setText("Attacker: " + battle.attacker.armyName);
                 Army2.setText("Defender: " + battle.defender.armyName);
                 Army2.append("\n Infantry: " + battle.getDefender().getNumInf() + "\n Archers: " + battle.getDefender().getNumArc() + "\n Cavalry :" + battle.getDefender().getNumCav() + "\n Siege Weapons: " + battle.getDefender().getNumSie());
@@ -543,10 +590,10 @@ public class BattleActivity extends GameActivity
                 cancelLoadDialog(progressDialog);
                 alert.show();
 
-                }
+            }
         }
     }
-
+    //Method to kill progress dialogs
     public void cancelLoadDialog(ProgressDialog dialog)
     {
         dialog.dismiss();

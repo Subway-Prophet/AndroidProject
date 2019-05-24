@@ -21,7 +21,7 @@ public class Multiplayer_Logic
     MultiplayerData multiplayerData = new MultiplayerData();
     private static String out = "";
 
-
+    //Sets one piece of data
     public static void setSingleData(DocumentReference docRef, String key, Object data)
     {
         Map<String, Object> dataToSet = new HashMap<String, Object>();
@@ -29,7 +29,7 @@ public class Multiplayer_Logic
         docRef.set(dataToSet);
     }
 
-
+    //Sets two pieces of data
     public static void setTwoData(DocumentReference docRef, String key1,String key2, Object data, Object data2)
     {
         Map<String, Object> dataToSet = new HashMap<String, Object>();
@@ -38,6 +38,7 @@ public class Multiplayer_Logic
         docRef.set(dataToSet);
     }
 
+    //Sets three pieces of data
     public static void setThreeData(DocumentReference docRef, String key1,String key2,String key3, Object data, Object data2,Object data3)
     {
         Map<String, Object> dataToSet = new HashMap<String, Object>();
@@ -47,6 +48,7 @@ public class Multiplayer_Logic
         docRef.set(dataToSet);
     }
 
+    //Sets five pieces of data
     public static void setFiveData(DocumentReference docRef, String key1,String key2,String key3,String key4,String key5, Object data, Object data2,Object data3, Object data4,Object data5)
     {
         Map<String, Object> dataToSet = new HashMap<String, Object>();
@@ -58,6 +60,7 @@ public class Multiplayer_Logic
         docRef.set(dataToSet);
     }
 
+    //Sets six pieces of data
     public static void setSixData(DocumentReference docRef, String key1,String key2,String key3,String key4,String key5,String key6, Object data, Object data2,Object data3, Object data4,Object data5,Object data6)
     {
         Map<String, Object> dataToSet = new HashMap<String, Object>();
