@@ -46,6 +46,12 @@ You should now be done with the basic setup.
 
 ## Deployment
 You will need two devices that both have the current version of the app and working Google accounts.
+You can then run the code on both devices while following the following sugestions
+- Prior to starting one person should hit "Reset Battle". Do not do this if one person has hit start already.
+- Both users need to sign in with the sign in button
+- Both can then hit start.
+- Both can then hit ready and the battle will start.
+  - Repeat hitting ready
 
 ## Built With
 - Android Studio
