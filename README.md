@@ -51,7 +51,7 @@ You can then run the code on both devices while following the following sugestio
 - Both users need to sign in with the sign in button
 - Both can then hit start.
 - Both can then hit ready and the battle will start.
-  - Repeat hitting ready
+  - Repeat hitting ready to continue the battle
 
 ## Built With
 - Android Studio
