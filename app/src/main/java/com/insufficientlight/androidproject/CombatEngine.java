@@ -96,6 +96,8 @@ class CombatEngine
             }
         }
         if (defenderArc > 0)
+            //Sets the archers attacker Target
+           
         {
             if (attackerInf > 0)
             {
@@ -117,6 +119,7 @@ class CombatEngine
         }
         if (defenderCav > 0)
         {
+            //Sets the Cavalry attack target
             if (attackerCav == 0 && attackerArc != 0)
             {
                 attackerArcherLosses = attackerArcherLosses + (defenderCav / 40) * getRandomNumberInRange(2, 5);
@@ -140,7 +143,7 @@ class CombatEngine
             attackerLosses = attackerLosses + (defenderSie) * getRandomNumberInRange(2, 6);
         }
 
-        // Fail safes for empty ranks
+        // Fail safes for empty ranks, same code as above, just flipped
         if (defenderInf > 0)
         {
             if ((defenderCav > 0) && (attackerInf > defenderInf) && (attackerCav == 0))
