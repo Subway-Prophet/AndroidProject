@@ -52,4 +52,5 @@ combat
 -Minor Bug Fixed
 -Added logic to combat engine
 -Created Readme.md
+-Fixed bug where both players would be defenders/attackers
 
