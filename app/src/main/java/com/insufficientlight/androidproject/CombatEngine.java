@@ -58,7 +58,7 @@ class CombatEngine
         int defenderCavNewCount;
         int defenderSiegeNewCount;
 
-
+        //Sets a local variable for units so the program runs smoother 
         int defenderInf = skirmish.getBattle().getDefender().getNumInf();
         int defenderArc = skirmish.getBattle().getDefender().getNumArc();
         int defenderCav = skirmish.getBattle().getDefender().getNumCav();
@@ -73,11 +73,12 @@ class CombatEngine
         // Fail safes for empty ranks
         if (defenderInf > 0)
         {
-
+            //Checks if infantry can attack cavalry 
             if ((attackerCav > 0) && (defenderInf > attackerInf) && (defenderCav == 0))
             {
                 attackerCavLosses = (defenderInf /100) * getRandomNumberInRange(1, 5);
             }
+            //sets attacks priorities 
             if (attackerInf == 0)
             {
                 if (attackerArc > 0)
@@ -277,6 +278,7 @@ class CombatEngine
 
 
 
+        //Log messages
 
         Log.i("It ran an did not", "Noooo Halp defender " + defenderLosses);
             Log.i("It ran an did not", "Noooo Halp attacker " + attackerLosses);
@@ -304,6 +306,8 @@ class CombatEngine
             skirmish.getBattle().getDefender().setNumArc(defenderArcNewCount);
             skirmish.getBattle().getDefender().setNumCav(defenderCavNewCount);
             skirmish.getBattle().getDefender().setNumSie(defenderSiegeNewCount);
+            
+            //More logs
 
             Log.i("It ran an did not", "Noooo Halp");
     }
