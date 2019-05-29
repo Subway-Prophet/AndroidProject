@@ -1,4 +1,4 @@
-# Pointy Words
+# The Ire Lands
 We would like a multiplayer (eventually local and online) game that relies on both diplomacy and military prowess. 
 The game is meant to replicate the diplomatic tension from games like Conspiracy,
 while having the edge-of-your-seat kind of combat present in a strategy game like Risk. 
